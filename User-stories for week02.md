@@ -8,10 +8,9 @@
 
 - ***US1***: As a customer, I want to be able to specify search criteria and view available cars that match the search criteria, so that I can easily find the right car for me.
   - ***Acceptance Criteria***:
-    - Test – A customer can filter cars by age, preferred pick-up and drop-off locations
+    - Test – A customer can search cars by vehicle-type(small, medium, large, premium), age, preferred pick-up and drop-off locations.
     - Test – A customer should see the cars that match filtered criteria.
-    - Test – A customer should be able to click on one of the cars and see its details such as car type and price for each day of car rental.
-    - Test - The customer’s choice is stored and the search results only shows cars which match the customer’s requirements.
+    - Test – A customer should be able to see cars' details, including car types and prices for each day of car rental.
   - ***Priority***: 1
   - ***Size***: 4hrs
 
