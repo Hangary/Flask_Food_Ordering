@@ -20,8 +20,8 @@
 - ***US2***: As a customer, I should be able to click on the search results (if any) to enter my details and further proceed with booking, so that the booking can be finalized.
   - ***Acceptance Criteria***:
     - Test – If no cars available in the time period mentioned by customer, then system results show a blank page apologizing about the inconvenience.
-    - Test – After clicking on the car, text fields for additional details should pop up for the customer to enter
-    - name of the customer and age
+    - Test – After clicking on the car, text fields for additional details should pop up for the customer to enter:
+      - name of the customer and age
       - license number;
       - the rental period in number of days;
       - option to purchase an insurance cover; and
@@ -52,7 +52,7 @@
 
 - ***US5***: As a customer, I want to be able to pay by credit card, so that I can easily enter my payment details and complete the payment.
   - ***Acceptance Criteria***:
-    - Test – An external secured payment gateway should popup when the customer decides to click “PAY”
+    - Test – An external secured payment gateway should popup when the customer decides to click “PAY”.
     - Test – After the payment process is completed, the popup should close and AffordbleRentals webpage should show “PAYMENT COMPLETED” in green.
   - ***Priority***: 2
   - ***Size***: 1hr
@@ -61,7 +61,7 @@
 
 - ***US6***: As a customer, I expect to see a booking confirmation email from AfforableRental once I have made the payment, so that I can confirm the booking process is truly completed.
   - ***Acceptance Criteria***:
-    - Test – send email to the customer detailing:
+    - Test – The system will automatically send email to the customer detailing:
       - Booking date
       - Pickup time
       - Car information e.g. number plate, car type, color
