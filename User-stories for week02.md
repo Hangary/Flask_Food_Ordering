@@ -2,7 +2,7 @@
 
 ## Epics story 1
 
-**<u>Epic Story 1: As a customer, I want to browse and rent a car online easily, so that I can focus on other things in life.</u>** (6 user-stories)
+**<u>Epic Story 1: As a customer, I want to browse and rent a car online easily.</u>** (6 user-stories)
 
 ----
 
