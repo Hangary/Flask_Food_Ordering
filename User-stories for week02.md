@@ -7,6 +7,7 @@
 ----
 
 - ***US1***: As a customer, I want to be able to specify search criteria and view available cars that match the search criteria so that I can easily find the right car for me.
+
   - ***Acceptance Criteria***:
     - Test – A customer can filter cars by age, preferred pick-up and drop-off locations
     - Test – A customer should see the cars that match filtered criteria.
@@ -18,6 +19,7 @@
 ----
 
 - ***US2***: As a customer, I should be able to click on the search results (if any) to enter my details and further proceed with booking, so that the booking can be finalized.
+
   - ***Acceptance Criteria***:
     - Test – If no cars available in the time period mentioned by customer, then system results show a blank page apologizing about the inconvenience.
     - Test – After clicking on the car, text fields for additional details should pop up for the customer to enter:
@@ -43,6 +45,7 @@
 --------
 
 - ***US4***: As a customer, I must be able to review the final price before making payment, so that I can confirm my selection.
+
   - ***Acceptance Criteria***:
     - Test – A customer should see the detailed net price including all calculations and taxes.
   - ***Priority***: 2
@@ -51,6 +54,7 @@
 -----
 
 - ***US5***: As a customer, I want to be able to pay by credit card, so that I can easily enter my payment details and complete the payment.
+
   - ***Acceptance Criteria***:
     - Test – An external secured payment gateway should popup when the customer decides to click “PAY”.
     - Test – After the payment process is completed, the popup should close and AffordbleRentals webpage should show “PAYMENT COMPLETED” in green.
@@ -60,6 +64,7 @@
 -----
 
 - ***US6***: As a customer, I expect to see a booking confirmation email from AfforableRental once I have made the payment, so that I can confirm the booking process is truly completed.
+
   - ***Acceptance Criteria***:
     - Test – The system will automatically send email to the customer detailing:
       - Booking date
@@ -76,6 +81,7 @@
 ---
 
 - ***US1***: As a company staff, I should be able to log in this system with a username and password.
+
   - ***Acceptance Criteria***:
     - Test - The system admin can log in and log off the database system with a correct username and password.
     - Test - If the username or password is wrong, this login will be rejected.
@@ -85,6 +91,7 @@
 -----
 
 - ***US2***: As a company staff, I should be to enter new car information into the system, which holds the following information: vehicle-type (small, medium, large, premium), make, model, year and registration number.
+
   - ***Acceptance Criteria***:
     - Test - After login, the system admin can create a new car or enter new car information. And following information can be entered:
       - Vehicle-type
@@ -100,6 +107,7 @@
 **<u>Epic Story 3: As a company Manager, I want to view the reports of our car rental.</u>**
 
 - ***US***: As a company manager,  I should be able to generate weekly reports that show a log of cars rented during the week, so that I can analyse our profits and service.
+
   - ***Acceptance Criteria***:
     - Test - The system can generate a weekly report, which summarize the business.
   - ***Priority***: 2
