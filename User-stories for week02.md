@@ -90,7 +90,12 @@
 
 - ***US2***: As a company staff, I should be able to enter new car information into the system, so that I can manage our car information efficiently.
   - ***Acceptance Criteria***:
-    - Test - After login, the system admin can create a new car or enter new information. And following information can be entered: vehicle-type (small, medium, large, premium), make, model, year and registration number.
+    - Test - After login, the system admin can create a new car or enter new information. And following information can be entered: 
+      - vehicle-type: small, medium, large, premium
+      - make
+      - model
+      - year
+      - registration number.
   - ***Priority***: 1
   - ***Size***: 2hr
 
