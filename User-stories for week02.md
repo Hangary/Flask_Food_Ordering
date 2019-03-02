@@ -6,8 +6,7 @@
 
 ----
 
-- ***US1***: As a customer, I want to be able to specify search criteria and view available cars that match the search criteria so that I can easily find the right car for me.
-
+- ***US1***: As a customer, I want to be able to specify search criteria and view available cars that match the search criteria, so that I can easily find the right car for me.
   - ***Acceptance Criteria***:
     - Test – A customer can filter cars by age, preferred pick-up and drop-off locations
     - Test – A customer should see the cars that match filtered criteria.
@@ -80,8 +79,7 @@
 
 ---
 
-- ***US1***: As a company staff, I should be able to log in this system with a username and password.
-
+- ***US1***: As a company staff, I should be able to log in this system with a username and password, so that I can manage the car information system safely.
   - ***Acceptance Criteria***:
     - Test - The system admin can log in and log off the database system with a correct username and password.
     - Test - If the username or password is wrong, this login will be rejected.
@@ -90,15 +88,9 @@
 
 -----
 
-- ***US2***: As a company staff, I should be to enter new car information into the system, which holds the following information: vehicle-type (small, medium, large, premium), make, model, year and registration number.
-
+- ***US2***: As a company staff, I should be able to enter new car information into the system, so that I can manage our car information efficiently.
   - ***Acceptance Criteria***:
-    - Test - After login, the system admin can create a new car or enter new car information. And following information can be entered:
-      - Vehicle-type
-      - Make
-      - Model
-      - Year
-      - Registration number 
+    - Test - After login, the system admin can create a new car or enter new information. And following information can be entered: vehicle-type (small, medium, large, premium), make, model, year and registration number.
   - ***Priority***: 1
   - ***Size***: 2hr
 
@@ -107,7 +99,6 @@
 **<u>Epic Story 3: As a company Manager, I want to view the reports of our car rental.</u>**
 
 - ***US***: As a company manager,  I should be able to generate weekly reports that show a log of cars rented during the week, so that I can analyse our profits and service.
-
   - ***Acceptance Criteria***:
     - Test - The system can generate a weekly report, which summarize the business.
   - ***Priority***: 2
