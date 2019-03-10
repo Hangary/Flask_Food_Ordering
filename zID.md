@@ -5,4 +5,5 @@ Team member:
 
   1. Hange Liu, z5239938
   2. Kanadech Jirapongtanavech, z5176970
-  3. 
+  3. Gaurang Rustagi, z5203094
+  
