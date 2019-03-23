@@ -1,11 +1,14 @@
+'''
+This is a class for food items such as burgers, cola and other thing.
+'''
 class Item(object):
 
     def __init__(self, name, price, availability, description, ingredients, tags=""):
-        self._name = name
-        self._price = price
-        self._availability = availability
-        self._description = description
-        self._ingredients = ingredients
+        self._name = name                       # string
+        self._price = price                     # float
+        self._availability = availability       # boolean
+        self._description = description         # string
+        self._ingredients = ingredients         # list<ingredient>
         self._tags = tags
 
     @property

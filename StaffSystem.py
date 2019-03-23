@@ -1,6 +1,8 @@
+'''
+This class is a system used by staff, which should be able to manage online orders and update the inventory.
+'''
 
-
-class AdminSystem(object):
+class StaffSystem(object):
 
     def __init__(self, admin):
         self._logs = []
