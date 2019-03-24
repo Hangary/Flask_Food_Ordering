@@ -25,8 +25,12 @@ class Order(object):
 
     # add new items into order
     # item_type should be "Mains", "Sides" and "Drinks"
-    def add_item(self, item_type, item):
-        self._items[item_type].append(item)
+    def add_item(self, *argv):
+        for item in argv:
+            if item.type in ("Mains", "Sides", "Drinks"):
+                self._items[item.type].append(item)
+            else:
+                print("Wrong input!")
 
     # calculate order price
     def calculate_order_price(self):
