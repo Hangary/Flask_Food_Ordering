@@ -1,8 +1,9 @@
 from item import Item
 from order import Order
 from menu import Menu
+from inventory import Inventory
 
-class RestaurantSystem:
+class OrderSystem:
 
     def __init__(self):
         self._orders = []                   # list<order>
@@ -10,6 +11,7 @@ class RestaurantSystem:
         self._mains_menu = Menu("Mains")    # Main menu
         self._sides_menu = Menu("Sides")    # Sides menu
         self._drinks_menu = Menu("Drinks")  # Drinks menu
+        # self._inventory = Inventory()
         # self._admin_system = admin_system
 
     #def get_menu_items(self):
