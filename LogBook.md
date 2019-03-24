@@ -25,6 +25,7 @@ Decisions:
 - Discuss about iteration 2
 - Modify user stories according the advices from our tutor
 - Finish a hand-written CRC cards and Class diagram
+- Agree to the development plan for next week
 
 Requirements Elicition:
 
