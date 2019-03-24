@@ -2,6 +2,8 @@ from item import Item
 '''
 This is a class used to store menu information, which is composed of items.
 '''
+
+
 class Menu:
 
     def __init__(self, name):
@@ -10,7 +12,8 @@ class Menu:
 
     # add new item into the menu
     def add_item(self, name, price, availability, description, ingredients, tags):
-        self._items[name] = Item(name, price, availability, description, ingredients, tags)
+        self._items[name] = Item(
+            name, price, availability, description, ingredients, tags)
 
     # get all the details of the items inside the menu
     def display(self):
@@ -20,7 +23,7 @@ class Menu:
     def print_menu(self):
         for item in self._items.keys():
             print(self.get_item(item))
-    
+
     # get the detail for an item by its name
     def get_item(self, name):
         # if name in self._items.keys():

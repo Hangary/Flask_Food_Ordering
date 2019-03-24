@@ -1,10 +1,11 @@
 import pytest
 from restaurant import RestaurantSystem
-from AdminSystem import AdminSystem
-from AdminUser import AdminUser
 from menu import Menu
 from item import *
 
+'''
+TODO: this should be a test for the system
+'''
 
 class TestUS1(object):
 

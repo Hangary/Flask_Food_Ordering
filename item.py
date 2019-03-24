@@ -1,15 +1,22 @@
 '''
 This is a class for food items such as burgers, cola and other thing.
 '''
+
+
 class Item(object):
 
-    def __init__(self, name, price, availability, description, ingredients, tags=""):
+    def __init__(self, name, price, type, description, ingredients, availability=True):
         self._name = name                       # string
         self._price = price                     # float
-        self._availability = availability       # boolean
+        # the type of the item: "Mains", "Sides", "Drinks"
+        self._type = type
         self._description = description         # string
         self._ingredients = ingredients         # list<ingredient>
-        self._tags = tags
+        self._availability = availability       # boolean
+
+    # TODO: check whether this item is available in the inventory
+    def check_availability(self, inventory):
+        pass
 
     @property
     def name(self):
@@ -18,11 +25,15 @@ class Item(object):
     @property
     def price(self):
         return self._price
-    
+
     @property
-    def is_available(self):
+    def type(self):
+        return self._type
+
+    @property
+    def availability(self):
         return self._availability
-    
+
     @property
     def description(self):
         return self._description
@@ -31,10 +42,7 @@ class Item(object):
     def ingredients(self):
         return self._ingredients[::]
 
-    @property
-    def tags(self):
-        return self._tags[::]
-        
+    # TODO
     def __str__(self):
         return "name: {}, price: ${:.2f}, description: {}, ingredients: {}, tags: {}".format(self._name, self._price, self._description, self._ingredients, self._tags)
 
@@ -56,6 +64,26 @@ class Item(object):
     def __ne__(self, other):
         return not self == other
 
+
+'''
+This should be a special class for the mains
+'''
+
+
+class Creation(Item):
+
+    def __init__(self, name, price, type, description, ingredients, availability=True):
+        super().__init__(name, price, type, description,
+                         ingredients, availability=availability)
+
+    # TODO
+    def modify_ingredients(self, list_ingredients):
+        self.ingredients = list_ingredients
+        self._calculate_price()
+
+    # TODO: calculate its price based on its ingredients
+    def _calculate_price(self):
+        pass
 
 # i = Item('Mocha',4.50,True,'Chocolate Coffe',['Chocolate','Coffee'],"Uses Lindt White Choc")
 # print(i)

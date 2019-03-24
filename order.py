@@ -2,15 +2,18 @@ from item import Item
 '''
 This is a class used to store information about online orders.
 '''
+
+
 class Order(object):
 
     def __init__(self, order_id):
-        self._order_id      = order_id      # int, given by the system
-        self._is_payed      = False         # boolean, whether it is payed or not
-        self._is_prepared   = False         # boolean, whether it is prepared or not
-        self._items         = {"Mains": [], "Sides": [], "Drinks": []}            # dict{item}, contain 3 lists used to contain the food items chosen by the customer
-        self._notes         = ""            # string, some special notes by the customer
-        self._price         = 0             # int, the total price for the order
+        self._order_id = order_id      # int, given by the system
+        self._is_payed = False         # boolean, whether it is payed or not
+        self._is_prepared = False         # boolean, whether it is prepared or not
+        # dict{item}, contain 3 lists used to contain the food items chosen by the customer
+        self._items = {"Mains": [], "Sides": [], "Drinks": []}
+        self._notes = ""            # string, some special notes by the customer
+        self._price = 0             # int, the total price for the order
 
     # Order is payed
     def update_payment_status(self):
