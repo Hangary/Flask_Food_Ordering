@@ -1,14 +1,15 @@
 '''
-TODO: 
+Finished:
 This is a class used to store ingredients.
 '''
 
 
 class Ingredient(object):
 
-    def __init__(self, name, amount=0):
+    def __init__(self, name, amount=float('nan'), unit=''):
         self._name = name
         self._amount = amount
+        self._unit = unit
         self.__is_soldout()
 
     def __is_soldout(self):
@@ -37,12 +38,15 @@ class Ingredient(object):
         return self._is_soldout
 
     def __str__(self):
-        return f"{self._name}: {self._amount}"
+        if (self._amount != self.amount) and (self._unit == ''):
+            return f"{self._name}"
+        else:
+            return f"{self._name}: {self._amount} {self._unit}"
 
 
 if __name__ == "__main__":
     butter = Ingredient("butter")
-    tomato = Ingredient("tomato", 10)
+    tomato = Ingredient("tomato", 10, "gram(s)")
 
     print(butter.name, butter.amount, butter.is_soldout)
     print(butter)

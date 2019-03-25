@@ -7,12 +7,19 @@ from inventory import Inventory
 class OrderSystem:
 
     def __init__(self):
+        # order fields
         self._orders = []                   # list<order>
         self._norder = 0                    # total number of orders, also used as order id
-        self._mains_menu = Menu("Mains")    # Main menu
-        self._sides_menu = Menu("Sides")    # Sides menu
-        self._drinks_menu = Menu("Drinks")  # Drinks menu
-        self._inventory = Inventory()       # Inventory
+
+        # menu field
+        self._menus = {"Mains":   Menu("Mains"),
+                      "Sides":    Menu("Sides"),
+                      "Drinks":   Menu("Drinks")}
+
+        # inventory field
+        self._inventory = Inventory()
+
+        # admin field
         # self._admin_system = admin_system
 
     # def get_menu_items(self):
@@ -22,18 +29,17 @@ class OrderSystem:
     menu part
     '''
 
-    # Display menu
-    def display_mains_menu(self):
+    # Display a menu
+    def display_menu(self, menu_name):
         # return self._menu.display()
-        return self._mains_menu
-
-    def display_sides_menu(self):
-        # return self._menu.display()
-        return self._sides_menu
-
-    def display_drinks_menu(self):
-        # return self._menu.display()
-        return self._drinks_menu
+        if menu_name == "Mains":
+            return self._menus["Mains"]
+        elif menu_name == "Sides":
+            return self._menus["Sides"]
+        elif menu_name == "Drinks":
+            return self._menus["Drinks"]
+        else:
+            return None
 
     # TODO
     def display_item(self, name):
@@ -59,8 +65,7 @@ class OrderSystem:
             else:
                 return None
 
-    # TODO
-    # Make a new online order
+    # TODO: Make a new online order
     def make_order(self):
         new_order = Order(self._norder)
         self._norder += 1

@@ -10,10 +10,9 @@ class Menu:
         self._name = name   # the name for the menu, e.g. Mains, Drinks ...
         self._items = {}    # a dict for items
 
-    # add new item into the menu
-    def add_item(self, name, price, availability, description, ingredients, tags):
-        self._items[name] = Item(
-            name, price, availability, description, ingredients, tags)
+    # add an item into the menu
+    def add_item(self, item):
+        self._items[item.name] = item
 
     # get all the details of the items inside the menu
     def display(self):
@@ -26,10 +25,13 @@ class Menu:
 
     # get the detail for an item by its name
     def get_item(self, name):
-        # if name in self._items.keys():
-        #     print("menu-item present")
-        return self._items[name]
+        if name in self._items.keys():
+            print("menu-item present")
+            return self._items[name]
+        else:
+            return None
 
     # get all the items inside the menu
     def get_items(self):
         return self._items
+

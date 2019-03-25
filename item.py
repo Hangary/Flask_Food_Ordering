@@ -5,16 +5,24 @@ This is a class for food items such as burgers, cola and other thing.
 
 class Item(object):
 
-    def __init__(self, name, price, type, description, ingredients, availability=True):
+    def __init__(self, name, price, type, description='', availability=True):
         self._name = name                       # string
         self._price = price                     # float
-        # the type of the item: "Mains", "Sides", "Drinks"
-        self._type = type
+        self._type = type                       # "Mains", "Sides", "Drinks"
+        
+        # optional fields:
         self._description = description         # string
-        self._ingredients = ingredients         # list<ingredient>
         self._availability = availability       # boolean
+        
+        # other fields:
+        self._ingredients = {}                  # dict<ingredient>
 
-    # TODO: check whether this item is available in the inventory
+    # add ingredients into the item
+    def add_ingredients(self, *argv):
+        for ingredient in argv:
+            self._ingredients[ingredient.name] = ingredient
+
+    # TODO: check whether this item is available in the inventory, based on whether its ingredients are available
     def check_availability(self, inventory):
         pass
 
@@ -42,9 +50,12 @@ class Item(object):
     def ingredients(self):
         return self._ingredients[::]
 
-    # TODO
     def __str__(self):
-        return "name: {}, price: ${:.2f}, description: {}, ingredients: {}, tags: {}".format(self._name, self._price, self._description, self._ingredients, self._tags)
+        return f"name: {self._name}, \
+        price: ${self._price:.2f}, \
+        description: {self._description}, \
+        ingredients: {self._ingredients}, \
+        type: {self._type}"
 
     def __eq__(self, other):
         # assuming order of ingredient do not matter
@@ -66,7 +77,8 @@ class Item(object):
 
 
 '''
-This should be a special class for the mains
+This should be a special class for the mains.
+Notes: There should be a defaulted ingredients list for a main food and corresponding limits.
 '''
 
 
@@ -75,15 +87,29 @@ class Creation(Item):
     def __init__(self, name, price, type, description, ingredients, availability=True):
         super().__init__(name, price, type, description,
                          ingredients, availability=availability)
+        self._max_limit = {}
 
-    # TODO
-    def modify_ingredients(self, list_ingredients):
-        self.ingredients = list_ingredients
+    def set_ingredient_limit(self, ingredient_name, amount):
+        self._max_limit[ingredient_name] = amount
+
+    # TODO:
+    def modify_ingredients(self, ingredient_name, amount):
+        if self._max_limit[ingredient_name]:
+            if amount < self._max_limit[ingredient_name]:
+                pass
+            else:
+                print("more than the max amount!")
+                return
+        self._ingredients[ingredient_name].amount = amount
         self._calculate_price()
 
     # TODO: calculate its price based on its ingredients
     def _calculate_price(self):
         pass
 
-# i = Item('Mocha',4.50,True,'Chocolate Coffe',['Chocolate','Coffee'],"Uses Lindt White Choc")
-# print(i)
+
+# TODO: some unit tests here
+if __name__ == "__main__":
+    # i = Item('Mocha',4.50,True,'Chocolate Coffe',['Chocolate','Coffee'],"Uses Lindt White Choc")
+    # print(i)
+
