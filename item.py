@@ -1,3 +1,4 @@
+from ingredient import Ingredient
 '''
 This is a class for food items such as burgers, cola and other thing.
 '''
@@ -5,15 +6,15 @@ This is a class for food items such as burgers, cola and other thing.
 
 class Item(object):
 
-    def __init__(self, name, price, type, description='', availability=True):
+    def __init__(self, name, price, type, description='N/A', availability=True):
         self._name = name                       # string
         self._price = price                     # float
         self._type = type                       # "Mains", "Sides", "Drinks"
-        
+
         # optional fields:
         self._description = description         # string
         self._availability = availability       # boolean
-        
+
         # other fields:
         self._ingredients = {}                  # dict<ingredient>
 
@@ -48,14 +49,10 @@ class Item(object):
 
     @property
     def ingredients(self):
-        return self._ingredients[::]
+        return self._ingredients
 
     def __str__(self):
-        return f"name: {self._name}, \
-        price: ${self._price:.2f}, \
-        description: {self._description}, \
-        ingredients: {self._ingredients}, \
-        type: {self._type}"
+        return f"name: {self._name}, price: ${self._price:.2f}, description: {self._description}, type: {self._type}"
 
     def __eq__(self, other):
         # assuming order of ingredient do not matter
@@ -77,6 +74,7 @@ class Item(object):
 
 
 '''
+TODO:
 This should be a special class for the mains.
 Notes: There should be a defaulted ingredients list for a main food and corresponding limits.
 '''
@@ -110,6 +108,10 @@ class Creation(Item):
 
 # TODO: some unit tests here
 if __name__ == "__main__":
-    # i = Item('Mocha',4.50,True,'Chocolate Coffe',['Chocolate','Coffee'],"Uses Lindt White Choc")
-    # print(i)
 
+    coke_zero = Item("Coke Zero", 2.5, "Drinks")
+    print(coke_zero)
+    coke_zero.add_ingredients(Ingredient("Coke Zero"), Ingredient("Ice cube"))
+
+    for ingredient in coke_zero.ingredients:
+        print(ingredient)

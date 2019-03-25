@@ -1,6 +1,7 @@
 from item import Item
+from ingredient import Ingredient
 '''
-This is a class used to store information about online orders.
+TODO: This is a class used to store information about online orders.
 '''
 
 
@@ -26,8 +27,7 @@ class Order(object):
     def update_preparation_status(self):
         self._is_prepared = True
 
-    # add new items into order
-    # item_type should be "Mains", "Sides" and "Drinks"
+    # add new items into order, item_type should be "Mains", "Sides" and "Drinks"
     def add_item(self, *argv):
         for item in argv:
             if item.type in ("Mains", "Sides", "Drinks"):
@@ -36,20 +36,16 @@ class Order(object):
                 print("Wrong input!")
 
     # calculate order price
-    def calculate_order_price(self):
+    def calculate_price(self):
         price = 0
-        for item_type in self._items:
-            for item in item_type:
+        for items in self._items.values():
+            for item in items:
                 price = price + item.price
         self._price = price
 
-    # @property
-    # def item(self):
-    #     return self._items
-
-    # @item.setter
-    # def item(self, new_item):
-    #     self._price = new_item
+    @property
+    def items(self):
+        return self._items
 
     @property
     def is_prepared(self):
@@ -59,16 +55,24 @@ class Order(object):
     def order_id(self):
         return self._order_id
 
-    # def __str__(self):
-    #     return str(self._items) + "Special Notes: " + self._notes
+    def __str__(self):
+        return f"order id: {self._order_id}, total price: {self._price}"
 
-    # Display the list of orders that this table currentlyhas
-    def display(self):
+    # Display the items of orders
+    def display_items(self):
         print('Order {0} has items:'.format(self._order_id))
         for item_type in self._items:
             for item in item_type:
                 print(item)
 
-# i = Item('Mocha',4.50,True,'Chocolate Coffe',['Chocolate','Coffee'],"Uses Lindt White Choc")
-# o = Order(0,i,"2 sugar")
-# print("{}:{}".format(o,o.get_order_price()))
+if __name__ == "__main__":
+
+    fries_l = Item("Fries - Large", 5, "Sides")
+
+    coke_zero_m = Item("Coke Zero - Medium", 2.5, "Drinks")
+    coke_zero_m.add_ingredients(Ingredient("Coke Zero"), Ingredient("Ice cube"))
+
+    new_order = Order(45)
+    new_order.add_item(fries_l, coke_zero_m)
+    new_order.calculate_price()
+    print(new_order)
