@@ -3,7 +3,6 @@ from ingredient import Ingredient
 This is a class for food items such as burgers, cola and other thing.
 '''
 
-
 class Item(object):
 
     def __init__(self, name, price, type, description='N/A', availability=True):
@@ -51,8 +50,9 @@ class Item(object):
     def ingredients(self):
         return self._ingredients
 
+
     def __str__(self):
-        return f"name: {self._name}, price: ${self._price:.2f}, description: {self._description}, type: {self._type}"
+        return f"{self._type}: {self._name}, price: ${self._price:.2f}, description: {self._description}"
 
     def __eq__(self, other):
         # assuming order of ingredient do not matter
@@ -82,9 +82,8 @@ Notes: There should be a defaulted ingredients list for a main food and correspo
 
 class Creation(Item):
 
-    def __init__(self, name, price, type, description, ingredients, availability=True):
-        super().__init__(name, price, type, description,
-                         ingredients, availability=availability)
+    def __init__(self, name, price, type, description='N/A', availability=True):
+        super().__init__(name, price, "Creation", description, availability)
         self._max_limit = {}
 
     def set_ingredient_limit(self, ingredient_name, amount):
@@ -105,11 +104,23 @@ class Creation(Item):
     def _calculate_price(self):
         pass
 
+class Side(Item):
+
+    def __init__(self, name, price, description='N/A', availability=True):
+        super().__init__(name, price, "Side", description, availability)
+
+    
+
+class Drink(Item):
+
+    def __init__(self, name, price, description='N/A', availability=True):
+        super().__init__(name, price, "Drink", description, availability)
+
 
 # TODO: some unit tests here
 if __name__ == "__main__":
 
-    coke_zero = Item("Coke Zero", 2.5, "Drinks")
+    coke_zero = Drink("Coke Zero", 2.5)
     print(coke_zero)
     coke_zero.add_ingredients(Ingredient("Coke Zero"), Ingredient("Ice cube"))
 

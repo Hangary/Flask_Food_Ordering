@@ -6,32 +6,35 @@ This is a class used to store menu information, which is composed of items.
 
 class Menu:
 
-    def __init__(self, name):
-        self._name = name   # the name for the menu, e.g. Mains, Drinks ...
+    def __init__(self, menu_name):
+        self._name = menu_name   # the name for the menu, e.g. Mains, Drinks ...
         self._items = {}    # a dict for items
 
-    # add an item into the menu
-    def add_item(self, item):
-        self._items[item.name] = item
+    # add some items into the menu
+    def add_item(self, *argv):
+        for item in argv:
+            self._items[item.name] = item
 
-    # get all the details of the items inside the menu
+    # get a list of items by their names
+    def get_item(self, *argv):
+        items = []
+        for item_name in argv:
+            if item_name in self._items.keys():
+                items.append(self._items[item_name])
+        return items
+
+    # print all the items inside the menu
     def display(self):
-        return self._items.values()
+        for item in self._items.values():
+            print(item)
+    
+    # put items into an order
+    def putin_order(self, order, *argv):
+        for item_name in argv:
+            item = self.get_item(item_name)
+            if item:
+                order.add_item(item)
 
-    # print all the values inside the menu
-    def print_menu(self):
-        for item in self._items.keys():
-            print(self.get_item(item))
 
-    # get the detail for an item by its name
-    def get_item(self, name):
-        if name in self._items.keys():
-            print("menu-item present")
-            return self._items[name]
-        else:
-            return None
-
-    # get all the items inside the menu
-    def get_items(self):
-        return self._items
-
+if __name__ == "__main__":
+    pass
