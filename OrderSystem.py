@@ -12,6 +12,7 @@ class OrderSystem:
         self._norder = 0                    # total number of orders, also used as order id
 
         # menu field
+        # TODO right now it is composition but should be aggregation 
         self._menus = {"Mains":   Menu("Mains"),
                       "Sides":    Menu("Sides"),
                       "Drinks":   Menu("Drinks")}
@@ -45,9 +46,9 @@ class OrderSystem:
     def display_item(self, name):
         if name == "":
             return "Item name is empty"
-        if not self._menu.get_item(name):
+        if not self._menus[""].get_item(name):
             return "Item doesn't exist"
-        return self._menu.get_item(name)
+        return self._menus[""].get_item(name)
 
     '''
     order part

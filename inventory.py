@@ -11,6 +11,7 @@ class Inventory(object):
         self._ingredients = {}      # dict<Ingredient>
 
     # add a new ingredient to the inventory
+    # ingredients to be created first (aggregation relationship)
     def add_new_ingredient(self, *argv):
         for ingredient in argv:
             self._ingredients[ingredient.name] = ingredient
