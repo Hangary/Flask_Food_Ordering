@@ -1,6 +1,15 @@
 from ingredient import Ingredient
 '''
-This is a class for food items such as burgers, cola and other thing.
+This is a class for food items such as burgers, drinks, sides
+A completely customized burger with many ingredients will be classified as an item
+to be put in an order
+
+An item that has every ingredients for a particular type (main,side,drinks) will be used
+to show in menu.
+
+User should see the lists of available ingredients in the item through menu through system.
+And through the system, user may create their item using shown ingredients and add to their order
+
 '''
 
 
