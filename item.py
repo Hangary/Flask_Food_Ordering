@@ -9,8 +9,8 @@ to show in menu.
 
 User should see the lists of available ingredients in the item through menu through system.
 And through the system, user may create their item using shown ingredients and add to their order
-
 '''
+
 
 class Item(object):
 
@@ -35,6 +35,10 @@ class Item(object):
     def check_availability(self, inventory):
         pass
 
+    '''
+    Property
+    '''
+    
     @property
     def name(self):
         return self._name
@@ -59,6 +63,9 @@ class Item(object):
     def ingredients(self):
         return self._ingredients
 
+    '''
+    str, equal, notequal
+    '''
 
     def __str__(self):
         return f"{self._type}: {self._name}, price: ${self._price:.2f}, description: {self._description}"
@@ -113,12 +120,12 @@ class Creation(Item):
     def _calculate_price(self):
         pass
 
+
 class Side(Item):
 
     def __init__(self, name, price, description='N/A', availability=True):
         super().__init__(name, price, "Side", description, availability)
 
-    
 
 class Drink(Item):
 

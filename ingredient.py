@@ -12,6 +12,7 @@ class Ingredient(object):
         self._unit = unit
         self.__is_soldout()
 
+    # check whether it is sold_out
     def __is_soldout(self):
         self._is_soldout = False if self._amount > 0 else True
 
@@ -20,11 +21,14 @@ class Ingredient(object):
         self._amount += amount
         self.__is_soldout()
 
-    # reset the amount
+    # reset its amount
     def reset(self, amount):
         self._amount = amount
         self.__is_soldout()
 
+    '''
+    Property
+    '''
     @property
     def name(self):
         return self._name
@@ -37,6 +41,9 @@ class Ingredient(object):
     def is_soldout(self):
         return self._is_soldout
 
+    '''
+    str
+    '''
     def __str__(self):
         if (self._amount != self.amount) and (self._unit == ''):
             return f"{self._name}"
