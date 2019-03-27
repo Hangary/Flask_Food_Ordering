@@ -1,57 +1,54 @@
-from item import Item
+from item import *
 from order import Order
 from menu import Menu
 from inventory import Inventory
 
+'''
+This is the main interface for both customers and staff.
+'''
+
 
 class OrderSystem:
 
-    def __init__(self):
+    def __init__(self, Menus, Inventory):
         # order fields
-        self._orders = []                   # list<order>
-        self._norder = 0                    # total number of orders, also used as order id
+        self._orders = []       # list<order>
+        self._norder = 0        # total number of orders, also used as order id
 
         # menu field
-        # TODO right now it is composition but should be aggregation 
-        self._menus = {"Mains":   Menu("Mains"),
-                      "Sides":    Menu("Sides"),
-                      "Drinks":   Menu("Drinks")}
+        self._menus = Menus     # Menus should be a dict like {"Mains": Mains, "Sides": Sides, "Drinks": Drinks}
 
         # inventory field
-        self._inventory = Inventory()
-
-        # admin field
-        # self._admin_system = admin_system
-
-    # def get_menu_items(self):
-    #    return self._menu.get_items()
+        self._inventory = Inventory
 
     '''
-    menu part
+    Menu part
     '''
 
-    # Display a menu
-    def display_menu(self, menu_name):
-        # return self._menu.display()
-        if menu_name == "Mains":
-            return self._menus["Mains"]
-        elif menu_name == "Sides":
-            return self._menus["Sides"]
-        elif menu_name == "Drinks":
-            return self._menus["Drinks"]
+    # get a menu
+    def get_menu(self, menu_name):
+        if menu_name in self._menus.keys():
+            return self._menus[menu_name]
         else:
-            return None
+            print(f"{menu_name} menu not exist!")
+    
+    # get an item from its menus
+    def get_item(self, item_name):
+        for menu in self._menus.values():
+            item = menu.get_item(item_name)
+            if item:
+                return item
+        print(f"{item_name} not in the system")
 
-    # TODO
-    def display_item(self, name):
-        if name == "":
-            return "Item name is empty"
-        if not self._menus[""].get_item(name):
-            return "Item doesn't exist"
-        return self._menus[""].get_item(name)
+    # display a menu
+    def display_menu(self, menu_name):
+        if menu_name in self._menus.keys():
+            self._menus[menu_name].display()
+        else:
+            print(f"{menu_name} menu not exist!")
 
     '''
-    order part
+    Order part
     '''
 
     # Add a new order

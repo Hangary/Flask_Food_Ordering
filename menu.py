@@ -19,13 +19,12 @@ class Menu:
             self._items[item.name] = item
             self._nitems += 1
 
-    # get a list of items by their names
-    def get_items(self, *argv):
-        items = []
-        for item_name in argv:
-            if item_name in self._items.keys():
-                items.append(self._items[item_name])
-        return items
+    # get an item by its name
+    def get_item(self, item_name):
+        if item_name in self._items.values():
+            return self._items[item_name]
+        else:
+            return None
 
     # print all the items inside the menu
     def display(self):

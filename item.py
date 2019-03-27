@@ -38,7 +38,7 @@ class Item(object):
     '''
     Property
     '''
-    
+
     @property
     def name(self):
         return self._name
@@ -96,10 +96,10 @@ Notes: There should be a defaulted ingredients list for a main food and correspo
 '''
 
 
-class Creation(Item):
+class Main(Item):
 
-    def __init__(self, name, price, type, description='N/A', availability=True):
-        super().__init__(name, price, "Creation", description, availability)
+    def __init__(self, name, price, description='N/A', availability=True):
+        super().__init__(name, price, "Main", description, availability)
         self._max_limit = {}
 
     def set_ingredient_limit(self, ingredient_name, amount):
