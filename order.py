@@ -15,44 +15,49 @@ class Order(object):
         self._is_prepared = False         # boolean, whether it is prepared or not
 
         # Customized fields:
-        # 3 lists used to contain the food items chosen by the customer
-        self._items = {"Mains": [], "Sides": [], "Drinks": []}
+        # a dict used to contain the food items chosen by the customer
+        self._items = { }
         # float, the total price for the order
         self._price = float('nan')
         # string, some special notes by the customer
         self._notes = ''
 
     # if Order is payed
-    def update_payment_status(self):
-        self._is_payed = True
+    def update_payment_status(self, status):
+        self._is_payed = status
 
     # if Order is ready
-    def update_preparation_status(self):
-        self._is_prepared = True
+    def update_preparation_status(self, status):
+        self._is_prepared = status
 
-    # add new items into order, item_type should be "Mains", "Sides" and "Drinks"
+    # add new items into an order, item_type should be "Mains", "Sides" and "Drinks"
     def add_items(self, *argv):
         for item in argv:
-            if item.type in ("Mains", "Sides", "Drinks"):
-                self._items[item.type].append(item)
+            self._items[item.name] = item
+        self.calculate_price()
+
+    # TODO: delete items from an order, input should be names of items
+    def delete_items(self, *argv):
+        for item_name in argv:
+            if item_name in self._items.keys():
+                del self._items[item_name]
             else:
-                print("Wrong input!")
+                print("cannot find the item in the order")
         self.calculate_price()
 
     # calculate order price
     def calculate_price(self):
         price = 0
-        for items in self._items.values():
-            for item in items:
-                price = price + item.price
+        for item in self._items.values():
+            price = price + item.price
         self._price = price
 
     # Display the items of orders
-    def display_items(self):
+    def display(self):
         print('Order {0} has items:'.format(self._order_id))
-        for item_type in self._items.values():
-            for item in item_type:
-                print(item)
+        for item in self._items.values():
+            print(item)
+        print('Total price: ${}'.format(self._price))
 
     '''
     Property
@@ -69,6 +74,10 @@ class Order(object):
     @property
     def order_id(self):
         return self._order_id
+
+    @property
+    def price(self):
+        return self._price
 
     '''
     str
@@ -90,4 +99,4 @@ if __name__ == "__main__":
     new_order.add_items(fries_l, coke_zero_m)
     new_order.calculate_price()
     print(new_order)
-    new_order.display_items()
+    new_order.display()

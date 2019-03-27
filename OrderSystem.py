@@ -51,7 +51,7 @@ class OrderSystem:
     Order part
     '''
 
-    # Add a new order
+    # Add an order into the system
     def add_order(self, new_order):
         self._orders.append(new_order)
 
@@ -63,74 +63,35 @@ class OrderSystem:
             else:
                 return None
 
-    # TODO: Make a new online order
+    # Make a new online order, add it into the system, and then return the order id
     def make_order(self):
-        new_order = Order(self._norder)
+        new_orderId = self._norder + 1
+        new_order = Order(new_orderId)
         self._norder += 1
-
-        flag_finished = [False, False, False]
-
-        while flag_finished[0] == False:
-            print(self.display_mains_menu())
-            # an input, which choose an item
-            user_input = ...
-            if user_input.isdigit():
-                pass
-                item = Item(...)
-                new_order.add_item("Mains", item)
-            elif user_input == 'f':
-                flag_finished[0] = True
-            else:
-                print("Please reinput")
-
-        while flag_finished[1] == False:
-            print(self.display_sides_menu())
-            # an input, which choose an item
-            user_input = ...
-            if user_input.isdigit():
-                pass
-                item = Item(...)
-                new_order.add_item("Sides", item)
-            elif user_input == 'f':
-                flag_finished[1] = True
-            else:
-                print("Please reinput")
-
-        while flag_finished[1] == False:
-            print(self.display_drinks_menu())
-            # an input, which choose an item
-            user_input = ...
-            if user_input.isdigit():
-                pass
-                items = chosen_item
-                new_order.add_item("Drinks", item)
-            elif user_input == 'f':
-                flag_finished[1] = True
-            else:
-                print("Please reinput")
-
-        # TODO: display order price and items
-
-        # add this order into the system
         self.add_order(new_order)
+        return new_orderId
 
-    # TODO: Display the details of an order
-
+    # Display the details of an order
     def display_order(self, order_id):
         order = self._get_order(order_id)
         if order:
             order.display()
+
+    # TODO: Add items into an order
+
+    # TODO: Delete items from an order
+
 
     # TODO: Authorise payment for an order
     def pay_order(self, order_id):
         order = self._get_order(order_id)
         if not order:
             return
-        print('Table: {}, total: ${:.2f}'.format(table_number, total))
+        print('Order: {}, total price: ${:.2f}'.format(order_id, order.price))
 
         answer = input('Authorise payment? (yes/no) ')
         if answer.lower() == 'yes':
             print('Payment authorised.')
-            self._order_logs.append(table)
+            order.update_payment_status(True)
         else:
             print('Payment not authorised.')
