@@ -1,5 +1,9 @@
 # Log Book
 
+Class diagram sharing link: https://drive.google.com/file/d/1qwpH96GQkHD0EqUfOPcrqDqRoil30k9a/view?usp=sharing
+
+----
+
 You are required to maintain a log book through the entire project that records:
 
 - date of regular, stand-up meetings
@@ -34,3 +38,17 @@ Requirements Elicition:
 Obstacles:
 
 - Not sure whether the class diagram is correct
+
+## 27/3 Week 06 Regular Meeting
+
+*Location: Lab*
+*Participants: Kanadech, Gary, Gaurang*
+*Duration: 2 hrs*
+
+Decisions:
+
+- Finish the basic skeleton for the codes
+- Finish the first version of the Class Diagram
+- Begin implementing more features based on the draft codes
+
+![iter2](/Users/Hangar/Downloads/iter2.png)
