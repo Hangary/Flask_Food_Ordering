@@ -21,7 +21,7 @@ class Menu:
 
     # get an item by its name
     def get_item(self, item_name):
-        if item_name in self._items.values():
+        if item_name in self._items.keys():
             return self._items[item_name]
         else:
             return None

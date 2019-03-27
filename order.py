@@ -37,6 +37,7 @@ class Order(object):
                 self._items[item.type].append(item)
             else:
                 print("Wrong input!")
+        self.calculate_price()
 
     # calculate order price
     def calculate_price(self):

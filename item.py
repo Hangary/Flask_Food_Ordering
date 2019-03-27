@@ -99,7 +99,7 @@ Notes: There should be a defaulted ingredients list for a main food and correspo
 class Main(Item):
 
     def __init__(self, name, price, description='N/A', availability=True):
-        super().__init__(name, price, "Main", description, availability)
+        super().__init__(name, price, "Mains", description, availability)
         self._max_limit = {}
 
     def set_ingredient_limit(self, ingredient_name, amount):
@@ -124,13 +124,13 @@ class Main(Item):
 class Side(Item):
 
     def __init__(self, name, price, description='N/A', availability=True):
-        super().__init__(name, price, "Side", description, availability)
+        super().__init__(name, price, "Sides", description, availability)
 
 
 class Drink(Item):
 
     def __init__(self, name, price, description='N/A', availability=True):
-        super().__init__(name, price, "Drink", description, availability)
+        super().__init__(name, price, "Drinks", description, availability)
 
 
 # TODO: some unit tests here
