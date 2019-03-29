@@ -39,6 +39,8 @@ def test_OrderSystem_order():
     print(burger)
     order.add_items(s.get_item("Burger"), s.get_item("Fries"), s.get_item("Coke Zero"))
     print(order)
+    order.display()
 
 if __name__ == "__main__":
+    test_OrderSystem_menu()
     test_OrderSystem_order()

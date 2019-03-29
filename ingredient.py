@@ -6,10 +6,11 @@ This is a class used to store ingredients.
 
 class Ingredient(object):
 
-    def __init__(self, name, amount=float('nan'), unit=''):
+    def __init__(self, name, amount=float('nan'), unit='', additional_price=0):
         self._name = name
         self._amount = amount
         self._unit = unit
+        self._additional_price = additional_price
         self.__is_soldout()
 
     # check whether it is sold_out
@@ -41,6 +42,10 @@ class Ingredient(object):
     def is_soldout(self):
         return self._is_soldout
 
+    @property
+    def additional_price(self):
+        return self._additional_price
+    
     '''
     str
     '''
