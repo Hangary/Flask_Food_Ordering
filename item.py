@@ -16,7 +16,7 @@ class Item(object):
 
     def __init__(self, name, price, type, description='N/A', availability=True):
         self._name = name                       # string
-        self._price = price                     # float
+        self._price = price                # float
         self._type = type                       # "Mains", "Sides", "Drinks"
 
         # optional fields:
@@ -101,6 +101,7 @@ class Main(Item):
     def __init__(self, name, price, description='N/A', availability=True):
         super().__init__(name, price, "Mains", description, availability)
         self._max_limit = {}
+        self._total_price = price
 
     def set_ingredient_limit(self, ingredient_name, amount):
         self._max_limit[ingredient_name] = amount
@@ -114,11 +115,13 @@ class Main(Item):
                 print("more than the max amount!")
                 return
         self._ingredients[ingredient_name].amount = amount
-        self._calculate_price()
+        self.calculate_price()
 
-    # TODO: calculate its price based on its ingredients
-    def _calculate_price(self):
-        pass
+    def calculate_price(self):
+        total_price = self._price
+        for ingredient in self.ingredients.values():
+            total_price += ingredient.price
+        self._total_price = total_price
 
 
 class Side(Item):

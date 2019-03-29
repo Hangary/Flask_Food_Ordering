@@ -4,10 +4,9 @@ from OrderSystem import *
 def setup():
 
     BURGER_BASE_PRICE = 10
-    MAX_BUNS = 3
-
     WRAP_BASE_PRICE = 9
-    MAX_WRAP = 3
+    MAX_BUNS = 3
+    MAX_PATTIES = 3
 
     '''
     ingredients initializer
@@ -25,23 +24,32 @@ def setup():
     '''
     Mains initializer
     '''
-
+    # Buger
     burger = Main("Burger", BURGER_BASE_PRICE)
     burger.add_ingredients(sesame_bun, muffin_bun,
-                           chicken_patty, vegetarian_patty, tomato, lettuce)
-
-    wrap = Main("Wrap", WRAP_PRICE)
-
-    wrap.add_ingredients()
-
+                           chicken_patty, vegetarian_patty,
+                           tomato, lettuce)
+    burger.set_ingredient_limit(ingredient_name="Buns", amount=MAX_BUNS)
+    burger.set_ingredient_limit(ingredient_name="Patties", amount=MAX_PATTIES)
+    # Wrap
+    wrap = Main("Wrap", WRAP_BASE_PRICE)
+    wrap.add_ingredients(sesame_bun, muffin_bun,
+                         chicken_patty, vegetarian_patty,
+                         tomato, lettuce)
+    burger.set_ingredient_limit(ingredient_name="Buns", amount=MAX_BUNS)
+    burger.set_ingredient_limit(ingredient_name="Patties", amount=MAX_PATTIES) 
+    '''
+    Menu initializer
+    '''
     mains_menu = Menu("Mains")
-    mains_menu.add_items(burger)
+    mains_menu.add_items(burger, wrap)
 
-    # system
+    '''
+    system initializer
+    '''
+
     menu = {
         "Mains":     mains_menu,
-        "Sides":     sides_menu,
-        "Drinks":    drinks_menu
     }
     system = OrderSystem(menu, None)
     return system
