@@ -73,3 +73,4 @@ def test_OrderSystem_order():
 
 if __name__ == "__main__":
     test_OrderSystem_order()
+    assert 'tomato' in setup_fixture.get_menu("Mains").get_item("burger").ingredients

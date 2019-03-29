@@ -94,11 +94,13 @@ TODO:
 This should be a special class for the mains.
 Notes: There should be a defaulted ingredients list for a main food and corresponding limits.
 '''
-
-
+# when we instantiate main object (FOR MENU) price should be start at 0
+'''
+From the specs I think we might need to give single, double, triple burger options to customer
+'''
 class Main(Item):
 
-    def __init__(self, name, price, description='N/A', availability=True):
+    def __init__(self, name, price=0, description='N/A', availability=True):
         super().__init__(name, price, "Mains", description, availability)
         self._max_limit = {}
         self._total_price = price
@@ -113,7 +115,7 @@ class Main(Item):
                 pass
             else:
                 print("more than the max amount!")
-                return
+                return f'more than the max amount!'
         self._ingredients[ingredient_name].amount = amount
         self.calculate_price()
 
