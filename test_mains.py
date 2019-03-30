@@ -1,4 +1,5 @@
 from OrderSystem import *
+from inventory import Inventory
 
 
 def setup():
@@ -21,6 +22,19 @@ def setup():
     tomato = Ingredient(name="tomato", additional_price=0.5)
     lettuce = Ingredient(name="lettuce", additional_price=0.3)
 
+    '''
+    Inventory initializer
+    '''
+    inventory = Inventory()
+    inventory.add_new_ingredients(
+        Ingredient(name="Sesame Bun", amount=100, additional_price=1),
+        Ingredient(name="Muffin Bun", amount=100, additional_price=1),
+        Ingredient(name="Chicken Patty", amount=100, additional_price=3),
+        Ingredient(name="Vegetarian Patty", amount=100, additional_price=2),
+        Ingredient(name="tomato", amount=100, additional_price=0.5),
+        Ingredient(name="lettuce", amount=100, additional_price=0.3)
+        )
+    
     '''
     Mains initializer
     '''
@@ -51,7 +65,7 @@ def setup():
     menu = {
         "Mains":     mains_menu,
     }
-    system = OrderSystem(menu, None)
+    system = OrderSystem(menu, inventory)
     return system
 
 
@@ -75,14 +89,17 @@ def test_mains():
     order = Order(1)
     order.add_items(s.get_item("Burger"))
     order.items["Burger"].modify_buns(
+        s.inventory,
         Ingredient(name="Sesame Bun", amount=1, additional_price=1),
         Ingredient(name="Muffin Bun", amount=1, additional_price=1)
     )
     order.items["Burger"].modify_patties(
+        s.inventory,
         Ingredient(name="Chicken Patty", amount=2, additional_price=3),
         Ingredient(name="Vegetarian Patty", amount=1, additional_price=2)
     )
     order.items["Burger"].modify_other_ingredients(
+        s.inventory,
         Ingredient(name="tomato", amount=1, additional_price=0.5),
         Ingredient(name="lettuce", amount=0, additional_price=0.3)
     )

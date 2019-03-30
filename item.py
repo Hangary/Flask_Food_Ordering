@@ -134,7 +134,7 @@ class Main(Item):
             return f"<{ingredient_name}> not in the item!"
         self._max_limit[ingredient_name] = amount
 
-    def modify_buns(self, *argv):
+    def modify_buns(self, inventory, *argv):
         # check whether larger than the max limit
         total_amount = 0
         for ingredient in argv:
@@ -142,12 +142,17 @@ class Main(Item):
         if total_amount > self._max_limit['Bun']:
             print("Buns are more than the max amount!")
             return "Buns are more than the max amount!"
-        # add ingredients into dict
-        for ingredient in argv:
-            self._ingredients['Bun'][ingredient.name] = ingredient
+        else:
+            # add ingredients into dict
+            for ingredient in argv:
+                # check whether available
+                if inventory.is_available(ingredient.name, ingredient.amount):
+                    self._ingredients['Bun'][ingredient.name] = ingredient
+                else:
+                    print(f"{ingredient.name} is not enought in the inventory!")
         self.calculate_price()
 
-    def modify_patties(self, *argv):
+    def modify_patties(self, inventory, *argv):
         # check whether larger than the max limit
         total_amount = 0
         for ingredient in argv:
@@ -155,17 +160,27 @@ class Main(Item):
         if total_amount > self._max_limit['Patty']:
             print("Patties are more than the max amount!")
             return "Patties are more than the max amount!"
-        # add ingredients into dict
-        for ingredient in argv:
-            self._ingredients['Patty'][ingredient.name] = ingredient
+        else:
+            # add ingredients into dict
+            for ingredient in argv:
+                # check whether available
+                if inventory.is_available(ingredient.name, ingredient.amount):
+                    self._ingredients['Patty'][ingredient.name] = ingredient
+                else:
+                    print(f"{ingredient.name} is not enought in the inventory!")
         self.calculate_price()
 
-    def modify_other_ingredients(self, *argv):
+    def modify_other_ingredients(self, inventory, *argv):
         for ingredient in argv:
+            # check whether more than max limit
             if ingredient.name in self._max_limit.keys() and ingredient.amount > self._max_limit[ingredient.name]:
                 print(f"<{ingredient.name}> more than the max amount!")
                 return f"<{ingredient.name}> more than the max amount!"
-            self._ingredients['Other'][ingredient.name] = ingredient
+            # check whether available
+            if inventory.is_available(ingredient.name, ingredient.amount):
+                self._ingredients['Other'][ingredient.name] = ingredient
+            else:
+                print(f"{ingredient.name} is not enought in the inventory!")
         self.calculate_price()
 
     def calculate_price(self):
@@ -185,7 +200,7 @@ class Main(Item):
         Patties = [f"{patty.name}: {patty.amount}" for patty in self._ingredients['Patty'].values() if not isNaN(patty.amount) and patty.amount > 0]
         Others = [f"{other.name}: {other.amount}" for other in self._ingredients['Other'].values() if not isNaN(other.amount) and other.amount > 0]
 
-        return (f"{self._type}: {self._name}, \nIngredients: \n\t- Buns: {Buns} \n\t- Patties: {Patties} \n\t- Others: {Others} \nNet Price: ${self._total_price:.2f}, \nDescription: {self._description}")
+        return (f"{self._type}: {self._name} \nIngredients: \n\t- Buns: {Buns} \n\t- Patties: {Patties} \n\t- Others: {Others} \nNet Price: ${self._total_price:.2f} \nDescription: {self._description}")
 
 
 class Side(Item):

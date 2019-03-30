@@ -95,3 +95,10 @@ class OrderSystem:
             order.update_payment_status(True)
         else:
             print('Payment not authorised.')
+
+    '''
+    property
+    '''
+    @property
+    def inventory(self):
+        return self._inventory
