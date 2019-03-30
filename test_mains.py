@@ -86,7 +86,7 @@ def test_mains():
         Ingredient(name="tomato", amount=1, additional_price=0.5),
         Ingredient(name="lettuce", amount=0, additional_price=0.3)
     )
-    print(order.items['Burger'])
+    order.items['Burger'].review()
 
 if __name__ == "__main__":
     test_mains()
