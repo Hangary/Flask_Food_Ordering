@@ -1,4 +1,4 @@
-from ingredient import Ingredient
+from ingredient import *
 '''
 This is a class for food items such as burgers, drinks, sides
 A completely customized burger with many ingredients will be classified as an item
@@ -94,65 +94,94 @@ TODO:
 This should be a special class for the mains.
 Notes: There should be a defaulted ingredients list for a main food and corresponding limits.
 '''
+# when we instantiate main object (FOR MENU) price should be start at 0
+'''
+From the specs I think we might need to give single, double, triple burger options to customer
+'''
 
 
 class Main(Item):
 
-    def __init__(self, name, price, description='N/A', availability=True):
+    def __init__(self, name, price=0, description='N/A', availability=True):
         super().__init__(name, price, "Mains", description, availability)
         # dict<Ingredient>
         self._ingredients = {
-            'Bun':      { },
-            'Pattie':   { }
-            # and other ingredients
+            'Bun':      {},
+            'Patty':   {},
+            'Other':    {}  # and other ingredients
         }
         # dict<int>
         self._max_limit = {
             'Bun':      False,
-            'Pattie':   False
+            'Patty':   False
             # and other ingredients
         }
         # float, price + additional price
         self._total_price = price
-
+    
+    def add_ingredients(self, *argv):
+        for ingredient in argv:
+            if 'Bun' in ingredient.name:
+                self._ingredients['Bun'][ingredient.name] = ingredient
+            elif 'Patty' in ingredient.name:
+                self._ingredients['Patty'][ingredient.name] = ingredient
+            else:
+                self._ingredients['Other'][ingredient.name] = ingredient
+    
     def set_ingredient_limit(self, ingredient_name, amount):
-        if ingredient_name in self._ingredients.values():
-            self._max_limit[ingredient_name] = amount
-        else:
+        if ingredient_name != 'Bun' and ingredient_name != 'Patty' and ingredient_name not in self._ingredients['Others'].values():
             print(f"<{ingredient_name}> not in the item!")
+            return f"<{ingredient_name}> not in the item!"
+        self._max_limit[ingredient_name] = amount
 
-    def modify_ingredients(self, ingredient_name, amount):
-        if "Bun" in ingredient_name:
-            max_limit = self._max_limit['Bun'] - 
+    def modify_buns(self, *argv):
+        # check whether larger than the max limit
+        total_amount = 0
+        for ingredient in argv:
+            total_amount += ingredient.amount
+        if total_amount > self._max_limit['Bun']:
+            print("Buns are more than the max amount!")
+            return "Buns are more than the max amount!"
+        # add ingredients into dict
+        for ingredient in argv:
+            self._ingredients['Bun'][ingredient.name] = ingredient
+        self.calculate_price()
 
-        if "Bun" in ingredient_name:
-            if self._max_limit["Bun"]:
-                if amount > self._max_limit["Bun"]:
-                    print(f"<{ingredient_name}> more than the max amount!")
-                    return
-            self._ingredients[ingredient_name].reset(amount)
-        elif "Pattie" in ingredient_name:
-            if self._max_limit[ingredient_name]:
-                if amount < self._max_limit[ingredient_name]:
-                    self._ingredients[ingredient_name].reset(amount)
-            else:
-                print(f"<{ingredient_name}> more than the max amount!")
-                return
-        else:
-            if self._max_limit[ingredient_name]:
-                if amount < self._max_limit[ingredient_name]:
-                    self._ingredients[ingredient_name].reset(amount)
-            else:
-                print(f"<{ingredient_name}> more than the max amount!")
-                return
-        
+    def modify_patties(self, *argv):
+        # check whether larger than the max limit
+        total_amount = 0
+        for ingredient in argv:
+            total_amount += ingredient.amount
+        if total_amount > self._max_limit['Patty']:
+            print("Patties are more than the max amount!")
+            return "Patties are more than the max amount!"
+        # add ingredients into dict
+        for ingredient in argv:
+            self._ingredients['Patty'][ingredient.name] = ingredient
+        self.calculate_price()
+
+    def modify_other_ingredients(self, *argv):
+        for ingredient in argv:
+            if ingredient.name in self._max_limit.keys() and ingredient.amount > self._max_limit[ingredient.name]:
+                print(f"<{ingredient.name}> more than the max amount!")
+                return f"<{ingredient.name}> more than the max amount!"
+            self._ingredients['Other'][ingredient.name] = ingredient
         self.calculate_price()
 
     def calculate_price(self):
         total_price = self._price
-        for ingredient in self.ingredients.values():
-            total_price += ingredient.price
+        for ingredient_type in self._ingredients.values(): 
+            for ingredient in ingredient_type.values():
+                if not isNaN(ingredient.amount) and not isNaN(ingredient.additional_price):
+                    total_price += ingredient.additional_price * ingredient.amount
         self._total_price = total_price
+
+    def __str__(self):
+        Buns = [f"{bun.name}: {bun.amount}" for bun in self._ingredients['Bun'].values() if not isNaN(bun.amount) and bun.amount > 0]
+        Patties = [f"{patty.name}: {patty.amount}" for patty in self._ingredients['Patty'].values() if not isNaN(patty.amount) and patty.amount > 0]
+        Others = [f"{other.name}: {other.amount}" for other in self._ingredients['Other'].values() if not isNaN(other.amount) and other.amount > 0]
+
+        return (f"{self._type}: {self._name}, \ningredient: \nBuns: {Buns} \nPatties: {Patties} \nOthers: {Others} \nprice: ${self._total_price:.2f}, \ndescription: {self._description}")
 
 
 class Side(Item):

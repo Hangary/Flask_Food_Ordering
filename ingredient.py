@@ -3,6 +3,9 @@ Finished:
 This is a class used to store ingredients.
 '''
 
+# a function used to check whether a variable is Nan
+def isNaN(num):
+    return num != num
 
 class Ingredient(object):
 

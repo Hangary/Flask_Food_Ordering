@@ -1,4 +1,5 @@
 from item import *
+from order import Order
 '''
 Finished:
 This is a class used to store menu information, which is composed of items.
@@ -49,6 +50,10 @@ class Menu:
     @property
     def nitem(self):
         return self._nitems
+    
+    @property
+    def items(self):
+        return self._items
 
     '''
     str
