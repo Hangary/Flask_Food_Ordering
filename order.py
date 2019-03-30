@@ -30,10 +30,15 @@ class Order(object):
     def update_preparation_status(self, status):
         self._is_prepared = status
 
-    # add new items into an order, item_type should be "Mains", "Sides" and "Drinks"
+    # add new items into an order
     def add_items(self, *argv):
         for item in argv:
-            self._items[item.name] = item
+            if item.name in self._items.keys():
+                # TODO: what if a customer want multiple identical items?
+                print(f"{item.name} already in the order.")
+                pass
+            else:
+                self._items[item.name] = item
         self.calculate_price()
 
     # TODO: delete items from an order, input should be names of items
@@ -42,7 +47,7 @@ class Order(object):
             if item_name in self._items.keys():
                 del self._items[item_name]
             else:
-                print("cannot find the item in the order")
+                print(f"Cannot find {item_name} in the order!")
         self.calculate_price()
 
     # calculate order price

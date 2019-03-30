@@ -21,7 +21,7 @@ class Item(object):
 
         # optional fields:
         self._description = description         # string
-        self._availability = availability       # boolean
+        self._is_available = availability       # boolean
 
         # other fields:
         self._ingredients = {}                  # dict<ingredient>
@@ -31,9 +31,20 @@ class Item(object):
         for ingredient in argv:
             self._ingredients[ingredient.name] = ingredient
 
-    # TODO: check whether this item is available in the inventory, based on whether its ingredients are available
-    def check_availability(self, inventory):
-        pass
+    # check whether this item is available in the inventory, based on whether its ingredients are available
+    # This method is not suitable for Mains class
+    def _check_availability(self, inventory):
+        for ingredient in self._ingredients:
+            if (not isNaN(ingredient.amount) and ingredient.amount > 0):
+                if not inventory.is_available(ingredient.name, ingredient.amount):
+                    self._is_available = False
+                    return
+        self._is_available = True
+
+    # this method will return whether available
+    def is_available(self, inventory):
+        self._check_availability(inventory)
+        return self._is_available
 
     '''
     Property
@@ -50,10 +61,6 @@ class Item(object):
     @property
     def type(self):
         return self._type
-
-    @property
-    def availability(self):
-        return self._availability
 
     @property
     def description(self):
@@ -195,6 +202,10 @@ class Main(Item):
         print(str(self))
         return str(self)
 
+    def check_availability(self, inventory):
+        # when modifying the ingredients, we have ensured they are available
+        self._is_available = True
+
     def __str__(self):
         Buns = [f"{bun.name}: {bun.amount}" for bun in self._ingredients['Bun'].values() if not isNaN(bun.amount) and bun.amount > 0]
         Patties = [f"{patty.name}: {patty.amount}" for patty in self._ingredients['Patty'].values() if not isNaN(patty.amount) and patty.amount > 0]
@@ -207,7 +218,6 @@ class Side(Item):
 
     def __init__(self, name, price, description='N/A', availability=True):
         super().__init__(name, price, "Sides", description, availability)
-
 
 class Drink(Item):
 

@@ -78,8 +78,18 @@ class OrderSystem:
             order.display()
 
     # TODO: Add items into an order
+    def add_items_in_orders(self, order_id, *argv):
+        order = self._get_order(order_id)
+        for item in argv:
+            if not item.is_available(self._inventory):
+                print(f"{item.name} is not available!")
+                return
+        order.add_items(*argv)
 
     # TODO: Delete items from an order
+    def del_items_in_orders(self, order_id, *argv):
+        order = self._get_order(order_id)
+        order.delete_items(*argv)
 
 
     # TODO: Authorise payment for an order

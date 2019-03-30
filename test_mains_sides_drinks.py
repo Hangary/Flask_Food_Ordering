@@ -68,42 +68,38 @@ def setup():
     system = OrderSystem(menu, inventory)
     return system
 
-
-def test_OrderSystem_menu():
-    s = setup()
-    s.display_menu("Drinks")
-    s.display_menu("Wrong name")
-
-
-def test_OrderSystem_order():
-    s = setup()
-    order = Order(1)
-    burger = s.get_item("Burger")
-    print(burger)
-    order.add_items(s.get_item("Burger"), s.get_item(
-        "Fries"), s.get_item("Coke Zero"))
-    print(order)
-
 def test_mains():
     s = setup()
-    order = Order(1)
+    # create a new order
+    order = Order(order_id=1)
+
+    # add burger into the order
     order.add_items(s.get_item("Burger"))
+
+    # modify the buns of the burger
     order.items["Burger"].modify_buns(
         s.inventory,
         Ingredient(name="Sesame Bun", amount=1, additional_price=1),
         Ingredient(name="Muffin Bun", amount=1, additional_price=1)
     )
+    # modify the patties of the burger
     order.items["Burger"].modify_patties(
         s.inventory,
         Ingredient(name="Chicken Patty", amount=2, additional_price=3),
         Ingredient(name="Vegetarian Patty", amount=1, additional_price=2)
     )
+    # modify other ingredients of the burger
     order.items["Burger"].modify_other_ingredients(
         s.inventory,
         Ingredient(name="tomato", amount=1, additional_price=0.5),
         Ingredient(name="lettuce", amount=0, additional_price=0.3)
     )
+
+    # review this burger
     order.items['Burger'].review()
+
+
+
 
 if __name__ == "__main__":
     test_mains()
