@@ -24,18 +24,18 @@ Kanadech, Gary, Gaurang
 *Participants: Kanadech, Gary, Gaurang*
 *Duration: 2 hrs*
 
-Decisions:
+**Decisions**:
 
 - Discuss about iteration 2
 - Modify user stories according the advices from our tutor
 - Finish a hand-written CRC cards and Class diagram
 - Agree to the development plan for next week
 
-Requirements Elicition:
+**Requirements Elicition**:
 
 - Identifying the necessary classes
 
-Obstacles:
+**Obstacles**:
 
 - Not sure whether the class diagram is correct
 
@@ -52,3 +52,26 @@ Decisions:
 - Begin implementing more features based on the draft codes
 
 ![iter2](/Users/Hangar/Downloads/iter2.png)
+
+
+
+## 30/3 Week 06 Online Discussion
+
+*Location: Online, Messenger*
+*Participants: Kanadech, Gary, Gaurang*
+*Duration: 1 hrs*
+
+**Milestones:** Finish the basic skeleton of the project codes
+
+**Decisions**:
+
+- Finish the basic skeleton for the codes
+- Finish the first version of the Class Diagram
+- Begin implementing more features based on the draft codes
+
+**Work Asignned**:
+
+- *Kanadech*: Use `Pickle` to store class information; Create the system creator to read data from an external file and initialize the online order system
+- *Gary*: Finish the user story part 1 and some basic tests
+- *Gaurang*: Implement the staff system and login function
+
