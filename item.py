@@ -100,21 +100,52 @@ class Main(Item):
 
     def __init__(self, name, price, description='N/A', availability=True):
         super().__init__(name, price, "Mains", description, availability)
-        self._max_limit = {}
+        # dict<Ingredient>
+        self._ingredients = {
+            'Bun':      { },
+            'Pattie':   { }
+            # and other ingredients
+        }
+        # dict<int>
+        self._max_limit = {
+            'Bun':      False,
+            'Pattie':   False
+            # and other ingredients
+        }
+        # float, price + additional price
         self._total_price = price
 
     def set_ingredient_limit(self, ingredient_name, amount):
-        self._max_limit[ingredient_name] = amount
+        if ingredient_name in self._ingredients.values():
+            self._max_limit[ingredient_name] = amount
+        else:
+            print(f"<{ingredient_name}> not in the item!")
 
-    # TODO:
     def modify_ingredients(self, ingredient_name, amount):
-        if self._max_limit[ingredient_name]:
-            if amount < self._max_limit[ingredient_name]:
-                pass
+        if "Bun" in ingredient_name:
+            max_limit = self._max_limit['Bun'] - 
+
+        if "Bun" in ingredient_name:
+            if self._max_limit["Bun"]:
+                if amount > self._max_limit["Bun"]:
+                    print(f"<{ingredient_name}> more than the max amount!")
+                    return
+            self._ingredients[ingredient_name].reset(amount)
+        elif "Pattie" in ingredient_name:
+            if self._max_limit[ingredient_name]:
+                if amount < self._max_limit[ingredient_name]:
+                    self._ingredients[ingredient_name].reset(amount)
             else:
-                print("more than the max amount!")
+                print(f"<{ingredient_name}> more than the max amount!")
                 return
-        self._ingredients[ingredient_name].amount = amount
+        else:
+            if self._max_limit[ingredient_name]:
+                if amount < self._max_limit[ingredient_name]:
+                    self._ingredients[ingredient_name].reset(amount)
+            else:
+                print(f"<{ingredient_name}> more than the max amount!")
+                return
+        
         self.calculate_price()
 
     def calculate_price(self):
