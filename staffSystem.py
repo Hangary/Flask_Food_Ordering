@@ -25,7 +25,6 @@ Some application case in the main sytem: (from teacher)
 class StaffSystem(object):
 
     def __init__(self, staff):
-        self._logs = []
         self._staff = staff
         self._is_authenticated = False
 
@@ -40,15 +39,6 @@ class StaffSystem(object):
 
     def logout(self):
         self._is_authenticated = False
-
-    # View past discounts
-    def view_log(self):
-        if not self._is_authenticated:
-            return
-
-        for log in self._logs:
-            print(log)
-
 
     @property
     def is_authenticated(self):
