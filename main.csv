@@ -1,0 +1,8 @@
+Ingredient,Stock Unit,Unit,price,Notes
+Bun,1,Piece,1,
+Wrap,1,Piece,1,
+Patty,1,Piece,2,
+Tomato,1,Piece,0.2,slice
+Lettuce,30,gram,0.2,1 lettuce = 30 grams
+Cheese,1,Slice,0.5,slice
+Sauces,1,Package,0.1,package

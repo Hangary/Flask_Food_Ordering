@@ -1,0 +1,5 @@
+Ingredient,Stock Unit,Unit,price,Notes
+Bottled_drink,600,ml,4,1 bottle = 400 ml
+Can_drink,375,ml,2.5,1 can = 375 ml
+Juice_small,250,ml,3,1 small juice = 250 ml
+Juice_medium,450,ml,5,1 med juice = 450 ml
