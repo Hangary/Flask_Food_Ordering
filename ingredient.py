@@ -9,7 +9,7 @@ def isNaN(num):
 
 class Ingredient(object):
 
-    def __init__(self, name, amount=float('nan'), unit='', additional_price=0):
+    def __init__(self, name: str, amount: float =float('nan'), unit: str ='', additional_price: float =0):
         self._name = name
         self._amount = amount
         self._unit = unit
@@ -21,12 +21,12 @@ class Ingredient(object):
         self._is_soldout = False if self._amount > 0 else True
 
     # add or substract from the amount
-    def change(self, amount):
+    def change(self, amount: float):
         self._amount += amount
         self.__is_soldout()
 
     # reset its amount
-    def reset(self, amount):
+    def reset(self, amount: float):
         self._amount = amount
         self.__is_soldout()
 

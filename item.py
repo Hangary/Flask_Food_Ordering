@@ -1,4 +1,5 @@
 from ingredient import *
+from inventory import *
 '''
 This is a class for food items such as burgers, drinks, sides
 A completely customized burger with many ingredients will be classified as an item
@@ -14,9 +15,9 @@ And through the system, user may create their item using shown ingredients and a
 
 class Item(object):
 
-    def __init__(self, name, price, type, description='N/A', availability=True):
-        self._name = name                       # string
-        self._price = price                # float
+    def __init__(self, name: str, price: float, type: str, description: str ='N/A', availability: bool =True):
+        self._name = name
+        self._price = price
         self._type = type                       # "Mains", "Sides", "Drinks"
 
         # optional fields:
@@ -27,13 +28,13 @@ class Item(object):
         self._ingredients = {}                  # dict<ingredient>
 
     # add ingredients into the item
-    def add_ingredients(self, *argv):
+    def add_ingredients(self, *argv: Ingredient):
         for ingredient in argv:
             self._ingredients[ingredient.name] = ingredient
 
     # check whether this item is available in the inventory, based on whether its ingredients are available
     # This method is not suitable for Mains class
-    def _check_availability(self, inventory):
+    def _check_availability(self, inventory: Inventory):
         for ingredient in self._ingredients:
             if (not isNaN(ingredient.amount) and ingredient.amount > 0):
                 if not inventory.is_available(ingredient.name, ingredient.amount):
@@ -42,7 +43,7 @@ class Item(object):
         self._is_available = True
 
     # this method will return whether available
-    def is_available(self, inventory):
+    def is_available(self, inventory: Inventory):
         self._check_availability(inventory)
         return self._is_available
 
@@ -109,7 +110,7 @@ From the specs I think we might need to give single, double, triple burger optio
 
 class Main(Item):
 
-    def __init__(self, name, price=0, description='N/A', availability=True):
+    def __init__(self, name: str, price: float =0, description: str ='N/A', availability: bool =True):
         super().__init__(name, price, "Mains", description, availability)
         # dict<Ingredient>
         self._ingredients = {
@@ -126,7 +127,7 @@ class Main(Item):
         # float, price + additional price
         self._total_price = price
     
-    def add_ingredients(self, *argv):
+    def add_ingredients(self, *argv: Ingredient):
         for ingredient in argv:
             if 'Bun' in ingredient.name:
                 self._ingredients['Bun'][ingredient.name] = ingredient
@@ -135,13 +136,14 @@ class Main(Item):
             else:
                 self._ingredients['Other'][ingredient.name] = ingredient
     
-    def set_ingredient_limit(self, ingredient_name, amount):
+    def set_ingredient_limit(self, ingredient_name: str, amount: float):
         if ingredient_name != 'Bun' and ingredient_name != 'Patty' and ingredient_name not in self._ingredients['Others'].values():
             print(f"<{ingredient_name}> not in the item!")
             return f"<{ingredient_name}> not in the item!"
         self._max_limit[ingredient_name] = amount
 
-    def modify_buns(self, inventory, *argv):
+    # help customer modify the buns in their main
+    def modify_buns(self, inventory: Inventory, *argv: Ingredient):
         # check whether larger than the max limit
         total_amount = 0
         for ingredient in argv:
@@ -159,7 +161,8 @@ class Main(Item):
                     print(f"{ingredient.name} is not enought in the inventory!")
         self.calculate_price()
 
-    def modify_patties(self, inventory, *argv):
+    # help customer modify the patties in their main
+    def modify_patties(self, inventory: Inventory, *argv: Ingredient):
         # check whether larger than the max limit
         total_amount = 0
         for ingredient in argv:
@@ -177,7 +180,8 @@ class Main(Item):
                     print(f"{ingredient.name} is not enought in the inventory!")
         self.calculate_price()
 
-    def modify_other_ingredients(self, inventory, *argv):
+    # help customer modify the other ingredients in their main
+    def modify_other_ingredients(self, inventory: Inventory, *argv: Ingredient):
         for ingredient in argv:
             # check whether more than max limit
             if ingredient.name in self._max_limit.keys() and ingredient.amount > self._max_limit[ingredient.name]:
@@ -190,6 +194,7 @@ class Main(Item):
                 print(f"{ingredient.name} is not enought in the inventory!")
         self.calculate_price()
 
+    # calculate the total price according the ingredients' prices and its base price
     def calculate_price(self):
         total_price = self._price
         for ingredient_type in self._ingredients.values(): 
@@ -198,11 +203,12 @@ class Main(Item):
                     total_price += ingredient.additional_price * ingredient.amount
         self._total_price = total_price
 
+    # display the details of this creation
     def review(self):
         print(str(self))
         return str(self)
 
-    def check_availability(self, inventory):
+    def check_availability(self, inventory: Inventory):
         # when modifying the ingredients, we have ensured they are available
         self._is_available = True
 
@@ -216,12 +222,12 @@ class Main(Item):
 
 class Side(Item):
 
-    def __init__(self, name, price, description='N/A', availability=True):
+    def __init__(self, name: str, price: float, description='N/A', availability=True):
         super().__init__(name, price, "Sides", description, availability)
 
 class Drink(Item):
 
-    def __init__(self, name, price, description='N/A', availability=True):
+    def __init__(self, name: str, price: float, description='N/A', availability=True):
         super().__init__(name, price, "Drinks", description, availability)
 
 

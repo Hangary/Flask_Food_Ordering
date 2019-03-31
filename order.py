@@ -7,7 +7,7 @@ TODO: This is a class used to store information about online orders.
 
 class Order(object):
 
-    def __init__(self, order_id):
+    def __init__(self, order_id: int):
         self._order_id = order_id
 
         # Order status fields:
@@ -23,15 +23,15 @@ class Order(object):
         self._notes = ''
 
     # if Order is payed
-    def update_payment_status(self, status):
+    def update_payment_status(self, status: bool):
         self._is_payed = status
 
     # if Order is ready
-    def update_preparation_status(self, status):
+    def update_preparation_status(self, status: bool):
         self._is_prepared = status
 
     # add new items into an order
-    def add_items(self, *argv):
+    def add_items(self, *argv: Item):
         for item in argv:
             if item.name in self._items.keys():
                 # TODO: what if a customer want multiple identical items?
@@ -42,7 +42,7 @@ class Order(object):
         self.calculate_price()
 
     # TODO: delete items from an order, input should be names of items
-    def delete_items(self, *argv):
+    def delete_items(self, *argv: str):
         for item_name in argv:
             if item_name in self._items.keys():
                 del self._items[item_name]
