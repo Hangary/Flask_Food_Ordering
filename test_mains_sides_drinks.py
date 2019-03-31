@@ -1,4 +1,5 @@
 from OrderSystem import *
+from inventory import Inventory
 
 
 def setup():
@@ -21,6 +22,19 @@ def setup():
     tomato = Ingredient(name="tomato", additional_price=0.5)
     lettuce = Ingredient(name="lettuce", additional_price=0.3)
 
+    '''
+    Inventory initializer
+    '''
+    inventory = Inventory()
+    inventory.add_new_ingredients(
+        Ingredient(name="Sesame Bun", amount=100, additional_price=1),
+        Ingredient(name="Muffin Bun", amount=100, additional_price=1),
+        Ingredient(name="Chicken Patty", amount=100, additional_price=3),
+        Ingredient(name="Vegetarian Patty", amount=100, additional_price=2),
+        Ingredient(name="tomato", amount=100, additional_price=0.5),
+        Ingredient(name="lettuce", amount=100, additional_price=0.3)
+        )
+    
     '''
     Mains initializer
     '''
@@ -51,42 +65,41 @@ def setup():
     menu = {
         "Mains":     mains_menu,
     }
-    system = OrderSystem(menu, None)
+    system = OrderSystem(menu, inventory)
     return system
-
-
-def test_OrderSystem_menu():
-    s = setup()
-    s.display_menu("Drinks")
-    s.display_menu("Wrong name")
-
-
-def test_OrderSystem_order():
-    s = setup()
-    order = Order(1)
-    burger = s.get_item("Burger")
-    print(burger)
-    order.add_items(s.get_item("Burger"), s.get_item(
-        "Fries"), s.get_item("Coke Zero"))
-    print(order)
 
 def test_mains():
     s = setup()
-    order = Order(1)
+    # create a new order
+    order = Order(order_id=1)
+
+    # add burger into the order
     order.add_items(s.get_item("Burger"))
+
+    # modify the buns of the burger
     order.items["Burger"].modify_buns(
+        s.inventory,
         Ingredient(name="Sesame Bun", amount=1, additional_price=1),
         Ingredient(name="Muffin Bun", amount=1, additional_price=1)
     )
+    # modify the patties of the burger
     order.items["Burger"].modify_patties(
+        s.inventory,
         Ingredient(name="Chicken Patty", amount=2, additional_price=3),
         Ingredient(name="Vegetarian Patty", amount=1, additional_price=2)
     )
+    # modify other ingredients of the burger
     order.items["Burger"].modify_other_ingredients(
+        s.inventory,
         Ingredient(name="tomato", amount=1, additional_price=0.5),
         Ingredient(name="lettuce", amount=0, additional_price=0.3)
     )
-    print(order.items['Burger'])
+
+    # review this burger
+    order.items['Burger'].review()
+
+
+
 
 if __name__ == "__main__":
     test_mains()
