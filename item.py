@@ -115,7 +115,7 @@ class Main(Item):
         # dict<Ingredient>
         self._ingredients = {
             'Bun':      {},
-            'Patty':   {},
+            'Patty':    {},
             'Other':    {}  # and other ingredients
         }
         # dict<int>
@@ -219,6 +219,118 @@ class Main(Item):
 
         return (f"{self._type}: {self._name} \nIngredients: \n\t- Buns: {Buns} \n\t- Patties: {Patties} \n\t- Others: {Others} \nNet Price: ${self._total_price:.2f} \nDescription: {self._description}")
 
+class Wrap(Item):
+
+    def __init__(self, name: str, price: float =0, description: str ='N/A', availability: bool =True):
+        super().__init__(name, price, "Mains", description, availability)
+        # dict<Ingredient>
+        self._ingredients = {
+            'Wrap':      {},
+            'Patty':    {},
+            'Other':    {}  # and other ingredients
+        }
+        # dict<int>
+        self._max_limit = {
+            'Wrap':      False,
+            'Patty':    False
+            # and other ingredients
+        }
+        # float, price + additional price
+        self._total_price = price
+    
+    def add_ingredients(self, *argv: Ingredient):
+        for ingredient in argv:
+            if 'Wrap' in ingredient.name:
+                self._ingredients['Wrap'][ingredient.name] = ingredient
+            elif 'Patty' in ingredient.name:
+                self._ingredients['Patty'][ingredient.name] = ingredient
+            else:
+                self._ingredients['Other'][ingredient.name] = ingredient
+    
+    def set_ingredient_limit(self, ingredient_name: str, amount: float):
+        if ingredient_name != 'Wrap' and ingredient_name != 'Patty' and ingredient_name not in self._ingredients['Others'].values():
+            print(f"<{ingredient_name}> not in the item!")
+            return f"<{ingredient_name}> not in the item!"
+        self._max_limit[ingredient_name] = amount
+
+    # help customer modify the buns in their main
+    def modify_wrap(self, inventory: Inventory, *argv: Ingredient):
+        # check whether larger than the max limit
+        # TODO: if this function is called twice at different times customer could add more wrap than max 
+        total_amount = 0
+        for ingredient in argv:
+            total_amount += ingredient.amount
+        if total_amount > self._max_limit['Bun']:
+            print("Wraps are more than the max amount!")
+            return "wraps are more than the max amount!"
+        else:
+            # add ingredients into dict
+            for ingredient in argv:
+                # check whether available
+                if inventory.is_available(ingredient.name, ingredient.amount):
+                    self._ingredients['Wrap'][ingredient.name] = ingredient
+                else:
+                    print(f"{ingredient.name} is not enought in the inventory!")
+        self.calculate_price()
+
+    # help customer modify the patties in their main
+    def modify_patties(self, inventory: Inventory, *argv: Ingredient):
+        # check whether larger than the max limit
+        # TODO: if this function is called twice at different times customer could add more wrap than max 
+        total_amount = 0
+        for ingredient in argv:
+            total_amount += ingredient.amount
+        if total_amount > self._max_limit['Patty']:
+            print("Patties are more than the max amount!")
+            return "Patties are more than the max amount!"
+        else:
+            # add ingredients into dict
+            for ingredient in argv:
+                # check whether available
+                if inventory.is_available(ingredient.name, ingredient.amount):
+                    self._ingredients['Patty'][ingredient.name] = ingredient
+                else:
+                    print(f"{ingredient.name} is not enought in the inventory!")
+        self.calculate_price()
+
+    # help customer modify the other ingredients in their main
+    def modify_other_ingredients(self, inventory: Inventory, *argv: Ingredient):
+        for ingredient in argv:
+            # check whether more than max limit
+            if ingredient.name in self._max_limit.keys() and ingredient.amount > self._max_limit[ingredient.name]:
+                print(f"<{ingredient.name}> more than the max amount!")
+                return f"<{ingredient.name}> more than the max amount!"
+            # check whether available
+            if inventory.is_available(ingredient.name, ingredient.amount):
+                self._ingredients['Other'][ingredient.name] = ingredient
+            else:
+                print(f"{ingredient.name} is not enought in the inventory!")
+        self.calculate_price()
+
+    # calculate the total price according the ingredients' prices and its base price
+    def calculate_price(self):
+        total_price = self._price
+        for ingredient_type in self._ingredients.values(): 
+            for ingredient in ingredient_type.values():
+                if not isNaN(ingredient.amount) and not isNaN(ingredient.additional_price):
+                    total_price += ingredient.additional_price * ingredient.amount
+        self._total_price = total_price
+
+    # display the details of this creation
+    def review(self):
+        print(str(self))
+        return str(self)
+
+    def check_availability(self, inventory: Inventory):
+        # when modifying the ingredients, we have ensured they are available
+        self._is_available = True
+
+    def __str__(self):
+        Wraps = [f"{wrap.name}: {wrap.amount}" for wrap in self._ingredients['Wrap'].values() if not isNaN(wrap.amount) and wrap.amount > 0]
+        Patties = [f"{patty.name}: {patty.amount}" for patty in self._ingredients['Patty'].values() if not isNaN(patty.amount) and patty.amount > 0]
+        Others = [f"{other.name}: {other.amount}" for other in self._ingredients['Other'].values() if not isNaN(other.amount) and other.amount > 0]
+
+        return (f"{self._type}: {self._name} \nIngredients: \n\t- Wraps: {Wraps} \n\t- Patties: {Patties} \n\t- Others: {Others} \nNet Price: ${self._total_price:.2f} \nDescription: {self._description}")  
 
 class Side(Item):
 

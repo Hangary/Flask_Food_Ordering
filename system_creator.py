@@ -18,6 +18,7 @@ def create_menu():
     ### Creating Mains Menu (Need to add Wrap later)
     
     burger = Main("Burger", BURGER_BASE_PRICE)
+    wrap = Wrap("Wrap",WRAP_BASE_PRICE)
     inven = Inventory()
     with open('main.csv') as f:
         reader = csv.DictReader(f)
@@ -26,6 +27,7 @@ def create_menu():
             'Stock Unit'
             'Unit'
             'price'
+            'For'
             ]
         for row in reader:
             ingredient = Ingredient(
@@ -34,12 +36,19 @@ def create_menu():
                 row["Unit"],
                 float(row["price"])
             )
-            burger.calculate_price() #TypeError: unsupported operand type(s) for +=: 'int' and 'str'
-            burger.add_ingredients(ingredient)
+            if row['For'] == "BW":
+                burger.add_ingredients(ingredient)
+                wrap.add_ingredients(ingredient)
+            elif row['For'] == "B":
+                burger.add_ingredients(ingredient)
+            else:
+                wrap.add_ingredients(ingredient)
             inven.add_new_ingredients(ingredient)
+
     main_menu = Menu("Mains")
-    main_menu.add_items(burger)
+    main_menu.add_items(burger,wrap)
     print(burger)
+    print(wrap)
     print(main_menu)
 
     ### Creating Drinks Menu
