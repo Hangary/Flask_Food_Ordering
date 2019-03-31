@@ -35,7 +35,8 @@ class Item(object):
     # check whether this item is available in the inventory, based on whether its ingredients are available
     # This method is not suitable for Mains class
     def _check_availability(self, inventory: Inventory):
-        for ingredient in self._ingredients:
+        for key,ingredient in self._ingredients.items():
+            #print(key)
             if (not isNaN(ingredient.amount) and ingredient.amount > 0):
                 if not inventory.is_available(ingredient.name, ingredient.amount):
                     self._is_available = False
@@ -353,7 +354,7 @@ class Drink(Item):
 # TODO: some unit tests here
 if __name__ == "__main__":
 
-    coke_zero = Drink("Coke Zero", 2.5)
+    coke_zero = Drink("Coke Zero", 2.5,500)
     print(coke_zero)
     coke_zero.add_ingredients(Ingredient("Coke Zero"), Ingredient("Ice cube"))
 
