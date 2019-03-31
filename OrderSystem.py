@@ -2,6 +2,7 @@ from item import *
 from order import Order
 from menu import Menu
 from inventory import Inventory
+from staffSystem import StaffSystem
 
 '''
 This is the main interface for both customers and staff.
@@ -9,16 +10,15 @@ This is the main interface for both customers and staff.
 
 class OrderSystem:
 
-    def __init__(self, Menus: dict, Inventory: Inventory):
+    def __init__(self, Menus: dict, Inventory: Inventory, Staff_system: StaffSystem = None):
         # order fields
         self._orders = []       # list<order>
         self._norder = 0        # total number of orders, also used as order id
 
-        # menu field
+        # other system fields
         self._menus = Menus     # Menus should be a dict like {"Mains": Mains, "Sides": Sides, "Drinks": Drinks}
-
-        # inventory field
         self._inventory = Inventory
+        self._staff_system = Staff_system
 
     '''
     Menu part
