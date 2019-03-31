@@ -68,7 +68,7 @@ class Item(object):
     '''
 
     def __str__(self):
-        return f"{self._type}: {self._name}, price: ${self._price:.2f}, description: {self._description}"
+        return (f"{self._type}: {self._name}, price: ${self._price:.2f}, description: {self._description}")
 
     def __eq__(self, other):
         # assuming order of ingredient do not matter
