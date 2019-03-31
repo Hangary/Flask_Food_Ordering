@@ -39,11 +39,12 @@ def create_menu():
                 row["Unit"],
                 float(row["price"])
             )
-            #burger.calculate_price() TypeError: unsupported operand type(s) for +=: 'int' and 'str'
+            burger.calculate_price() #TypeError: unsupported operand type(s) for +=: 'int' and 'str'
             burger.add_ingredients(ingredient)
             inven.add_new_ingredient(ingredient)
     main_menu = Menu("Mains")
     main_menu.add_items(burger)
+    print(burger)
     print(main_menu)
 
     ### Creating Drinks Menu
