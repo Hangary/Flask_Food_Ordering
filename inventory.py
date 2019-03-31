@@ -34,6 +34,9 @@ class Inventory(object):
             if ingredient.is_soldout:
                 unavailable_ingredients.append(ingredient.name)
         return unavailable_ingredients
+    
+    def get_ingredient(self,name):
+        return self._ingredients[name]
 
 
 if __name__ == "__main__":

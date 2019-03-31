@@ -15,8 +15,8 @@ which will read data from a file and output a system with correct menus and inve
 '''
 
 def create_menu():
-    ### Creating Mains Menu (Need to add Wrap later)
     
+    ### Creating Mains Menu Burger and Wrap
     burger = Main("Burger", BURGER_BASE_PRICE)
     wrap = Wrap("Wrap",WRAP_BASE_PRICE)
     inven = Inventory()
@@ -47,43 +47,81 @@ def create_menu():
 
     main_menu = Menu("Mains")
     main_menu.add_items(burger,wrap)
-    print(burger)
-    print(wrap)
-    print(main_menu)
+    # print(burger)
+    # print(wrap)
+    # print(main_menu)
 
     ### Creating Drinks Menu
     drinks_menu = Menu("Drinks")
-    with open('drink.csv') as d:
+    with open('drink_ing.csv') as d:
         reader = csv.DictReader(d)
         COLUMNS = [
             'Ingredient'
-            'Stock Unit'
             'Unit'
-            'price'
+            'Starting'
             ]
         for row in reader:
             ingredient = Ingredient(
                 row["Ingredient"],
-                100,
-                row["Unit"],
-                float(row["price"])
+                float(row["Starting"]),
+                row["Unit"]
             )
-            drink = Drink(row["Ingredient"],float(row["price"]))
-            drink.add_ingredients(ingredient)
-            drinks_menu.add_items(drink)
             inven.add_new_ingredients(ingredient)
-        print(drinks_menu)
+    with open('drink.csv') as d1:
+        reader = csv.DictReader(d1)
+        COLUMNS = [
+            'Item'
+            'Multiplier'
+            'Price'
+            'Use'
+            ]
+        for row in reader:
+            drink = Drink(row["Item"],float(row["price"]),float(row["Multiplier"]))
+            drink.add_ingredients(inven.get_ingredient(row['Use']))
+            drinks_menu.add_items(drink)
+            
+        # print(drinks_menu)
     
-    menu_dict = {1:main_menu,2:drinks_menu}
+    ### Creating Drinks Menu
+    sides_menu = Menu("Sides")
+    with open('side_ing.csv') as d:
+        reader = csv.DictReader(d)
+        COLUMNS = [
+            'Ingredient'
+            'Unit'
+            'Starting'
+            ]
+        for row in reader:
+            ingredient = Ingredient(
+                row["Ingredient"],
+                float(row["Starting"]),
+                row["Unit"]
+            )
+            inven.add_new_ingredients(ingredient)
+    with open('side.csv') as d1:
+        reader = csv.DictReader(d1)
+        COLUMNS = [
+            'Item'
+            'Multiplier'
+            'Price'
+            'Use'
+            ]
+        for row in reader:
+            side = Side(row["Item"],float(row["price"]),float(row["Multiplier"]))
+            side.add_ingredients(inven.get_ingredient(row['Use']))
+            sides_menu.add_items(drink)
+            
+        # print(sides_menu)
+    menu_dict = {1:main_menu,2:drinks_menu,3:sides_menu}
     return menu_dict
     
 if __name__ == "__main__":
     menu_dict = create_menu()
-    print(menu_dict)
-    print(menu_dict[1])
     with open('full_order.dat','wb') as f:
         pickle.dump(menu_dict,f,pickle.HIGHEST_PROTOCOL)
-    print("Try loading")
+    print("Unpickling")
     with open('full_order.dat','rb') as f:
         full_order = pickle.load(f)
     print(full_order[1])
+    print(full_order[2])
+    print(full_order[3])

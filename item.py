@@ -334,14 +334,21 @@ class Wrap(Item):
 
 class Side(Item):
 
-    def __init__(self, name: str, price: float, description='N/A', availability=True):
+    def __init__(self, name: str, price: float, multiplier:float , description='N/A', availability=True):
         super().__init__(name, price, "Sides", description, availability)
+        self._multiplier = multiplier
 
+    @property
+    def multiplier(self):
+        return self._multiplier
 class Drink(Item):
 
-    def __init__(self, name: str, price: float, description='N/A', availability=True):
+    def __init__(self, name: str, price: float,multiplier:float, description='N/A', availability=True):
         super().__init__(name, price, "Drinks", description, availability)
-
+        self._multiplier = multiplier
+    @property
+    def multiplier(self):
+        return self._multiplier
 
 # TODO: some unit tests here
 if __name__ == "__main__":
