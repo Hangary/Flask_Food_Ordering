@@ -1,6 +1,6 @@
-Ingredient,Stock Unit,Unit,price,Notes
-Small Fries,75,gram,2,
-Med Fries,125,gram,3,
-Large Fries,200,gram,4,
-Nugget 3 pack,3,Piece,3,
-Nugget 6 pack,6,Piece,5,
+Item,Multiplier,Unit,price,Use
+Small Fries,75,gram,2,Fries
+Med Fries,125,gram,3,Fries
+Large Fries,200,gram,4,Fries
+Nugget 3 pack,3,Piece,3,Nugget
+Nugget 6 pack,6,Piece,5,Nugget

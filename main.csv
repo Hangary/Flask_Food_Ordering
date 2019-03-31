@@ -1,8 +1,8 @@
-Ingredient,Stock Unit,Unit,price,Notes,For
-Bun,1,Piece,1,,B
-Wrap,1,Piece,1,,W
-Patty,1,Piece,2,,BW
-Tomato,1,Piece,0.2,slice,BW
-Lettuce,30,gram,0.2,1 lettuce = 30 grams,BW
-Cheese,1,Slice,0.5,slice,BW
-Sauces,1,Package,0.1,package,BW
+Ingredient,Stock Unit,Unit,price,Notes,For,Starting
+Bun,1,Piece,1,,B,100
+Wrap,1,Piece,1,,W,100
+Patty,1,Piece,2,,BW,100
+Tomato,1,Piece,0.2,slice,BW,100
+Lettuce,30,gram,0.2,1 lettuce = 30 grams,BW,9000
+Cheese,1,Slice,0.5,slice,BW,100
+Sauces,1,Package,0.1,package,BW,100
