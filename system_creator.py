@@ -15,11 +15,6 @@ which will read data from a file and output a system with correct menus and inve
 '''
 
 def create_menu():
-    #menu = Menu()
-    #menu.add_item("Burger", 20, True, "Delicious Beef Burger", ["Lettuce", "Tomato", "Beef"], ["nut-free"])
-    #menu.add_item("Salad", 15, False, "Vegetable salad", ["Lettuce", "Tomato", "Cucumber"], ["nut-free", "vegan", "glutten-free"])
-    #menu.add_item("Mocha", 10, True, "Best Mocha", ["Milk", "Chocolate", "Coffee"], ["nut-free", "vegan", "glutten-free"])
-    
     ### Creating Mains Menu (Need to add Wrap later)
     
     burger = Main("Burger", BURGER_BASE_PRICE)
@@ -41,7 +36,7 @@ def create_menu():
             )
             burger.calculate_price() #TypeError: unsupported operand type(s) for +=: 'int' and 'str'
             burger.add_ingredients(ingredient)
-            inven.add_new_ingredient(ingredient)
+            inven.add_new_ingredients(ingredient)
     main_menu = Menu("Mains")
     main_menu.add_items(burger)
     print(burger)
@@ -67,7 +62,7 @@ def create_menu():
             drink = Drink(row["Ingredient"],float(row["price"]))
             drink.add_ingredients(ingredient)
             drinks_menu.add_items(drink)
-            inven.add_new_ingredient(ingredient)
+            inven.add_new_ingredients(ingredient)
         print(drinks_menu)
     
     menu_dict = {1:main_menu,2:drinks_menu}
