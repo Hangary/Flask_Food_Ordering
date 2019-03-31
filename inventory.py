@@ -19,6 +19,9 @@ class Inventory(object):
     # add or substract amount of an ingredient
     def update_stock(self, ingredient_name: str, amount: float):
         self._ingredients[ingredient_name].change(amount)
+    
+    def update_value(self, ingredient_name: str, amount: float):
+        self._ingredients[ingredient_name].update_value(amount)
 
     # check an ingredient whether available (with an amount)
     def is_available(self, ingredient_name: str, amount: float =None):
