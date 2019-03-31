@@ -83,7 +83,19 @@ class OrderSystem:
             if not item.is_available(self._inventory):
                 print(f"{item.name} is not available!")
                 return
+            print("Before")
+            print(self._inventory.get_ingredient("Fries").amount)
+            self.update_inventory(item)
+            print("After")
+            print(self._inventory.get_ingredient("Fries").amount)
+            print("")
+        
         order.add_items(*argv)
+        # print("Before")
+        # print(self._inventory.get_ingredient("Fries").amount)
+        # self.update_inventory(item)
+        # print("After")
+        # print(self._inventory.get_ingredient("Fries").amount)
 
     # TODO: Delete items from an order
     def del_items_in_orders(self, order_id: int, *argv: Item):
@@ -105,6 +117,10 @@ class OrderSystem:
         else:
             print('Payment not authorised.')
 
+    def update_inventory(self,item: Item):
+        if item.type == "Sides":
+            for key in item.ingredients:
+                self.inventory.update_value(key,-item.multiplier)
     '''
     property
     '''
