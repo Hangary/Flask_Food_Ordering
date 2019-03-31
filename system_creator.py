@@ -2,6 +2,7 @@ from menu import Menu
 from item import *
 from ingredient import *
 from inventory import Inventory
+from OrderSystem import *
 import csv
 import pickle
 BURGER_BASE_PRICE = 10
@@ -109,19 +110,27 @@ def create_menu():
         for row in reader:
             side = Side(row["Item"],float(row["price"]),float(row["Multiplier"]))
             side.add_ingredients(inven.get_ingredient(row['Use']))
-            sides_menu.add_items(drink)
+            sides_menu.add_items(side)
             
         # print(sides_menu)
-    menu_dict = {1:main_menu,2:drinks_menu,3:sides_menu}
-    return menu_dict
+    menu_dict = {"Mains":main_menu,"Sides":sides_menu,"Drinks":drinks_menu}
+    system = OrderSystem(menu_dict,inven)
+    return system
     
 if __name__ == "__main__":
-    menu_dict = create_menu()
-    with open('full_order.dat','wb') as f:
-        pickle.dump(menu_dict,f,pickle.HIGHEST_PROTOCOL)
-    print("Unpickling")
-    with open('full_order.dat','rb') as f:
-        full_order = pickle.load(f)
-    print(full_order[1])
-    print(full_order[2])
-    print(full_order[3])
+    # menu_dict = create_menu()
+    # with open('full_order.dat','wb') as f:
+    #     pickle.dump(menu_dict,f,pickle.HIGHEST_PROTOCOL)
+    # print("Unpickling")
+    # with open('full_order.dat','rb') as f:
+    #     full_order = pickle.load(f)
+    # print(full_order[1])
+    # print(full_order[2])
+    # print(full_order[3])
+    system = create_menu()
+    system.make_order()
+    SF = system.get_item("Small Fries")
+    MF = system.get_item("Med Fries")
+    LF = system.get_item("Large Fries")
+    system.add_items_in_orders(1,SF,MF,LF)
+    system.display_order(1)
