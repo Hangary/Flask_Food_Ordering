@@ -82,15 +82,15 @@ class OrderSystem:
         order = self._get_order(order_id)
         for item in argv:
             if not item.is_available(self._inventory):
-                print(f"{item.name} is not available!")
-                return
-            print("Before")
-            print(self._inventory.get_ingredient("Fries").amount)
-            self.update_inventory(item)
-            print("After")
-            print(self._inventory.get_ingredient("Fries").amount)
-            print("")
-            order.add_individual_item(item)
+                print(f"{item.name} is not available!\n")
+            else:
+                print("Before")
+                print(self._inventory.get_ingredient("Fries").amount)
+                self.update_inventory(item)
+                print("After")
+                print(self._inventory.get_ingredient("Fries").amount)
+                print("")
+                order.add_individual_item(item)
         
         #order.add_items(*argv)
 

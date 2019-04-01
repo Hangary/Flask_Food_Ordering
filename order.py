@@ -40,10 +40,11 @@ class Order(object):
             else:
                 self._items[item.name] = item
         self.calculate_price()
-
+    # Use this instead
     def add_individual_item(self, item:Item):
         self._items[item.name] = item
         self.calculate_price()
+        
     # TODO: delete items from an order, input should be names of items
     def delete_items(self, *argv: str):
         for item_name in argv:

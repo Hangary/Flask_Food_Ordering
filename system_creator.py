@@ -60,12 +60,14 @@ def create_menu():
             'Ingredient'
             'Unit'
             'Starting'
+            'Min_Selling'
             ]
         for row in reader:
             ingredient = Ingredient(
                 row["Ingredient"],
                 float(row["Starting"]),
-                row["Unit"]
+                row["Unit"],
+                min_selling=float(row['Min_Selling'])
             )
             inven.add_new_ingredients(ingredient)
     with open('drink.csv') as d1:
@@ -91,12 +93,14 @@ def create_menu():
             'Ingredient'
             'Unit'
             'Starting'
+            'Min_Selling'
             ]
         for row in reader:
             ingredient = Ingredient(
                 row["Ingredient"],
                 float(row["Starting"]),
-                row["Unit"]
+                row["Unit"],
+                min_selling=float(row['Min_Selling'])
             )
             inven.add_new_ingredients(ingredient)
     with open('side.csv') as d1:
@@ -134,6 +138,6 @@ if __name__ == "__main__":
     SF = system.get_item("Small Fries")
     MF = system.get_item("Med Fries")
     LF = system.get_item("Large Fries")
-    system.add_items_in_orders(1,SF,MF,LF)
+    system.add_items_in_orders(1,SF,MF,LF,SF)
     system.display_order(1)
     print("Amount of Fries left {}".format(system.inventory.get_ingredient('Fries').amount))
