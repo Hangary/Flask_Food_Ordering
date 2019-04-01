@@ -15,7 +15,7 @@ class Order(object):
         self._is_prepared = False         # boolean, whether it is prepared or not
 
         # Customized fields:
-        # a dict used to contain the food items chosen by the customer
+        # Dictionary key = item name value = list of item (to support duplicate)
         self._items = { }
         # float, the total price for the order
         self._price = float('nan')
@@ -31,6 +31,7 @@ class Order(object):
         self._is_prepared = status
 
     # add new items into an order
+    # dont call this
     def add_items(self, *argv: Item):
         for item in argv:
             if item.name in self._items.keys():
@@ -42,9 +43,12 @@ class Order(object):
         self.calculate_price()
     # Use this instead
     def add_individual_item(self, item:Item):
-        self._items[item.name] = item
+        if item.name in self._items:
+            self._items[item.name].append(item)
+        else:
+            self._items[item.name] = [item]
         self.calculate_price()
-        
+
     # TODO: delete items from an order, input should be names of items
     def delete_items(self, *argv: str):
         for item_name in argv:
@@ -57,15 +61,17 @@ class Order(object):
     # calculate order price
     def calculate_price(self):
         price = 0
-        for item in self._items.values():
-            price = price + item.price
+        for item_list in self._items.values():
+            for item in item_list:
+                price = price + item.price
         self._price = price
 
     # Display the items of orders
     def display(self):
         print('Order {0} has items:'.format(self._order_id))
-        for item in self._items.values():
-            print(item)
+        for item_list in self._items.values():
+            for item in item_list:
+                print(item)
         print('Total price: ${}'.format(self._price))
 
     '''
@@ -98,14 +104,15 @@ class Order(object):
 
 if __name__ == "__main__":
 
-    fries_l = Item("Fries - Large", 5, "Sides")
+    # fries_l = Item("Fries - Large", 5, "Sides")
 
-    coke_zero_m = Item("Coke Zero - Medium", 2.5, "Drinks")
-    coke_zero_m.add_ingredients(Ingredient(
-        "Coke Zero"), Ingredient("Ice cube"))
+    # coke_zero_m = Item("Coke Zero - Medium", 2.5, "Drinks")
+    # coke_zero_m.add_ingredients(Ingredient(
+    #     "Coke Zero"), Ingredient("Ice cube"))
 
-    new_order = Order(45)
-    new_order.add_items(fries_l, coke_zero_m)
-    new_order.calculate_price()
-    print(new_order)
-    new_order.display()
+    # new_order = Order(45)
+    # new_order.add_items(fries_l, coke_zero_m)
+    # new_order.calculate_price()
+    # print(new_order)
+    # new_order.display()
+    pass

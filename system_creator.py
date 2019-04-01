@@ -132,7 +132,7 @@ if __name__ == "__main__":
     # print(full_order[2])
     # print(full_order[3])
     system = create_menu()
-    with open('full_order','wb') as f:
+    with open('full_order.dat','wb') as f:
         pickle.dump(system,f,pickle.HIGHEST_PROTOCOL)
     system.make_order()
     SF = system.get_item("Small Fries")

@@ -132,5 +132,5 @@ if __name__ == "__main__":
     SF = system.get_item("Small Fries")
     MF = system.get_item("Med Fries")
     LF = system.get_item("Large Fries")
-    system.add_items_in_orders(1,SF,MF,LF)
+    system.add_items_in_orders(1,SF,MF,LF,MF)
     system.display_order(1)
