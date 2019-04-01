@@ -35,8 +35,7 @@ class Item(object):
     # check whether this item is available in the inventory, based on whether its ingredients are available
     # This method is not suitable for Mains class
     def _check_availability(self, inventory: Inventory):
-        for key,ingredient in self._ingredients.items():
-            #print(key)
+        for ingredient in self._ingredients.values():
             if (not isNaN(ingredient.amount) and ingredient.amount > 0):
                 if not inventory.is_available(ingredient.name, ingredient.amount):
                     self._is_available = False
@@ -341,7 +340,7 @@ class Side(Item):
     
     ## Overiding ##
     def _check_availability(self, inventory: Inventory):
-        for key,ingredient in self._ingredients.items():
+        for ingredient in self._ingredients.values():
             if (not isNaN(ingredient.amount) and (self.multiplier - ingredient.amount > 0)):
                 self._is_available = False
                 return
@@ -358,6 +357,18 @@ class Drink(Item):
     def __init__(self, name: str, price: float,multiplier:float, description='N/A', availability=True):
         super().__init__(name, price, "Drinks", description, availability)
         self._multiplier = multiplier
+
+    ### overiding
+    def _check_availability(self, inventory: Inventory):
+        for ingredient in self._ingredients.values():
+            if (not isNaN(ingredient.amount) and (self.multiplier - ingredient.amount > 0)):
+                self._is_available = False
+                return
+                # if not inventory.is_available(ingredient.name, ingredient.amount):
+                #     self._is_available = False
+                #     return
+        self._is_available = True
+
     @property
     def multiplier(self):
         return self._multiplier

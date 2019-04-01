@@ -33,7 +33,7 @@ class Inventory(object):
     # display all the unavailable ingredients in the inventory
     def display_unavailable_ingredients(self):
         unavailable_ingredients = []
-        for ingredient in self._ingredients:
+        for ingredient in self._ingredients.values():
             if ingredient.is_soldout:
                 unavailable_ingredients.append(ingredient.name)
         return unavailable_ingredients

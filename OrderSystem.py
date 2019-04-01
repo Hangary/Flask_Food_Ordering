@@ -85,10 +85,12 @@ class OrderSystem:
                 print(f"{item.name} is not available!\n")
             else:
                 print("Before")
-                print(self._inventory.get_ingredient("Fries").amount)
+                for name in item.ingredients.keys():
+                    print(self._inventory.get_ingredient(name).amount)
                 self.update_inventory(item)
                 print("After")
-                print(self._inventory.get_ingredient("Fries").amount)
+                for name in item.ingredients.keys():
+                    print(self._inventory.get_ingredient(name).amount)
                 print("")
                 order.add_individual_item(item)
         
@@ -115,9 +117,10 @@ class OrderSystem:
             print('Payment not authorised.')
 
     def update_inventory(self,item: Item):
-        if item.type == "Sides":
-            for key in item.ingredients:
+        if item.type == "Sides" or item.type == "Drinks":
+            for key in item.ingredients.keys():
                 self.inventory.update_value(key,-item.multiplier)
+    
     '''
     property
     '''
@@ -126,11 +129,4 @@ class OrderSystem:
         return self._inventory
 
 if __name__ == "__main__":
-    with open('full_order.dat','rb') as f:
-        system = pickle.load(f)
-    system.make_order()
-    SF = system.get_item("Small Fries")
-    MF = system.get_item("Med Fries")
-    LF = system.get_item("Large Fries")
-    system.add_items_in_orders(1,SF,MF,LF,MF)
-    system.display_order(1)
+    pass
