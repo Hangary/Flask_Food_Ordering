@@ -2,6 +2,7 @@ from item import *
 from order import Order
 from menu import Menu
 from inventory import Inventory
+import pickle
 
 '''
 This is the main interface for both customers and staff.
@@ -89,13 +90,9 @@ class OrderSystem:
             print("After")
             print(self._inventory.get_ingredient("Fries").amount)
             print("")
+            order.add_individual_item(item)
         
-        order.add_items(*argv)
-        # print("Before")
-        # print(self._inventory.get_ingredient("Fries").amount)
-        # self.update_inventory(item)
-        # print("After")
-        # print(self._inventory.get_ingredient("Fries").amount)
+        #order.add_items(*argv)
 
     # TODO: Delete items from an order
     def del_items_in_orders(self, order_id: int, *argv: Item):
@@ -127,3 +124,13 @@ class OrderSystem:
     @property
     def inventory(self):
         return self._inventory
+
+if __name__ == "__main__":
+    with open('full_order.dat','rb') as f:
+        system = pickle.load(f)
+    system.make_order()
+    SF = system.get_item("Small Fries")
+    MF = system.get_item("Med Fries")
+    LF = system.get_item("Large Fries")
+    system.add_items_in_orders(1,SF,MF,LF)
+    system.display_order(1)

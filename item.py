@@ -338,6 +338,17 @@ class Side(Item):
     def __init__(self, name: str, price: float, multiplier:float , description='N/A', availability=True):
         super().__init__(name, price, "Sides", description, availability)
         self._multiplier = multiplier
+    
+    ## Overiding ##
+    def _check_availability(self, inventory: Inventory):
+        for key,ingredient in self._ingredients.items():
+            if (not isNaN(ingredient.amount) and (self.multiplier - ingredient.amount > 0)):
+                self._is_available = False
+                return
+                # if not inventory.is_available(ingredient.name, ingredient.amount):
+                #     self._is_available = False
+                #     return
+        self._is_available = True
 
     @property
     def multiplier(self):

@@ -128,9 +128,12 @@ if __name__ == "__main__":
     # print(full_order[2])
     # print(full_order[3])
     system = create_menu()
+    with open('full_order','wb') as f:
+        pickle.dump(system,f,pickle.HIGHEST_PROTOCOL)
     system.make_order()
     SF = system.get_item("Small Fries")
     MF = system.get_item("Med Fries")
     LF = system.get_item("Large Fries")
     system.add_items_in_orders(1,SF,MF,LF)
     system.display_order(1)
+    print("Amount of Fries left {}".format(system.inventory.get_ingredient('Fries').amount))
