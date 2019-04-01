@@ -175,4 +175,5 @@ if __name__ == "__main__":
     t = Ingredient("Tomato",1,additional_price=0.2)
     C = Ingredient("Cheese",1,additional_price=0.5)
     system._get_order(1).items["Burger"][0].modify_buns(system.inventory,b,b,b)
+    system._get_order(1).calculate_price()
     system.display_order(1)

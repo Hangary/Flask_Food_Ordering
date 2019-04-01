@@ -160,11 +160,9 @@ class Main(Item):
                     if ingredient.name in self._ingredients['Bun'] and not math.isnan(self._ingredients['Bun'][ingredient.name].amount):
                         self._ingredients['Bun'][ingredient.name].change(+ingredient.amount)
                     else:
-                        self._ingredients['Bun'][ingredient.name] = ingredient
+                        self._ingredients['Bun'][ingredient.name] = Ingredient(ingredient.name,ingredient.amount,additional_price= ingredient.additional_price)
                     inventory.update_stock(ingredient.name,-ingredient.amount)
                     print(inventory.get_ingredient(ingredient.name).amount)
-                    print('Hello')
-                    #assert(False)
                 else:
                     print(f"{ingredient.name} is not enough in the inventory!")
         self.calculate_price()
@@ -226,7 +224,10 @@ class Main(Item):
         Others = [f"{other.name}: {other.amount}" for other in self._ingredients['Other'].values()]# if not isNaN(other.amount) and other.amount > 0]
 
         return (f"{self._type}: {self._name} \nIngredients: \n\t- Buns: {Buns} \n\t- Patties: {Patties} \n\t- Others: {Others} \nNet Price: ${self._total_price:.2f} \nDescription: {self._description}")
-
+    @property
+    def price(self):
+        return self._total_price
+        
 class Wrap(Item):
 
     def __init__(self, name: str, price: float =0, description: str ='N/A', availability: bool =True):
