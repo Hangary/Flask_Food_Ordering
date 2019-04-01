@@ -72,7 +72,6 @@ def test_mains():
     s = setup()
     # create a new order
     order = Order(order_id=1)
-
     # add burger into the order
     order.add_items(s.get_item("Burger"))
 

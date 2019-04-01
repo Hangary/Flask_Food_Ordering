@@ -80,6 +80,9 @@ class OrderSystem:
     def add_items_in_orders(self, order_id: int, *argv: Item):
         order = self._get_order(order_id)
         for item in argv:
+            if item.type == "Mains":
+                order.add_items(item)
+                continue
             if not item.is_available(self._inventory):
                 print(f"{item.name} is not available!\n")
             else:
@@ -116,7 +119,7 @@ class OrderSystem:
     def update_inventory(self,item: Item):
         if item.type == "Sides" or item.type == "Drinks":
             for key,ingredient in item.ingredients.items():
-                self.inventory.update_value(key,-ingredient.amount)
+                self.inventory.update_stock(key,-ingredient.amount)
     
     '''
     property

@@ -29,11 +29,12 @@ def create_menu():
             'Unit'
             'price'
             'For'
+            'Starting'
             ]
         for row in reader:
             ingredient = Ingredient(
                 row["Ingredient"],
-                100,
+                float(row['Starting']),
                 row["Unit"],
                 float(row["price"])
             )
@@ -46,10 +47,11 @@ def create_menu():
             else:
                 wrap.add_ingredients(Ingredient(name=row["Ingredient"],additional_price= row["price"]))
             
-
+    burger.set_ingredient_limit(ingredient_name="Bun", amount=MAX_BUNS)
+    burger.set_ingredient_limit(ingredient_name="Patty", amount=MAX_PATTIES)
     main_menu = Menu("Mains")
     main_menu.add_items(burger,wrap)
-    #main_menu.display()
+    main_menu.display()
 
     ### Creating Drinks Menu
     drinks_menu = Menu("Drinks")
@@ -163,3 +165,14 @@ if __name__ == "__main__":
     print("Amount of Coke left {}".format(system.inventory.get_ingredient('Coke').amount))
     print("Amount of OrangeJuice left {}".format(system.inventory.get_ingredient('OrangeJuice').amount))
     print("Out of Stock",system.inventory.display_unavailable_ingredients())
+    system.display_menu("Mains")
+    burger = system.get_item("Burger")
+    wrap = system.get_item("Wrap")
+    system.add_items_in_orders(1,burger,wrap)
+    system.display_order(1)
+    b = Ingredient("Bun",1,additional_price=1)
+    p = Ingredient("Patty",1,additional_price=2)
+    t = Ingredient("Tomato",1,additional_price=0.2)
+    C = Ingredient("Cheese",1,additional_price=0.5)
+    system._get_order(1).items["Burger"][0].modify_buns(system.inventory,b,b,b)
+    system.display_order(1)

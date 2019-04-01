@@ -9,23 +9,17 @@ def isNaN(num):
 
 class Ingredient(object):
 
-    def __init__(self, name: str, amount: float =float('nan'), unit: str ='', additional_price: float =0, factor = 1, min_selling = 1):
+    def __init__(self, name: str, amount: float =float('nan'), unit: str ='', additional_price: float =0, min_selling = 1):
         self._name = name
         self._amount = amount
         self._unit = unit
         self._additional_price = additional_price
-        self._factor = factor
         self._min_selling = min_selling
         self.__is_soldout()
 
     # check whether it is sold_out
     def __is_soldout(self):
         self._is_soldout = False if self._amount >= self._min_selling else True
-
-    # this function call is for increment and decrement due to being added/removed to order
-    def update_value(self, amount: float):
-        self._amount += amount*self._factor
-        self.__is_soldout()
 
     # this function call is for updating inventory stock
     def change(self, amount: float):
