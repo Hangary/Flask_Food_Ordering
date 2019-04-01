@@ -334,44 +334,13 @@ class Wrap(Item):
 
 class Side(Item):
 
-    def __init__(self, name: str, price: float, multiplier:float , description='N/A', availability=True):
+    def __init__(self, name: str, price: float, description='N/A', availability=True):
         super().__init__(name, price, "Sides", description, availability)
-        self._multiplier = multiplier
     
-    ## Overiding ##
-    def _check_availability(self, inventory: Inventory):
-        for ingredient in self._ingredients.values():
-            if (not isNaN(ingredient.amount) and (self.multiplier - ingredient.amount > 0)):
-                self._is_available = False
-                return
-                # if not inventory.is_available(ingredient.name, ingredient.amount):
-                #     self._is_available = False
-                #     return
-        self._is_available = True
-
-    @property
-    def multiplier(self):
-        return self._multiplier
 class Drink(Item):
 
-    def __init__(self, name: str, price: float,multiplier:float, description='N/A', availability=True):
+    def __init__(self, name: str, price: float, description='N/A', availability=True):
         super().__init__(name, price, "Drinks", description, availability)
-        self._multiplier = multiplier
-
-    ### overiding
-    def _check_availability(self, inventory: Inventory):
-        for ingredient in self._ingredients.values():
-            if (not isNaN(ingredient.amount) and (self.multiplier - ingredient.amount > 0)):
-                self._is_available = False
-                return
-                # if not inventory.is_available(ingredient.name, ingredient.amount):
-                #     self._is_available = False
-                #     return
-        self._is_available = True
-
-    @property
-    def multiplier(self):
-        return self._multiplier
 
 # TODO: some unit tests here
 if __name__ == "__main__":

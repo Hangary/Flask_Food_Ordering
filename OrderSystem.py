@@ -77,7 +77,6 @@ class OrderSystem:
         if order:
             order.display()
 
-    # TODO: Add items into an order
     def add_items_in_orders(self, order_id: int, *argv: Item):
         order = self._get_order(order_id)
         for item in argv:
@@ -92,9 +91,7 @@ class OrderSystem:
                 for name in item.ingredients.keys():
                     print(self._inventory.get_ingredient(name).amount)
                 print("")
-                order.add_individual_item(item)
-        
-        #order.add_items(*argv)
+                order.add_items(item)
 
     # TODO: Delete items from an order
     def del_items_in_orders(self, order_id: int, *argv: Item):
@@ -118,8 +115,8 @@ class OrderSystem:
 
     def update_inventory(self,item: Item):
         if item.type == "Sides" or item.type == "Drinks":
-            for key in item.ingredients.keys():
-                self.inventory.update_value(key,-item.multiplier)
+            for key,ingredient in item.ingredients.items():
+                self.inventory.update_value(key,-ingredient.amount)
     
     '''
     property

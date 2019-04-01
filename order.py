@@ -34,19 +34,10 @@ class Order(object):
     # dont call this
     def add_items(self, *argv: Item):
         for item in argv:
-            if item.name in self._items.keys():
-                # TODO: what if a customer want multiple identical items?
-                print(f"{item.name} already in the order.")
-                pass
+            if item.name in self._items:
+                self._items[item.name].append(item)
             else:
-                self._items[item.name] = item
-        self.calculate_price()
-    # Use this instead
-    def add_individual_item(self, item:Item):
-        if item.name in self._items:
-            self._items[item.name].append(item)
-        else:
-            self._items[item.name] = [item]
+                self._items[item.name] = [item]
         self.calculate_price()
 
     # TODO: delete items from an order, input should be names of items
@@ -103,16 +94,5 @@ class Order(object):
 
 
 if __name__ == "__main__":
-
-    # fries_l = Item("Fries - Large", 5, "Sides")
-
-    # coke_zero_m = Item("Coke Zero - Medium", 2.5, "Drinks")
-    # coke_zero_m.add_ingredients(Ingredient(
-    #     "Coke Zero"), Ingredient("Ice cube"))
-
-    # new_order = Order(45)
-    # new_order.add_items(fries_l, coke_zero_m)
-    # new_order.calculate_price()
-    # print(new_order)
-    # new_order.display()
+    
     pass

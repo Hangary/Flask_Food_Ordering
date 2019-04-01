@@ -1,6 +1,6 @@
-Item,Multiplier,Unit,price,Use
-Small Fries,75,gram,2,Fries
-Med Fries,125,gram,3,Fries
-Large Fries,200,gram,4,Fries
-Nugget 3 pack,3,Piece,3,Nugget
-Nugget 6 pack,6,Piece,5,Nugget
+Item,price,Use
+Small Fries,2,Fries:75
+Med Fries,3,Fries:125
+Large Fries,4,Fries:200
+Nugget 3 pack,3,Nugget:3
+Nugget 6 pack,5,Nugget:6

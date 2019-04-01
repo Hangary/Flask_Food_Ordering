@@ -37,20 +37,19 @@ def create_menu():
                 row["Unit"],
                 float(row["price"])
             )
-            if row['For'] == "BW":
-                burger.add_ingredients(ingredient)
-                wrap.add_ingredients(ingredient)
-            elif row['For'] == "B":
-                burger.add_ingredients(ingredient)
-            else:
-                wrap.add_ingredients(ingredient)
             inven.add_new_ingredients(ingredient)
+            if row['For'] == "BW":
+                burger.add_ingredients(Ingredient(name=row["Ingredient"],additional_price= row["price"]))
+                wrap.add_ingredients(Ingredient(name=row["Ingredient"],additional_price= row["price"]))
+            elif row['For'] == "B":
+                burger.add_ingredients(Ingredient(name=row["Ingredient"],additional_price= row["price"]))
+            else:
+                wrap.add_ingredients(Ingredient(name=row["Ingredient"],additional_price= row["price"]))
+            
 
     main_menu = Menu("Mains")
     main_menu.add_items(burger,wrap)
-    # print(burger)
-    # print(wrap)
-    # print(main_menu)
+    #main_menu.display()
 
     ### Creating Drinks Menu
     drinks_menu = Menu("Drinks")
@@ -74,16 +73,18 @@ def create_menu():
         reader = csv.DictReader(d1)
         COLUMNS = [
             'Item'
-            'Multiplier'
             'Price'
             'Use'
             ]
         for row in reader:
-            drink = Drink(row["Item"],float(row["price"]),float(row["Multiplier"]))
-            drink.add_ingredients(inven.get_ingredient(row['Use']))
+            drink = Drink(row["Item"],float(row["price"]))
+            s = row['Use'].split('|')
+            for i in s:
+                i = i.split(":")
+                drink.add_ingredients(Ingredient(i[0],float(i[1])))
             drinks_menu.add_items(drink)
             
-        # print(drinks_menu)
+    #drinks_menu.display()
     
     ### Creating Drinks Menu
     sides_menu = Menu("Sides")
@@ -107,34 +108,29 @@ def create_menu():
         reader = csv.DictReader(d1)
         COLUMNS = [
             'Item'
-            'Multiplier'
             'Price'
             'Use'
             ]
         for row in reader:
-            side = Side(row["Item"],float(row["price"]),float(row["Multiplier"]))
-            side.add_ingredients(inven.get_ingredient(row['Use']))
+            side = Side(row["Item"],float(row["price"]))
+            s = row['Use'].split('|')
+            for i in s:
+                i = i.split(":")
+                side.add_ingredients(Ingredient(i[0],float(i[1])))
             sides_menu.add_items(side)
             
-        # print(sides_menu)
+    #sides_menu.display()
     menu_dict = {"Mains":main_menu,"Sides":sides_menu,"Drinks":drinks_menu}
     system = OrderSystem(menu_dict,inven)
     return system
     
 if __name__ == "__main__":
-    # menu_dict = create_menu()
-    # with open('full_order.dat','wb') as f:
-    #     pickle.dump(menu_dict,f,pickle.HIGHEST_PROTOCOL)
-    # print("Unpickling")
-    # with open('full_order.dat','rb') as f:
-    #     full_order = pickle.load(f)
-    # print(full_order[1])
-    # print(full_order[2])
-    # print(full_order[3])
+
     system = create_menu()
     with open('full_order.dat','wb') as f:
         pickle.dump(system,f,pickle.HIGHEST_PROTOCOL)
     system.make_order()
+    system.display_menu("Mains")
     print("Showing sides menu")
     system.display_menu("Sides")
     SF = system.get_item("Small Fries")
@@ -145,10 +141,11 @@ if __name__ == "__main__":
     print("Ordering Fries")
     system.add_items_in_orders(1,SF,MF,LF,SF)
     system.display_order(1)
+    print("Out of Stock",system.inventory.display_unavailable_ingredients())
+    print("Amount of Fries left {}".format(system.inventory.get_ingredient('Fries').amount))
     print("Ordering Nuggets")
     system.add_items_in_orders(1,N6,N3,N6,N3,N6,N3)
     system.display_order(1)
-    print("Amount of Fries left {}".format(system.inventory.get_ingredient('Fries').amount))
     print("Amount of Nuggets left {}".format(system.inventory.get_ingredient('Nugget').amount))
     print("Out of Stock",system.inventory.display_unavailable_ingredients())
     

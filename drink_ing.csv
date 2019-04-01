@@ -1,3 +1,4 @@
 Ingredient,Unit,Starting,Min_Selling
 Coke,1,1500,375
 OrangeJuice,1,1000,250
+Ice,1,1000,20
