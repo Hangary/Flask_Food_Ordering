@@ -153,6 +153,7 @@ class Main(Item):
                 print("Buns are more than the max amount!")
                 return "Buns are more than the max amount!"
             # check whether available
+            
             if inventory.is_available(ingredient.name, ingredient.amount):
                 if ingredient.name in self._ingredients['Bun'] and not math.isnan(self._ingredients['Bun'][ingredient.name].amount):
                     self._ingredients['Bun'][ingredient.name].change(+ingredient.amount)
@@ -174,7 +175,7 @@ class Main(Item):
                 print("Patties are more than the max amount!")
                 return "Patties are more than the max amount!"
             # check whether available
-            if inventory.is_available(ingredient.name, ingredient.amount):
+            if inventory.is_available(ingredient.name, ingredient.amount):    
                 if ingredient.name in self._ingredients['Patty'] and not math.isnan(self._ingredients['Patty'][ingredient.name].amount):
                     self._ingredients['Patty'][ingredient.name].change(+ingredient.amount)
                 else:
@@ -192,6 +193,7 @@ class Main(Item):
                 print(f"<{ingredient.name}> more than the max amount!")
                 return f"<{ingredient.name}> more than the max amount!"
             # check whether available
+            
             if inventory.is_available(ingredient.name, ingredient.amount):
                 if ingredient.name in self._ingredients['Other'] and not math.isnan(self._ingredients['Other'][ingredient.name].amount):
                     self._ingredients['Other'][ingredient.name].change(+ingredient.amount)
@@ -232,10 +234,10 @@ class Main(Item):
     def price(self):
         return self._total_price
 
-class Wrap(Item):
+class Wrap(Main):
 
     def __init__(self, name: str, price: float =0, description: str ='N/A', availability: bool =True):
-        super().__init__(name, price, "Mains", description, availability)
+        super().__init__(name, price, description, availability)
         # dict<Ingredient>
         self._ingredients = {
             'Wrap':      {},
@@ -268,75 +270,44 @@ class Wrap(Item):
 
     # help customer modify the buns in their main
     def modify_wrap(self, inventory: Inventory, *argv: Ingredient):
-        # check whether larger than the max limit
-        # TODO: if this function is called twice at different times customer could add more wrap than max 
+
         total_amount = 0
         for ingredient in argv:
             total_amount += ingredient.amount
-        if total_amount > self._max_limit['Bun']:
-            print("Wraps are more than the max amount!")
-            return "wraps are more than the max amount!"
-        else:
-            # add ingredients into dict
-            for ingredient in argv:
-                # check whether available
-                if inventory.is_available(ingredient.name, ingredient.amount):
-                    self._ingredients['Wrap'][ingredient.name] = ingredient
+            if total_amount > self._max_limit['Wrap']:
+                print("Wraps are more than the max amount!")
+                return "wraps are more than the max amount!"
+
+            if inventory.is_available(ingredient.name, ingredient.amount):
+                if ingredient.name in self._ingredients['Wrap'] and not math.isnan(self._ingredients['Wrap'][ingredient.name].amount):
+                    self._ingredients['Wrap'][ingredient.name].change(+ingredient.amount)
                 else:
-                    print(f"{ingredient.name} is not enought in the inventory!")
-        self.calculate_price()
+                    self._ingredients['Wrap'][ingredient.name] = Ingredient(ingredient.name,ingredient.amount,additional_price= ingredient.additional_price)
+                inventory.update_stock(ingredient.name,-ingredient.amount)
+                print(inventory.get_ingredient(ingredient.name).amount)
+            else:
+                print(f"{ingredient.name} is not enough in the inventory!")
+            self.calculate_price()
 
     # help customer modify the patties in their main
     def modify_patties(self, inventory: Inventory, *argv: Ingredient):
         # check whether larger than the max limit
-        # TODO: if this function is called twice at different times customer could add more wrap than max 
         total_amount = 0
         for ingredient in argv:
             total_amount += ingredient.amount
-        if total_amount > self._max_limit['Patty']:
-            print("Patties are more than the max amount!")
-            return "Patties are more than the max amount!"
-        else:
-            # add ingredients into dict
-            for ingredient in argv:
-                # check whether available
-                if inventory.is_available(ingredient.name, ingredient.amount):
-                    self._ingredients['Patty'][ingredient.name] = ingredient
+            if total_amount > self._max_limit['Patty']:
+                print("Patties are more than the max amount!")
+                return "Patties are more than the max amount!"
+            if inventory.is_available(ingredient.name, ingredient.amount):    
+                if ingredient.name in self._ingredients['Patty'] and not math.isnan(self._ingredients['Patty'][ingredient.name].amount):
+                    self._ingredients['Patty'][ingredient.name].change(+ingredient.amount)
                 else:
-                    print(f"{ingredient.name} is not enought in the inventory!")
-        self.calculate_price()
-
-    # help customer modify the other ingredients in their main
-    def modify_other_ingredients(self, inventory: Inventory, *argv: Ingredient):
-        for ingredient in argv:
-            # check whether more than max limit
-            if ingredient.name in self._max_limit.keys() and ingredient.amount > self._max_limit[ingredient.name]:
-                print(f"<{ingredient.name}> more than the max amount!")
-                return f"<{ingredient.name}> more than the max amount!"
-            # check whether available
-            if inventory.is_available(ingredient.name, ingredient.amount):
-                self._ingredients['Other'][ingredient.name] = ingredient
+                    self._ingredients['Patty'][ingredient.name] = Ingredient(ingredient.name,ingredient.amount,additional_price= ingredient.additional_price)
+                inventory.update_stock(ingredient.name,-ingredient.amount)
+                print(inventory.get_ingredient(ingredient.name).amount)
             else:
-                print(f"{ingredient.name} is not enought in the inventory!")
-        self.calculate_price()
-
-    # calculate the total price according the ingredients' prices and its base price
-    def calculate_price(self):
-        total_price = self._price
-        for ingredient_type in self._ingredients.values(): 
-            for ingredient in ingredient_type.values():
-                if not isNaN(ingredient.amount) and not isNaN(ingredient.additional_price):
-                    total_price += ingredient.additional_price * ingredient.amount
-        self._total_price = total_price
-
-    # display the details of this creation
-    def review(self):
-        print(str(self))
-        return str(self)
-
-    def check_availability(self, inventory: Inventory):
-        # when modifying the ingredients, we have ensured they are available
-        self._is_available = True
+                print(f"{ingredient.name} is not enough in the inventory!")
+            self.calculate_price()
 
     def __str__(self):
         Wraps = [f"{wrap.name}: {wrap.amount}" for wrap in self._ingredients['Wrap'].values() if not isNaN(wrap.amount) and wrap.amount >= 0]

@@ -81,7 +81,15 @@ class OrderSystem:
         order = self._get_order(order_id)
         for item in argv:
             if item.type == "Mains":
-                order.add_items(item)
+                if (item.__class__.__name__ == "Main"):
+                    temp = Main(item.name,10)
+                    temp.set_ingredient_limit(ingredient_name="Bun", amount=4)
+                    temp.set_ingredient_limit(ingredient_name="Patty", amount=3)
+                else:
+                    temp = Wrap(item.name,9)
+                    temp.set_ingredient_limit(ingredient_name="Wrap", amount=4)
+                    temp.set_ingredient_limit(ingredient_name="Patty", amount=3)
+                order.add_items(temp)
                 continue
             if not item.is_available(self._inventory):
                 print(f"{item.name} is not available!\n")
