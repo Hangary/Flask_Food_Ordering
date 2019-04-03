@@ -10,7 +10,7 @@ This is the main interface for both customers and staff.
 
 class OrderSystem:
 
-    def __init__(self, Menus: dict, Inventory: Inventory, Staff_system: StaffSystem = None):
+    def __init__(self, Menus: dict, Inventory: Inventory, Staff_system = "NONE"):
         # order fields
         self._orders = []       # list<order>
         self._norder = 0        # total number of orders, also used as order id
