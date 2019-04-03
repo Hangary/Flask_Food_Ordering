@@ -23,7 +23,7 @@ class Ingredient(object):
 
     # this function call is for updating inventory stock
     def change(self, amount: float):
-        self._amount += amount
+        self._amount += amount * float(self._unit)
         self.__is_soldout()
 
     # reset its amount

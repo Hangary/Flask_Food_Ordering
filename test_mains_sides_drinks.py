@@ -48,13 +48,15 @@ def test_mains():
 def test_mains2():
 
     system = setup()
-
     orderID = system.make_order()
     system.add_items_in_orders(
         orderID, 
         system.get_item("Burger"), 
         system.get_item("Wrap"),
-        system.get_item("Coke Can") 
+        system.get_item("Coke Can"),
+        system.get_item("Coke Can"),
+        system.get_item("Nugget 6 pack"),
+        system.get_item("Nugget 6 pack")
     )
     
     # buns
@@ -65,7 +67,7 @@ def test_mains2():
     vegetarian_patty = Ingredient(name="Vegetarian Patty",amount=1, additional_price=2)
     # other
     tomato = Ingredient(name="Tomato", amount=2, additional_price=0.5)
-    lettuce = Ingredient(name="Lettuce", amount=3, additional_price=0.3)
+    lettuce = Ingredient(name="Lettuce", amount=3, additional_price=0.2)
 
     '''
     Modify burger
@@ -93,21 +95,22 @@ def test_mains2():
 
     system._get_order(1).items["Wrap"][0].modify_wraps(
         system.inventory,
-        #
+        
     )
 
     system._get_order(1).calculate_price()
     system.display_order(1)
 
     print(f"Amount of Sesame Bun left {system.inventory.get_ingredient('Sesame Bun').amount}")
-    #print("Amount of Wrap left {}".format(system.inventory.get_ingredient('Wrap').amount))
-    #print("Amount of Patty left {}".format(system.inventory.get_ingredient('Patty').amount))
+    print("Amount of Lettuce left {}".format(system.inventory.get_ingredient('Lettuce').amount))
+    print("Amount of Nugget left {}".format(system.inventory.get_ingredient('Nugget').amount))
     #print("Amount of Tomato left {}".format(system.inventory.get_ingredient('Tomato').amount))
     #print("Amount of Cheese left {}".format(system.inventory.get_ingredient('Cheese').amount))
 
     print("~~~~~~~~~~~~~~~~~~Showing Mains Menu~~~~~~~~~~~~~~~~")
     system.display_menu("Mains")
     print(system.get_item("Burger"))
+    print(system.get_item("Wrap"))
 
 
 if __name__ == "__main__":
