@@ -155,7 +155,6 @@ class Main(Item):
         self.calculate_price()
 
     def modify_buns(self, inventory: Inventory, *argv: Ingredient):
-        print(argv)
         self._modify_ingredients("Bun", inventory, *argv)
 
     def modify_patties(self, inventory: Inventory, *argv: Ingredient):

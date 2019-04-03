@@ -60,8 +60,7 @@ class OrderSystem:
         for order in self._orders:
             if order.order_id == order_id:
                 return order
-            else:
-                return None
+        return None
 
     # Make a new online order, add it into the system, and then return the order id
     def make_order(self) -> int:
@@ -117,6 +116,10 @@ class OrderSystem:
     @property
     def inventory(self):
         return self._inventory
+    
+    @property
+    def total_order(self):
+        return self._norder
 
 if __name__ == "__main__":
     pass
