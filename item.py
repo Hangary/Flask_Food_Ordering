@@ -134,7 +134,7 @@ class Main(Item):
                 if not inventory.is_available(ingredient.name, ingredient.amount):
                     print(f"{ingredient.name} is not enough in the inventory!")
                     return f"{ingredient_type} are more than the max amount!"
-                self._ingredients[ingredient_type][ingredient.name].reset(ingredient.amount)
+                self._ingredients[ingredient_type][ingredient.name] = Ingredient(ingredient.name,ingredient.amount,additional_price= ingredient.additional_price)
                 inventory.update_stock(ingredient.name, -ingredient.amount)
         elif ingredient_type is "Other":
             for ingredient in argv:
@@ -147,7 +147,7 @@ class Main(Item):
                 if not inventory.is_available(ingredient.name, ingredient.amount):
                     print(f"{ingredient.name} is not enough in the inventory!")
                     return f"{ingredient.name} are more than the max amount!"
-                self._ingredients[ingredient_type][ingredient.name].reset(ingredient.amount)
+                self._ingredients[ingredient_type][ingredient.name] = Ingredient(ingredient.name,ingredient.amount,additional_price= ingredient.additional_price)
                 inventory.update_stock(ingredient.name, -ingredient.amount)
         else:
             print("invalid ingredient type!")
@@ -214,7 +214,7 @@ class Burger(Main):
         Buns = [f"{bun.name}: {bun.amount}" for bun in self._ingredients['Bun'].values() if not isNaN(bun.amount) and bun.amount > 0]
         Patties = [f"{patty.name}: {patty.amount}" for patty in self._ingredients['Patty'].values() if not isNaN(patty.amount) and patty.amount > 0]
         Others = [f"{other.name}: {other.amount}" for other in self._ingredients['Other'].values() if not isNaN(other.amount) and other.amount > 0]
-        return (f"{self._type}: {self._name} \nIngredients: \n\t- Buns: {Buns} \n\t- Patties: {Patties} \n\t- Others: {Others} \nNet Price: ${self._total_price:.2f} \nDescription: {self._description}")
+        return (f"{self._type}: {self._name} \nIngredients: \n\t- Buns: {Buns} \n\t- Patties: {Patties} \n\t- Others: {Others} \nNet Price: ${self.price:.2f} \nDescription: {self._description}")
 
 
 class Wrap(Main):
@@ -238,7 +238,7 @@ class Wrap(Main):
         Wraps = [f"{wrap.name}: {wrap.amount}" for wrap in self._ingredients['Wrap'].values() if not isNaN(wrap.amount) and wrap.amount >= 0]
         Patties = [f"{patty.name}: {patty.amount}" for patty in self._ingredients['Patty'].values() if not isNaN(patty.amount) and patty.amount >= 0]
         Others = [f"{other.name}: {other.amount}" for other in self._ingredients['Other'].values() if not isNaN(other.amount) and other.amount >= 0]
-        return (f"{self._type}: {self._name} \nIngredients: \n\t- Wraps: {Wraps} \n\t- Patties: {Patties} \n\t- Others: {Others} \nNet Price: ${self._total_price:.2f} \nDescription: {self._description}")
+        return (f"{self._type}: {self._name} \nIngredients: \n\t- Wraps: {Wraps} \n\t- Patties: {Patties} \n\t- Others: {Others} \nNet Price: ${self.price:.2f} \nDescription: {self._description}")
 
 
 class Side(Item):
