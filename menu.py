@@ -29,7 +29,9 @@ class Menu:
 
     # print all the items inside the menu
     def display(self):
+        print(f"{self.name}:")
         for item in self._items.values():
+            item = f"<{item.name}> Price: {item.price}" 
             print(item)
 
     # put items into an order

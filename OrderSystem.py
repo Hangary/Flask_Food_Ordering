@@ -2,6 +2,7 @@ from item import *
 from order import Order
 from menu import Menu
 from inventory import Inventory
+from copy import deepcopy
 
 '''
 This is the main interface for both customers and staff.
@@ -76,14 +77,14 @@ class OrderSystem:
         if order:
             order.display()
 
-    # TODO: Add items into an order
     def add_items_in_orders(self, order_id: int, *argv: Item):
-        order = self._get_order(order_id)
         for item in argv:
             if not item.is_available(self._inventory):
-                print(f"{item.name} is not available!")
-                return
-        order.add_items(*argv)
+                print(f"{item.name} is not available!\n")
+            else:
+                self.update_inventory(item)
+                item = deepcopy(item)
+                self._get_order(order_id).add_items(item)
 
     # TODO: Delete items from an order
     def del_items_in_orders(self, order_id: int, *argv: Item):
@@ -91,7 +92,7 @@ class OrderSystem:
         order.delete_items(*argv)
 
 
-    # TODO: Authorise payment for an order
+    # Authorise payment for an order
     def pay_order(self, order_id: int):
         order = self._get_order(order_id)
         if not order:
@@ -105,9 +106,17 @@ class OrderSystem:
         else:
             print('Payment not authorised.')
 
+    def update_inventory(self, item: Item):
+        if item.type == "Sides" or item.type == "Drinks":
+            for key,ingredient in item.ingredients.items():
+                self.inventory.update_stock(key,-ingredient.amount)
+    
     '''
     property
     '''
     @property
     def inventory(self):
         return self._inventory
+
+if __name__ == "__main__":
+    pass
