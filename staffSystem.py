@@ -38,9 +38,9 @@ class StaffSystem(object):
         return False
 
     def add_staff(self,username,password):
-        if username in self._staff_details
-            print('User-name already taken, please enter another username')
-        else
+      #  if username in self._staff_details
+       #     print('User-name already taken, please enter another username')
+        #else
             self._staff_details{username} = password
 
 
