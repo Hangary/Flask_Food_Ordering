@@ -7,7 +7,7 @@ TODO: This is a class used to store information about online orders.
 
 class Order(object):
 
-    def __init__(self, order_id):
+    def __init__(self, order_id: int):
         self._order_id = order_id
 
         # Order status fields:
@@ -15,7 +15,7 @@ class Order(object):
         self._is_prepared = False         # boolean, whether it is prepared or not
 
         # Customized fields:
-        # a dict used to contain the food items chosen by the customer
+        # Dictionary key = item name value = list of item (to support duplicate)
         self._items = { }
         # float, the total price for the order
         self._price = float('nan')
@@ -23,42 +23,50 @@ class Order(object):
         self._notes = ''
 
     # if Order is payed
-    def update_payment_status(self, status):
+    def update_payment_status(self, status: bool):
         self._is_payed = status
 
     # if Order is ready
-    def update_preparation_status(self, status):
+    def update_preparation_status(self, status: bool):
         self._is_prepared = status
 
-    # add new items into an order, item_type should be "Mains", "Sides" and "Drinks"
-    def add_items(self, *argv):
+    # add new items into an order
+    # dont call this
+    def add_items(self, *argv: Item):
         for item in argv:
-            self._items[item.name] = item
+            if item.name in self._items:
+                self._items[item.name].append(item)
+            else:
+                self._items[item.name] = [item]
         self.calculate_price()
 
     # TODO: delete items from an order, input should be names of items
-    def delete_items(self, *argv):
+    def delete_items(self, *argv: str):
         for item_name in argv:
             if item_name in self._items.keys():
                 del self._items[item_name]
             else:
-                print("cannot find the item in the order")
+                print(f"Cannot find {item_name} in the order!")
         self.calculate_price()
 
     # calculate order price
     def calculate_price(self):
         price = 0
-        for item in self._items.values():
-            price = price + item.price
+        for item_list in self._items.values():
+            for item in item_list:
+                price = price + item.price
         self._price = price
 
     # Display the items of orders
     def display(self):
         print('Order {0} has items:'.format(self._order_id))
-        for item in self._items.values():
-            print(item)
+        for item_list in self._items.values():
+            for item in item_list:
+                print(item)
         print('Total price: ${}'.format(self._price))
 
+
+    
     '''
     Property
     '''
@@ -88,15 +96,5 @@ class Order(object):
 
 
 if __name__ == "__main__":
-
-    fries_l = Item("Fries - Large", 5, "Sides")
-
-    coke_zero_m = Item("Coke Zero - Medium", 2.5, "Drinks")
-    coke_zero_m.add_ingredients(Ingredient(
-        "Coke Zero"), Ingredient("Ice cube"))
-
-    new_order = Order(45)
-    new_order.add_items(fries_l, coke_zero_m)
-    new_order.calculate_price()
-    print(new_order)
-    new_order.display()
+    
+    pass

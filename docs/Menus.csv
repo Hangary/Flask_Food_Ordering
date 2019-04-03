@@ -1,0 +1,12 @@
+﻿Item Name,Price,Type,Ingredients
+Burger,8,Main,Sesame Bun | Muffin Bun | Chicken Patty | Vegetarian Patty | Beef Patty | Tomato | Lettuce | Cheddar Cheese | Swiss Cheese
+Wrap,8,Main,Wrap | Beef Patty | Vegetarian Patty | Chicken Patty | Tomato | Lettuce | Tomato Sauce | Cheddar Cheese | Swiss Cheese
+Small Fries,2,Side,Fries:75
+Med Fries,3,Side,Fries:125
+Large Fries,4,Side,Fries:200
+Nugget 3 pack,3,Side,Nugget:3
+Nugget 6 pack,5,Side,Nugget:6
+Coke Bottle,4,Drink,Coke:600
+Coke Can,2.5,Drink,Coke:375
+OrangeJuice_Small,3,Drink,OrangeJuice:250 | Ice:20
+OrangeJuice_Medium,5,Drink,OrangeJuice:450 | Ice:40
