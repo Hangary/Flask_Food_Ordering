@@ -110,7 +110,7 @@ class OrderSystem:
         order.delete_items(*argv)
 
 
-    # TODO: Authorise payment for an order
+    # Authorise payment for an order
     def pay_order(self, order_id: int):
         order = self._get_order(order_id)
         if not order:

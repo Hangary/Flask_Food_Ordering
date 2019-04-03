@@ -37,7 +37,10 @@ class Inventory(object):
     
     def get_ingredient(self,name):
         return self._ingredients[name]
-    
+
+    def __str__(self):
+        l = [f"{ingredient.name}: {ingredient.amount}" for ingredient in self._ingredients.values()]
+        return str(l)
 
 if __name__ == "__main__":
     butter = Ingredient("butter")
