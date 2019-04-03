@@ -181,7 +181,7 @@ class Main(Item):
         print(str(self))
         return str(self)
 
-    def check_availability(self, inventory: Inventory):
+    def _check_availability(self, inventory: Inventory):
         # when modifying the ingredients, we have ensured they are available
         self._is_available = True
 

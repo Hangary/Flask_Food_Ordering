@@ -2,7 +2,7 @@ from item import *
 from order import Order
 from menu import Menu
 from inventory import Inventory
-import pickle
+from copy import deepcopy
 
 '''
 This is the main interface for both customers and staff.
@@ -78,31 +78,13 @@ class OrderSystem:
             order.display()
 
     def add_items_in_orders(self, order_id: int, *argv: Item):
-        order = self._get_order(order_id)
         for item in argv:
-            if item.type == "Mains":
-                if (item.__class__.__name__ == "Main"):
-                    temp = Main(item.name,10)
-                    temp.set_ingredient_limit(ingredient_name="Bun", amount=4)
-                    temp.set_ingredient_limit(ingredient_name="Patty", amount=3)
-                else:
-                    temp = Wrap(item.name,9)
-                    temp.set_ingredient_limit(ingredient_name="Wrap", amount=4)
-                    temp.set_ingredient_limit(ingredient_name="Patty", amount=3)
-                order.add_items(temp)
-                continue
             if not item.is_available(self._inventory):
                 print(f"{item.name} is not available!\n")
             else:
-                print("Before")
-                for name in item.ingredients.keys():
-                    print(self._inventory.get_ingredient(name).amount)
                 self.update_inventory(item)
-                print("After")
-                for name in item.ingredients.keys():
-                    print(self._inventory.get_ingredient(name).amount)
-                print("")
-                order.add_items(item)
+                item = deepcopy(item)
+                self._get_order(order_id).add_items(item)
 
     # TODO: Delete items from an order
     def del_items_in_orders(self, order_id: int, *argv: Item):
@@ -124,7 +106,7 @@ class OrderSystem:
         else:
             print('Payment not authorised.')
 
-    def update_inventory(self,item: Item):
+    def update_inventory(self, item: Item):
         if item.type == "Sides" or item.type == "Drinks":
             for key,ingredient in item.ingredients.items():
                 self.inventory.update_stock(key,-ingredient.amount)
