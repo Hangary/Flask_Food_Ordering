@@ -22,8 +22,12 @@ class Inventory(object):
 
     # check an ingredient whether available (with an amount)
     def is_available(self, ingredient_name: str, amount: float =None):
-        if amount or (amount != 0):
-            return (self._ingredients[ingredient_name].amount/self._ingredients[ingredient_name].multiplier >= amount)
+        available_amount = self._ingredients[ingredient_name].amount/self._ingredients[ingredient_name].multiplier
+        if amount or (amount == 0):
+            if( available_amount >= amount):
+                return True
+            else:
+                return False 
         else:
             return self._ingredients[ingredient_name].is_soldout
 
@@ -35,8 +39,8 @@ class Inventory(object):
                 unavailable_ingredients.append(ingredient.name)
             elif self.is_available(ingredient.name, ingredient.minimum):
                 unavailable_ingredients.append(ingredient.name)
-        return unavailable_ingredients
-    
+        print(unavailable_ingredients)
+    #get ingredient details
     def get_ingredient(self,name):
         return self._ingredients[name]
 
