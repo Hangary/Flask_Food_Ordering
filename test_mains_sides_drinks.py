@@ -1,6 +1,7 @@
 from OrderSystem import *
 from inventory import *
 from system_creator import *
+import pickle
 
 def setup():
     '''
@@ -47,14 +48,22 @@ def test_mains():
 
 def test_mains2():
 
-    system = setup()
-
+    try:
+        with open('full_order.dat','rb') as f:
+            system = pickle.load(f)
+    except FileNotFoundError:
+        print("File not found creating new system")
+        system = setup()
     orderID = system.make_order()
+    print(orderID)
     system.add_items_in_orders(
         orderID, 
         system.get_item("Burger"), 
         system.get_item("Wrap"),
-        system.get_item("Coke Can") 
+        system.get_item("Coke Can"),
+        system.get_item("Coke Can"),
+        system.get_item("Nugget 6 pack"),
+        system.get_item("Nugget 6 pack")
     )
     
     # buns
@@ -65,7 +74,7 @@ def test_mains2():
     vegetarian_patty = Ingredient(name="Vegetarian Patty",amount=1, additional_price=2)
     # other
     tomato = Ingredient(name="Tomato", amount=2, additional_price=0.5)
-    lettuce = Ingredient(name="Lettuce", amount=3, additional_price=0.3)
+    lettuce = Ingredient(name="Lettuce", amount=3, additional_price=0.2)
 
     '''
     Modify burger
@@ -76,12 +85,12 @@ def test_mains2():
         sesame_bun,
         muffin_bun
     )
-    system._get_order(1).items["Burger"][0].modify_patties(
+    system._get_order(orderID).items["Burger"][0].modify_patties(
         system.inventory,
         chicken_patty,
         vegetarian_patty
     )
-    system._get_order(1).items["Burger"][0].modify_other_ingredients(
+    system._get_order(orderID).items["Burger"][0].modify_other_ingredients(
         system.inventory,
         tomato,
         lettuce
@@ -91,24 +100,40 @@ def test_mains2():
     Modify Wrap
     '''
 
-    system._get_order(1).items["Wrap"][0].modify_wraps(
+    system._get_order(orderID).items["Wrap"][0].modify_wraps(
         system.inventory,
-        #
+        
     )
 
-    system._get_order(1).calculate_price()
-    system.display_order(1)
+    system._get_order(orderID).calculate_price()
+    system.display_order(orderID)
 
     print(f"Amount of Sesame Bun left {system.inventory.get_ingredient('Sesame Bun').amount}")
-    #print("Amount of Wrap left {}".format(system.inventory.get_ingredient('Wrap').amount))
-    #print("Amount of Patty left {}".format(system.inventory.get_ingredient('Patty').amount))
+    print("Amount of Lettuce left {}".format(system.inventory.get_ingredient('Lettuce').amount))
+    print("Amount of Nugget left {}".format(system.inventory.get_ingredient('Nugget').amount))
     #print("Amount of Tomato left {}".format(system.inventory.get_ingredient('Tomato').amount))
     #print("Amount of Cheese left {}".format(system.inventory.get_ingredient('Cheese').amount))
 
     print("~~~~~~~~~~~~~~~~~~Showing Mains Menu~~~~~~~~~~~~~~~~")
     system.display_menu("Mains")
     print(system.get_item("Burger"))
+    print(system.get_item("Wrap"))
+    print("Pickling system")
+    with open('full_order.dat','wb') as f:
+        pickle.dump(system,f,pickle.HIGHEST_PROTOCOL)
+
+
+def test_persistance():
+    try:
+        with open('full_order.dat','rb') as f:
+            system = pickle.load(f)
+    except FileNotFoundError:
+        print("File not Found")
+        assert(False)
+    for i in range(1,system.total_order+1):
+        system.display_order(i)
 
 
 if __name__ == "__main__":
     test_mains2()
+    test_persistance()
