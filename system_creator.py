@@ -28,8 +28,9 @@ def create_inventory(file_address: str) -> Inventory:
                     name=row["Ingredient Name"],
                     amount=float(row['Stock Amount']),
                     unit=row["Stock Unit"],
-                    additional_price=float(
-                        row["Additional Price"]) if row["Additional Price"] else 0
+                    additional_price=float(row["Additional Price"] if row["Additional Price"] else 0),
+                    min_selling= float(row["Min Selling"]),
+                    multiplier = float(row["Multiplier"])
                 )
             )
 
