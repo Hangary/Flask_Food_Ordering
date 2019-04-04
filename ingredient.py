@@ -20,7 +20,10 @@ class Ingredient(object):
 
     # check whether it is sold_out
     def __is_soldout(self):
-        self._is_soldout = False if self._amount >= self._min_selling else True
+        if self._amount >= self._min_selling:
+             self._is_soldout = False
+        else:
+             self._is_soldout = True
 
     # this function call is for updating inventory stock
     def change(self, amount: float):

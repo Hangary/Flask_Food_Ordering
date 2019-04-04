@@ -22,7 +22,7 @@ class Inventory(object):
 
     # check an ingredient whether available (with an amount)
     def is_available(self, ingredient_name: str, amount: float =None):
-        if amount or (amount == 0):
+        if amount or (amount != 0):
             return (self._ingredients[ingredient_name].amount/self._ingredients[ingredient_name].multiplier >= amount)
         else:
             return self._ingredients[ingredient_name].is_soldout
