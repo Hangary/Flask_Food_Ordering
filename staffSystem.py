@@ -24,25 +24,27 @@ Some application case in the main sytem: (from teacher)
 
 class StaffSystem(object):
 
-    def __init__(self, staff:dict):
-        self._staff = {}
-        self._staff = staff
+    def __init__(self): #staff:dict):
+        self._staff = []    #list of staff members
       #  self._staff_details = staff_details
         self._is_authenticated = False
 
     
     # Simulate login & logout (this will be different when using Flask and Flask-login)
     def login(self, username, password):
-        if self._staff.authenticate(username, password):
-            self._is_authenticated = True
+        for staff_member in self._staff:
+            if staff_member.authenticate(username, password):
+                self._is_authenticated = True
             return True
         return False
 
     def add_staff(self,username,password):
-        if username in self._staff_details:
-            print('User-name already taken, please enter another username')
+        for staff_member in self._staff:
+            if username == staff_member.username:
+                print('User-name already taken, please enter another username')
         else:
-            self._staff_details[username] = password
+            new_staff = Staff(username,password)
+            self._staff.append(new_staff)
 
 
     @property
@@ -66,3 +68,6 @@ class Staff(object):
             return True
         else:
             return False
+    @property
+    def username(self):
+        return self._username
