@@ -2,7 +2,11 @@ from item import *
 from order import Order
 from menu import Menu
 from inventory import Inventory
+<<<<<<< HEAD
 from copy import deepcopy
+=======
+from staffSystem import StaffSystem
+>>>>>>> feature/staff_system
 
 '''
 This is the main interface for both customers and staff.
@@ -10,16 +14,15 @@ This is the main interface for both customers and staff.
 
 class OrderSystem:
 
-    def __init__(self, Menus: dict, Inventory: Inventory):
+    def __init__(self, Menus: dict, Inventory: Inventory, Staff_system = "NONE"):
         # order fields
         self._orders = []       # list<order>
         self._norder = 0        # total number of orders, also used as order id
 
-        # menu field
+        # other system fields
         self._menus = Menus     # Menus should be a dict like {"Mains": Mains, "Sides": Sides, "Drinks": Drinks}
-
-        # inventory field
         self._inventory = Inventory
+        self._staff_system = Staff_system
 
     '''
     Menu part
@@ -117,6 +120,9 @@ class OrderSystem:
     @property
     def inventory(self):
         return self._inventory
+<<<<<<< HEAD
 
 if __name__ == "__main__":
     pass
+=======
+>>>>>>> feature/staff_system
