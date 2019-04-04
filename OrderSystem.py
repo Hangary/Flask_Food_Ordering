@@ -2,7 +2,7 @@ from item import *
 from order import Order
 from menu import Menu
 from inventory import Inventory
-from staffSystem import StaffSystem
+from staffSystem import *
 
 '''
 This is the main interface for both customers and staff.
