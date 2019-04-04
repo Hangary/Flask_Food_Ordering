@@ -2,11 +2,8 @@ from item import *
 from order import Order
 from menu import Menu
 from inventory import Inventory
-<<<<<<< HEAD
 from copy import deepcopy
-=======
 from staffSystem import StaffSystem
->>>>>>> feature/staff_system
 
 '''
 This is the main interface for both customers and staff.
@@ -119,16 +116,10 @@ class OrderSystem:
     @property
     def inventory(self):
         return self._inventory
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
     
     @property
     def total_order(self):
         return self._norder
->>>>>>> d72df20bb6b559bbac6155307a46a8b986f5d21e
 
 if __name__ == "__main__":
     pass
-=======
->>>>>>> feature/staff_system
