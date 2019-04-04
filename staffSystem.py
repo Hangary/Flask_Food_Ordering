@@ -26,6 +26,7 @@ class StaffSystem(object):
 
     def __init__(self, staff, staff_details: dict):
         self._staff = staff
+        self._staff_details = {}
         self._staff_details = staff_details
         self._is_authenticated = False
 
@@ -38,10 +39,10 @@ class StaffSystem(object):
         return False
 
     def add_staff(self,username,password):
-      #  if username in self._staff_details
-       #     print('User-name already taken, please enter another username')
-        #else
-            self._staff_details{username} = password
+        if username in self._staff_details:
+            print('User-name already taken, please enter another username')
+        else:
+            self._staff_details[username] = password
 
 
     @property
