@@ -2,7 +2,6 @@ from item import *
 from order import Order
 from menu import Menu
 from inventory import Inventory
-from copy import deepcopy
 from staffSystem import StaffSystem
 
 '''
@@ -13,7 +12,8 @@ class OrderSystem:
 
     def __init__(self, Menus: dict, Inventory: Inventory, Staff_system = "NONE"):
         # order fields
-        self._orders = []       # list<order>
+        self._pending_orders = []       # list<order>
+        self._completed_orders = []     #list<order>
         self._norder = 0        # total number of orders, also used as order id
 
         # other system fields
@@ -53,14 +53,15 @@ class OrderSystem:
 
     # Add an order into the system
     def add_order(self, new_order: Order):
-        self._orders.append(new_order)
+        self._pending_orders.append(new_order)
 
     # return an order based on an order id
     def _get_order(self, order_id: int) -> Order:
-        for order in self._orders:
+        for order in self._pending_orders:
             if order.order_id == order_id:
                 return order
-        return None
+            else:
+                return None
 
     # Make a new online order, add it into the system, and then return the order id
     def make_order(self) -> int:
@@ -76,14 +77,14 @@ class OrderSystem:
         if order:
             order.display()
 
+    # TODO: Add items into an order
     def add_items_in_orders(self, order_id: int, *argv: Item):
+        order = self._get_order(order_id)
         for item in argv:
             if not item.is_available(self._inventory):
-                print(f"{item.name} is not available!\n")
-            else:
-                self.update_inventory(item)
-                item = deepcopy(item)
-                self._get_order(order_id).add_items(item)
+                print(f"{item.name} is not available!")
+                return
+        order.add_items(*argv)
 
     # TODO: Delete items from an order
     def del_items_in_orders(self, order_id: int, *argv: Item):
@@ -91,7 +92,7 @@ class OrderSystem:
         order.delete_items(*argv)
 
 
-    # Authorise payment for an order
+    # TODO: Authorise payment for an order
     def pay_order(self, order_id: int):
         order = self._get_order(order_id)
         if not order:
@@ -105,21 +106,21 @@ class OrderSystem:
         else:
             print('Payment not authorised.')
 
-    def update_inventory(self, item: Item):
-        if item.type == "Sides" or item.type == "Drinks":
-            for key,ingredient in item.ingredients.items():
-                self.inventory.update_stock(key,-ingredient.amount)
-    
+    def update_order(self,order_id,username = 'NONE',password = 'NONE'):
+        if self._staff_system.is_authenticated == False:
+            if self._staff_system.login(username,password) == False:
+                print('Invalid login')
+                return
+        order = self._get_order(order_id)
+        order.is_prepared = True
+        self._pending_orders.remove(order)
+        self._completed_orders.append(order)
+
+
+
     '''
     property
     '''
     @property
     def inventory(self):
         return self._inventory
-    
-    @property
-    def total_order(self):
-        return self._norder
-
-if __name__ == "__main__":
-    pass
