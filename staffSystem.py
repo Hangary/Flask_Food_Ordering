@@ -24,10 +24,10 @@ Some application case in the main sytem: (from teacher)
 
 class StaffSystem(object):
 
-    def __init__(self, staff, staff_details: dict):
+    def __init__(self, staff:dict):
+        self._staff = {}
         self._staff = staff
-        self._staff_details = {}
-        self._staff_details = staff_details
+      #  self._staff_details = staff_details
         self._is_authenticated = False
 
     
