@@ -18,6 +18,8 @@ You are required to maintain a log book through the entire project that records:
 
 Kanadech, Gary, Gaurang
 
+-----
+
 ## 23/3 Week 05 Regular Meeting
 
 *Location: Library*
@@ -39,6 +41,8 @@ Kanadech, Gary, Gaurang
 
 - Not sure whether the class diagram is correct
 
+----
+
 ## 27/3 Week 06 Regular Meeting
 
 *Location: Lab*
@@ -51,17 +55,13 @@ Decisions:
 - Finish the first version of the Class Diagram
 - Begin implementing more features based on the draft codes
 
-![iter2](/Users/Hangar/Downloads/iter2.png)
-
-
-
 ## 30/3 Week 06 Online Discussion
 
 *Location: Online, Messenger*
 *Participants: Kanadech, Gary, Gaurang*
 *Duration: 1 hrs*
 
-**Milestones:** Finish the basic skeleton of the project codes
+**Milestones**: Finish the basic skeleton of the project codes
 
 **Decisions**:
 
@@ -75,3 +75,23 @@ Decisions:
 - *Gary*: Finish the user story part 1 and some basic tests
 - *Gaurang*: Implement the staff system and login function
 
+------
+
+## 1/4 Week 07 Review Meeting
+
+*Location: Columbo Theatre*
+*Participants: Kanadech, Gary*
+
+**Milestones:** Finish the `system_creator` and user stories for drinks and sides.
+
+**Content**:
+
+- Found out some problems in our codes
+- Decided to refactor our codes to make it more orderly
+
+**Obstacle**: For the same user stories, we use different implementations. So we have to reach a consensus about how should we use our classes.
+
+**Tasks to do**:
+
+1. Refactor our codes and fix some logical bugs
+2. Add more features like `exception handling` into our codes
