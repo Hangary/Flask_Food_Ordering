@@ -39,8 +39,8 @@ class Order(object):
             else:
                 self._items[item.name] = [item]
         self.calculate_price()
-
-    # TODO: delete items from an order, input should be names of items
+        
+    #function to delete items from order
     def delete_items(self, *argv: str):
         for item_name in argv:
             if item_name in self._items.keys():

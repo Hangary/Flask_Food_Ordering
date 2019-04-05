@@ -52,7 +52,7 @@ class OrderSystem:
     '''
 
     # Add an order into the system
-    def add_order(self, new_order: Order):
+    def _add_order(self, new_order: Order):
         self._pending_orders.append(new_order)
 
     # return an order based on an order id
@@ -68,7 +68,7 @@ class OrderSystem:
         new_orderId = self._norder + 1
         new_order = Order(new_orderId)
         self._norder += 1
-        self.add_order(new_order)
+        self._add_order(new_order)
         return new_orderId
 
     # Display the details of an order
@@ -93,11 +93,8 @@ class OrderSystem:
 
 
     # TODO: Authorise payment for an order
-    def pay_order(self, order_id: int):
-        order = self._get_order(order_id)
-        if not order:
-            return
-        print('Order: {}, total price: ${:.2f}'.format(order_id, order.price))
+    def _pay_order(self, order: Order):
+        print('Order: {}, total price: ${:.2f}'.format(order.order_id, order.price))
 
         answer = input('Authorise payment? (yes/no) ')
         if answer.lower() == 'yes':
@@ -115,6 +112,17 @@ class OrderSystem:
         order.is_prepared = True
         self._pending_orders.remove(order)
         self._completed_orders.append(order)
+
+    def checkout(self,order_id: int):
+        order = self._get_order(order_id)
+        if not order:
+            print("Order does not exist")
+            return
+        print("Your final order is")
+        self.display_order(order_id)
+        self._pay_order(order)
+
+        
 
 
 
