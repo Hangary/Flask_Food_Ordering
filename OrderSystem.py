@@ -112,7 +112,7 @@ class OrderSystem:
         order.is_prepared = True
         self._pending_orders.remove(order)
         self._completed_orders.append(order)
-
+    #checking out after placing order
     def checkout(self,order_id: int):
         order = self._get_order(order_id)
         if not order:
@@ -121,6 +121,16 @@ class OrderSystem:
         print("Your final order is")
         self.display_order(order_id)
         self._pay_order(order)
+        #updating inventory after order is paid
+        if (order.is_payed):
+            for items_list in order.items.values():
+                for item in items_list:
+                    for ingredient in item.ingredients.values():
+                        self._inventory.update_stock(ingredient.name,-ingredient.amount)
+
+
+                    
+
 
         
 

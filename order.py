@@ -15,7 +15,7 @@ class Order(object):
         self._is_prepared = False         # boolean, whether it is prepared or not
 
         # Customized fields:
-        # Dictionary key = item name value = list of item (to support duplicate)
+        # Dictionary key = item name, value = list of item (to support duplicate)
         self._items = { }
         # float, the total price for the order
         self._price = float('nan')
@@ -39,7 +39,7 @@ class Order(object):
             else:
                 self._items[item.name] = [item]
         self.calculate_price()
-        
+
     #function to delete items from order
     def delete_items(self, *argv: str):
         for item_name in argv:
@@ -78,6 +78,10 @@ class Order(object):
     @property
     def is_prepared(self):
         return self._is_prepared
+
+    @property
+    def is_payed(self):
+        return self._is_payed
 
     @property
     def order_id(self):
