@@ -102,8 +102,9 @@ class OrderSystem:
             order.update_payment_status(True)
         else:
             print('Payment not authorised.')
-
+    # function for staff to remove orders which are completed from the list
     def update_order(self,order_id,username = 'NONE',password = 'NONE'):
+        #authorising to make sure only staff can remove orders
         if self._staff_system.is_authenticated == False:
             if self._staff_system.login(username,password) == False:
                 print('Invalid login')
