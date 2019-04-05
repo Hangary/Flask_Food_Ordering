@@ -133,7 +133,17 @@ def test_persistance():
     for i in range(1,system.total_order+1):
         system.display_order(i)
 
+def test_mains3():
+    #TODO: before first run $ rm full_order.dat
+    # Unpickle the full_order.dat here
+    # Checkout order_id 1
+    # inspect if the inventory is being decremented correctly
+    # 1st run seems ok? Modify the fucntion so that it checkout everyorder in the pending_order list
+    # inspect that everyorder is in completed_order list
+    # may be do some testings on your staff class here too.
+    pass
 
 if __name__ == "__main__":
     test_mains2()
+    test_mains3()
     test_persistance()
