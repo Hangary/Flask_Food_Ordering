@@ -2,7 +2,7 @@ from ingredient import *
 from inventory import *
 import math
 '''
-This is a class for food items such as burgers, drinks, sides
+This is a class for food items such as burgers, wraps, drinks and sides
 A completely customized burger with many ingredients will be classified as an item
 to be put in an order
 
@@ -37,8 +37,11 @@ class Item(object):
     # This method is not suitable for Mains class
     def _check_availability(self, inventory: Inventory):
         for ingredient in self._ingredients.values():
-            if (not isNaN(ingredient.amount) and ingredient.amount > 0):
-                if not inventory.is_available(ingredient.name, ingredient.amount):
+            if ingredient.amount == 0:
+                self._is_available = False
+                return
+            else:
+                if (not isNaN(ingredient.amount) and not inventory.is_available(ingredient.name, ingredient.amount)):
                     self._is_available = False
                     return
         self._is_available = True
@@ -98,6 +101,7 @@ class Main(Item):
         # float, price + additional price
         self._total_price = price
 
+    # Code to add ingredients in the main
     def add_ingredients(self, *argv: Ingredient):
         for ingredient in argv:
             if "Bun" in ingredient.name:
@@ -129,11 +133,13 @@ class Main(Item):
                 if ingredient_type in self._max_limit.keys():
                     if total_amount > self._max_limit[ingredient_type]:
                         print(f"{ingredient_type} are more than the max amount!")
-                        return f"{ingredient_type} are more than the max amount!"
+                        return
+                       # return f"{ingredient_type} are more than the max amount!"
                 # if ingredient available, update inventory
                 if not inventory.is_available(ingredient.name, ingredient.amount):
                     print(f"{ingredient.name} is not enough in the inventory!")
-                    return f"{ingredient_type} are more than the max amount!"
+                    return
+                   # return f"{ingredient_type} are more than the max amount!"
                 self._ingredients[ingredient_type][ingredient.name] = Ingredient(ingredient.name,ingredient.amount,additional_price= ingredient.additional_price)
                 inventory.update_stock(ingredient.name, -ingredient.amount)
         elif ingredient_type is "Other":
