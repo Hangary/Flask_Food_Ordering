@@ -39,7 +39,8 @@ class Inventory(object):
                 unavailable_ingredients.append(ingredient.name)
             elif self.is_available(ingredient.name, ingredient.minimum):
                 unavailable_ingredients.append(ingredient.name)
-        print(unavailable_ingredients)
+        return unavailable_ingredients
+    
     #get ingredient details
     def get_ingredient(self,name):
         return self._ingredients[name]

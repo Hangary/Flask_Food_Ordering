@@ -3,6 +3,7 @@ from order import Order
 from menu import Menu
 from inventory import Inventory
 from staffSystem import *
+from copy import deepcopy
 
 '''
 This is the main interface for both customers and staff.
@@ -60,8 +61,8 @@ class OrderSystem:
         for order in self._pending_orders:
             if order.order_id == order_id:
                 return order
-            else:
-                return None
+        else:
+            return None
 
     # Make a new online order, add it into the system, and then return the order id
     def make_order(self) -> int:
@@ -83,8 +84,10 @@ class OrderSystem:
         for item in argv:
             if not item.is_available(self._inventory):
                 print(f"{item.name} is not available!")
-                return
-        order.add_items(*argv)
+            else:
+                item = deepcopy(item)
+                order.add_items(item)
+        #order.add_items(*argv)
 
     # TODO: Delete items from an order
     def del_items_in_orders(self, order_id: int, *argv: Item):
@@ -130,16 +133,13 @@ class OrderSystem:
                         self._inventory.update_stock(ingredient.name,-ingredient.amount)
 
 
-                    
-
-
-        
-
-
-
     '''
     property
     '''
     @property
     def inventory(self):
         return self._inventory
+
+    @property
+    def total_order(self):
+        return self._norder
