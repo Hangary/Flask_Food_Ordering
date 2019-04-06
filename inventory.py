@@ -37,7 +37,7 @@ class Inventory(object):
         for ingredient in self._ingredients.values():
             if ingredient.is_soldout:
                 unavailable_ingredients.append(ingredient.name)
-            elif self.is_available(ingredient.name, ingredient.minimum):
+            elif not self.is_available(ingredient.name, ingredient.minimum):
                 unavailable_ingredients.append(ingredient.name)
         return unavailable_ingredients
     
