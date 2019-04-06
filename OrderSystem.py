@@ -113,9 +113,20 @@ class OrderSystem:
                 print('Invalid login')
                 return
         order = self._get_order(order_id)
-        order.is_prepared  = True
-        self._pending_orders.remove(order)
-        self._completed_orders.append(order)
+        if(order and order in self._pending_orders):
+            order.is_prepared  = True
+            self._pending_orders.remove(order)
+            self._completed_orders.append(order)
+        else:
+            print("Order already completed")
+
+    def display_order_lists(self):
+        print("-----List of Pending orders---------")
+        for orders in self._pending_orders:
+            print(orders)
+        print("-----List of completed orders---------")
+        for complete_orders in self._completed_orders:
+            print(complete_orders)
     #checking out after placing order
     def checkout(self,order_id: int):
         order = self._get_order(order_id)

@@ -224,9 +224,15 @@ def test_staff_mark_order():
         print("File not Found")
         assert(False)
     system.update_order(1,'Gaurang','1234')
-    print(system.completed_orders)
-    print(system.pending_orders)
+
+    system.display_order_lists()
     
+    system.update_order(2,'Gaurang','1234')
+    system.update_order(3,'Gaurang','1234')
+    system.update_order(4,'Gaurang','1234')
+
+
+    system.display_order_lists()
     with open('full_order.dat','wb') as f:
         pickle.dump(system,f,pickle.HIGHEST_PROTOCOL)   
 
