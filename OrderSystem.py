@@ -40,6 +40,7 @@ class OrderSystem:
             if item:
                 return item
         print(f"{item_name} not in the system")
+        return f"{item_name} not in the system"
 
     # display a menu
     def display_menu(self, menu_name: str):
@@ -47,6 +48,7 @@ class OrderSystem:
             self._menus[menu_name].display()
         else:
             print(f"{menu_name} menu not exist!")
+            return f"{menu_name} menu not exist!"
 
     '''
     Order part

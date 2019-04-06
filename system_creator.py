@@ -116,7 +116,7 @@ def create_drinks_menu(file_address: str) -> Menu:
 
     return drinks_menu
 
-
+### Creating system with pickling
 def create_save_system(mains: Menu, sides: Menu, drinks: Menu, inventory: Inventory, staff_system: StaffSystem) -> OrderSystem:
     system = OrderSystem(
         Menus={"Mains": mains,
@@ -131,6 +131,16 @@ def create_save_system(mains: Menu, sides: Menu, drinks: Menu, inventory: Invent
 
     return system
 
+### Creating system without pickling
+def create_system(mains: Menu, sides: Menu, drinks: Menu, inventory: Inventory, staff_system: StaffSystem) -> OrderSystem:
+    system = OrderSystem(
+        Menus={"Mains": mains,
+               "Sides": sides,
+               "Drinks": drinks},
+        Inventory=inventory,
+        Staff_system=staff_system
+    )
+    return system
 
 if __name__ == "__main__":
 
