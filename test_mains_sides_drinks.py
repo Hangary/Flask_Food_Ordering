@@ -214,7 +214,7 @@ def test_mains3():
    # pass
     def test_4():
         system.update_order(orderID,'Gaurang','1234')
-     print(system.completed_orders)
+        print(system.completed_orders)
         print(system.pending_orders)
 
 if __name__ == "__main__":
