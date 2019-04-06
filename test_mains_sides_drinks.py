@@ -113,8 +113,8 @@ def test_mains2():
     print(f"Amount of Sesame Bun left {system.inventory.get_ingredient('Sesame Bun').amount}")
     print("Amount of Lettuce left {}".format(system.inventory.get_ingredient('Lettuce').amount))
     print("Amount of Nugget left {}".format(system.inventory.get_ingredient('Nugget').amount))
-    #print("Amount of Tomato left {}".format(system.inventory.get_ingredient('Tomato').amount))
-    #print("Amount of Cheese left {}".format(system.inventory.get_ingredient('Cheese').amount))
+    print("Amount of Tomato left {}".format(system.inventory.get_ingredient('Tomato').amount))
+    print("Amount of Cheddar Cheese left {}".format(system.inventory.get_ingredient('Cheddar Cheese').amount))
 
     print("~~~~~~~~~~~~~~~~~~Showing Mains Menu~~~~~~~~~~~~~~~~")
     system.display_menu("Mains")
@@ -140,8 +140,8 @@ def test_mains3():
         with open('full_order.dat','rb') as f:
             system = pickle.load(f)
     except FileNotFoundError:
-        print("File not Found")
-        assert(False) 
+        print("File not found creating new system")
+        system = setup()
 
     orderID = system.make_order()
     print(orderID)
@@ -196,14 +196,24 @@ def test_mains3():
 
     system._get_order(orderID).calculate_price()
     system.display_order(orderID)
+    print(f"Checking out Order {orderID}")
     system.checkout(orderID)
     print(f"Amount of Sesame Bun left {system.inventory.get_ingredient('Sesame Bun').amount}")
+    print(f"Amount of Muffin Bun left {system.inventory.get_ingredient('Muffin Bun').amount}")
     print("Amount of Lettuce left {}".format(system.inventory.get_ingredient('Lettuce').amount))
     print("Amount of Nugget left {}".format(system.inventory.get_ingredient('Nugget').amount))
+<<<<<<< HEAD
     #print("Amount of Tomato left {}".format(system.inventory.get_ingredient('Tomato').amount))
     #print("Amount of Cheese left {}".format(system.inventory.get_ingredient('Cheese').amount))
 
 
+=======
+    print("Amount of Tomato left {}".format(system.inventory.get_ingredient('Tomato').amount))
+    print("Amount of Chicken Patty left {}".format(system.inventory.get_ingredient('Chicken Patty').amount))
+    
+    with open('full_order.dat','wb') as f:
+        pickle.dump(system,f,pickle.HIGHEST_PROTOCOL)
+>>>>>>> Fixed a bug where the inventory is showing nan
     #TODO: before first run $ rm full_order.dat
     # Unpickle the full_order.dat here
     # Checkout order_id 1
@@ -218,6 +228,10 @@ def test_mains3():
         print(system.pending_orders)
 
 if __name__ == "__main__":
-    test_mains2()
+    #test_mains2()
     test_mains3()
+<<<<<<< HEAD
   #  test_persistance()
+=======
+    test_persistance()
+>>>>>>> Fixed a bug where the inventory is showing nan

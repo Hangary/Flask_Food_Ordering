@@ -4,7 +4,7 @@ from menu import Menu
 from inventory import Inventory
 from staffSystem import *
 from copy import deepcopy
-
+import math
 '''
 This is the main interface for both customers and staff.
 '''
@@ -99,7 +99,7 @@ class OrderSystem:
     def _pay_order(self, order: Order):
         print('Order: {}, total price: ${:.2f}'.format(order.order_id, order.price))
 
-        answer = input('Authorise payment? (yes/no) ')
+        answer = 'yes' #input('Authorise payment? (yes/no) ')
         if answer.lower() == 'yes':
             print('Payment authorised.')
             order.update_payment_status(True)
@@ -130,11 +130,13 @@ class OrderSystem:
             for items_list in order.items.values():
                 for item in items_list:
                     for ingredient_list in item.ingredients.values():
-                        if dict == type(ingredient_list):
-                            for ingredient in ingredient_list.values():                    
-                                self._inventory.update_stock(ingredient.name,-ingredient.amount)
-                        else:
+                        if ingredient_list.__class__.__name__ == "Ingredient":
                             self._inventory.update_stock(ingredient_list.name,-ingredient_list.amount)
+                        else: 
+                            for ingredient in ingredient_list.values():
+                                assert(ingredient.__class__.__name__ == "Ingredient")
+                                if not isNaN(ingredient.amount):
+                                    self._inventory.update_stock(ingredient.name,-ingredient.amount)
 
 
     '''
