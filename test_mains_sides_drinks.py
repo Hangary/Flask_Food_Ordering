@@ -46,8 +46,8 @@ def test_mains():
     # review this burger
     order.items['Burger'][0].review()
 
-
-def test_mains2():
+### Should not call this because this will allow customer to create infinite order
+def test_mains_no_checkout():
 
     try:
         with open('full_order.dat','rb') as f:
@@ -113,8 +113,8 @@ def test_mains2():
     print(f"Amount of Sesame Bun left {system.inventory.get_ingredient('Sesame Bun').amount}")
     print("Amount of Lettuce left {}".format(system.inventory.get_ingredient('Lettuce').amount))
     print("Amount of Nugget left {}".format(system.inventory.get_ingredient('Nugget').amount))
-    #print("Amount of Tomato left {}".format(system.inventory.get_ingredient('Tomato').amount))
-    #print("Amount of Cheese left {}".format(system.inventory.get_ingredient('Cheese').amount))
+    print("Amount of Tomato left {}".format(system.inventory.get_ingredient('Tomato').amount))
+    print("Amount of Cheddar Cheese left {}".format(system.inventory.get_ingredient('Cheddar Cheese').amount))
 
     print("~~~~~~~~~~~~~~~~~~Showing Mains Menu~~~~~~~~~~~~~~~~")
     system.display_menu("Mains")
@@ -135,13 +135,13 @@ def test_persistance():
     for i in range(1,system.total_order+1):
         system.display_order(i)
 
-def test_mains3():
+def test_mains_checkout():
     try:
         with open('full_order.dat','rb') as f:
             system = pickle.load(f)
     except FileNotFoundError:
-        print("File not Found")
-        assert(False) 
+        print("File not found creating new system")
+        system = setup()
 
     orderID = system.make_order()
     print(orderID)
@@ -196,14 +196,17 @@ def test_mains3():
 
     system._get_order(orderID).calculate_price()
     system.display_order(orderID)
+    print(f"Checking out Order {orderID}")
     system.checkout(orderID)
     print(f"Amount of Sesame Bun left {system.inventory.get_ingredient('Sesame Bun').amount}")
+    print(f"Amount of Muffin Bun left {system.inventory.get_ingredient('Muffin Bun').amount}")
     print("Amount of Lettuce left {}".format(system.inventory.get_ingredient('Lettuce').amount))
     print("Amount of Nugget left {}".format(system.inventory.get_ingredient('Nugget').amount))
-    #print("Amount of Tomato left {}".format(system.inventory.get_ingredient('Tomato').amount))
-    #print("Amount of Cheese left {}".format(system.inventory.get_ingredient('Cheese').amount))
-
-
+    print("Amount of Tomato left {}".format(system.inventory.get_ingredient('Tomato').amount))
+    print("Amount of Chicken Patty left {}".format(system.inventory.get_ingredient('Chicken Patty').amount))
+    
+    with open('full_order.dat','wb') as f:
+        pickle.dump(system,f,pickle.HIGHEST_PROTOCOL)
     #TODO: before first run $ rm full_order.dat
     # Unpickle the full_order.dat here
     # Checkout order_id 1
@@ -212,12 +215,31 @@ def test_mains3():
     # inspect that everyorder is in completed_order list
     # may be do some testings on your staff class here too.
    # pass
+<<<<<<< HEAD
     def test_4():
         system.update_order(orderID,'Gaurang','1234')
         print(system.completed_orders)
         print(system.pending_orders)
+=======
+
+def test_staff_mark_order():
+    try:
+        with open('full_order.dat','rb') as f:
+            system = pickle.load(f)
+    except FileNotFoundError:
+        print("File not Found")
+        assert(False)
+    system.update_order(1,'Gaurang','1234')
+    print(system.completed_orders)
+    print(system.pending_orders)
+    
+    with open('full_order.dat','wb') as f:
+        pickle.dump(system,f,pickle.HIGHEST_PROTOCOL)   
+>>>>>>> 22030d85434f4d4fc58a4a6a1b9d6261a0e87988
 
 if __name__ == "__main__":
-    test_mains2()
-    test_mains3()
-  #  test_persistance()
+    test_mains_checkout()   #create & checkout order 1
+    test_mains_checkout()   #create & checkout order 2
+    test_mains_checkout()   #create & checkout order 3
+    test_mains_checkout()   #create & checkout order 4
+    test_staff_mark_order() #mark order 1 as completed
