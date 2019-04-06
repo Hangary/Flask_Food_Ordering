@@ -12,7 +12,7 @@ def setup():
         sides=create_sides_menu("docs/Menus.csv"),
         drinks=create_drinks_menu("docs/Menus.csv"),
         inventory=create_inventory("docs/Inventory.csv"),
-       # staff_system=create_staffsystem("docs/StaffSystem.csv")
+        staff_system=create_staffsystem("docs/StaffSystem.csv")
     )
     
     return system
@@ -108,6 +108,7 @@ def test_mains2():
 
     system._get_order(orderID).calculate_price()
     system.display_order(orderID)
+    system.checkout(orderID)
 
     print(f"Amount of Sesame Bun left {system.inventory.get_ingredient('Sesame Bun').amount}")
     print("Amount of Lettuce left {}".format(system.inventory.get_ingredient('Lettuce').amount))
@@ -196,11 +197,15 @@ def test_mains3():
     system._get_order(orderID).calculate_price()
     system.display_order(orderID)
     system.checkout(orderID)
+    system.update_order(orderID,'Gaurang','1234')
+    print(system.completed_orders)
+    print(system.pending_orders)
     print(f"Amount of Sesame Bun left {system.inventory.get_ingredient('Sesame Bun').amount}")
     print("Amount of Lettuce left {}".format(system.inventory.get_ingredient('Lettuce').amount))
     print("Amount of Nugget left {}".format(system.inventory.get_ingredient('Nugget').amount))
     #print("Amount of Tomato left {}".format(system.inventory.get_ingredient('Tomato').amount))
     #print("Amount of Cheese left {}".format(system.inventory.get_ingredient('Cheese').amount))
+
 
     #TODO: before first run $ rm full_order.dat
     # Unpickle the full_order.dat here
@@ -214,4 +219,4 @@ def test_mains3():
 if __name__ == "__main__":
     test_mains2()
     test_mains3()
-   # test_persistance()
+  #  test_persistance()

@@ -1,4 +1,5 @@
 from item import Item
+from inventory import Inventory
 from ingredient import Ingredient
 '''
 TODO: This is a class used to store information about online orders.
@@ -12,7 +13,7 @@ class Order(object):
 
         # Order status fields:
         self._is_payed = False            # boolean, whether it is payed or not
-        self._is_prepared = False         # boolean, whether it is prepared or not
+        self._is_prepared = False       # boolean, whether it is prepared or not
 
         # Customized fields:
         # Dictionary key = item name, value = list of item (to support duplicate)
@@ -38,7 +39,7 @@ class Order(object):
                 self._items[item.name].append(item)
             else:
                 self._items[item.name] = [item]
-        self.calculate_price()
+            self.calculate_price()
 
     #function to delete items from order
     def delete_items(self, *argv: str):
@@ -90,6 +91,10 @@ class Order(object):
     @property
     def price(self):
         return self._price
+    
+    @is_prepared.setter
+    def is_prepared(self,vara):
+       self._is_prepared = vara
 
     '''
     str

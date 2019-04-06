@@ -113,7 +113,7 @@ class OrderSystem:
                 print('Invalid login')
                 return
         order = self._get_order(order_id)
-        order.is_prepared = True
+        order.is_prepared  = True
         self._pending_orders.remove(order)
         self._completed_orders.append(order)
     #checking out after placing order
@@ -143,7 +143,16 @@ class OrderSystem:
     @property
     def inventory(self):
         return self._inventory
+    
+    @property
+    def pending_orders(self):
+        return self._pending_orders
+    
+    @property
+    def completed_orders(self):
+        return self._completed_orders
 
     @property
     def total_order(self):
         return self._norder
+
