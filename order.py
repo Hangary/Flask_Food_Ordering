@@ -65,6 +65,8 @@ class Order(object):
             for item in item_list:
                 print(item)
         print('Total price: ${}'.format(self._price))
+        print("Paid?",self.is_payed)
+        print("Prepared?",self.is_prepared)
 
 
     

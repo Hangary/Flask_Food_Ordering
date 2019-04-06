@@ -75,8 +75,13 @@ class OrderSystem:
         return new_orderId
 
     # Display the details of an order
+    # Use this function to display order at anytime
     def display_order(self, order_id: int):
         order = self._get_order(order_id)
+        if order == None:
+            for order in self._completed_orders:
+                if order.order_id == order_id:
+                    break
         if order:
             order.display()
 
