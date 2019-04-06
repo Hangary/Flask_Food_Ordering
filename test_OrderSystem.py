@@ -8,7 +8,7 @@ import csv
 
 import pytest
 
-@pytest.fixture
+@pytest.fixture(scope = "module")
 def setup():
     system = create_system(
         mains=create_mains_menu("docs/Menus.csv"),
@@ -39,4 +39,26 @@ def test_make_order(setup):
     setup.make_order()
     assert setup.total_order == 1
 
+def test_add_order(setup):
+    # add some drinks and sides
+    # continue from above
+    assert setup.total_order == 1
+    someList = ["Coke Can","Nugget 6 pack","OrangeJuice_Small","Med Fries"]
+    setup.add_items_in_orders(
+        1,
+        setup.get_item(someList[0]),
+        setup.get_item(someList[1]),
+        setup.get_item(someList[2]),
+        setup.get_item(someList[3])
+    )
+    for itemName in someList:
+        assert(itemName in setup._get_order(1).items.keys())
 
+def test_remove_order(setup):
+    
+    assert setup.total_order == 1
+    someList = ["Coke Can","Nugget 6 pack","OrangeJuice_Small"]
+    setup.del_items_in_orders(1,someList[0],someList[1],someList[2])
+    for itemName in someList:
+        assert(itemName not in setup._get_order(1).items.keys())
+    assert("Med Fries" in setup._get_order(1).items.keys())

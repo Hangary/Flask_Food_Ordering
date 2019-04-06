@@ -97,7 +97,7 @@ class OrderSystem:
         #order.add_items(*argv)
 
     # TODO: Delete items from an order
-    def del_items_in_orders(self, order_id: int, *argv: Item):
+    def del_items_in_orders(self, order_id: int, *argv: str):
         order = self._get_order(order_id)
         order.delete_items(*argv)
 
