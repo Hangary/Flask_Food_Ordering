@@ -61,6 +61,10 @@ class Ingredient(object):
     @property 
     def multiplier(self):
         return self._multiplier
+    
+    @property
+    def unit(self):
+        return self._unit
     '''
     str
     '''
