@@ -215,12 +215,6 @@ def test_mains_checkout():
     # inspect that everyorder is in completed_order list
     # may be do some testings on your staff class here too.
    # pass
-<<<<<<< HEAD
-    def test_4():
-        system.update_order(orderID,'Gaurang','1234')
-        print(system.completed_orders)
-        print(system.pending_orders)
-=======
 
 def test_staff_mark_order():
     try:
@@ -235,7 +229,6 @@ def test_staff_mark_order():
     
     with open('full_order.dat','wb') as f:
         pickle.dump(system,f,pickle.HIGHEST_PROTOCOL)   
->>>>>>> 22030d85434f4d4fc58a4a6a1b9d6261a0e87988
 
 if __name__ == "__main__":
     test_mains_checkout()   #create & checkout order 1
