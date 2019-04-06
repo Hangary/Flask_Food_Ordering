@@ -42,9 +42,9 @@ class StaffSystem(object):
         for staff_member in self._staff:
             if username == staff_member.username:
                 print('User-name already taken, please enter another username')
-        else:
-            new_staff = Staff(username,password)
-            self._staff.append(new_staff)
+                return
+        new_staff = Staff(username,password)
+        self._staff.append(new_staff)
 
 
     @property

@@ -108,6 +108,7 @@ class Main(Item):
                 self._ingredients["Bun"][ingredient.name] = ingredient
             elif "Patty" in ingredient.name:
                 self._ingredients["Patty"][ingredient.name] = ingredient
+            #This wrap refers to base material which is used in constructing the main wrap
             elif  "Wrap" in ingredient.name:
                 self._ingredients["Wrap"][ingredient.name] = ingredient
             else:
@@ -122,7 +123,7 @@ class Main(Item):
     '''
     modify functions
     '''
-
+    #private function to modify ingredients 
     def _modify_ingredients(self, ingredient_type: str, inventory: Inventory, *argv: Ingredient):
         # check input
         if ingredient_type in ("Bun", "Patty", "Wrap"):
@@ -141,7 +142,7 @@ class Main(Item):
                     return
                    # return f"{ingredient_type} are more than the max amount!"
                 self._ingredients[ingredient_type][ingredient.name] = Ingredient(ingredient.name,ingredient.amount,additional_price= ingredient.additional_price)
-                inventory.update_stock(ingredient.name, -ingredient.amount)
+                #inventory.update_stock(ingredient.name, -ingredient.amount)
         elif ingredient_type is "Other":
             for ingredient in argv:
                 # if more than max limit, reject
@@ -152,9 +153,9 @@ class Main(Item):
                 # if ingredient available, update inventory
                 if not inventory.is_available(ingredient.name, ingredient.amount):
                     print(f"{ingredient.name} is not enough in the inventory!")
-                    return f"{ingredient.name} are more than the max amount!"
+                    return #f"{ingredient.name} are more than the max amount!"
                 self._ingredients[ingredient_type][ingredient.name] = Ingredient(ingredient.name,ingredient.amount,additional_price= ingredient.additional_price)
-                inventory.update_stock(ingredient.name, -ingredient.amount)
+                #inventory.update_stock(ingredient.name, -ingredient.amount)
         else:
             print("invalid ingredient type!")
         

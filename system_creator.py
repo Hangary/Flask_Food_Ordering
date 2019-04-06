@@ -3,6 +3,7 @@ from item import *
 from ingredient import *
 from inventory import *
 from OrderSystem import *
+from staffSystem import *
 import csv
 import pickle
 
@@ -15,6 +16,19 @@ BURGER_BASE_PRICE = 10
 WRAP_BASE_PRICE = 9
 MAX_BUNS = 4
 MAX_PATTIES = 3
+
+
+def create_staffsystem(file_address: str) -> StaffSystem:
+    staffsystem = StaffSystem()
+
+    with open(file_address) as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            staffsystem.add_staff(
+                username=row["User-name"],
+                password=row["Password"]
+            )
+    return staffsystem
 
 
 def create_inventory(file_address: str) -> Inventory:
@@ -103,12 +117,13 @@ def create_drinks_menu(file_address: str) -> Menu:
     return drinks_menu
 
 
-def create_save_system(mains: Menu, sides: Menu, drinks: Menu, inventory: Inventory) -> OrderSystem:
+def create_save_system(mains: Menu, sides: Menu, drinks: Menu, inventory: Inventory):#,staff_system: StaffSystem) -> OrderSystem:
     system = OrderSystem(
         Menus={"Mains": mains,
                "Sides": sides,
                "Drinks": drinks},
-        Inventory=inventory
+        Inventory=inventory,
+       # Staff_system=staff_system
     )
 
     with open('full_order.dat', 'wb') as f:
@@ -123,5 +138,6 @@ if __name__ == "__main__":
         mains=create_mains_menu("Menus.csv"),
         sides=create_sides_menu("Menus.csv"),
         drinks=create_drinks_menu("Menus.csv"),
-        inventory=create_inventory("Inventory.csv")
+        inventory=create_inventory("Inventory.csv"),
+       # staff_system=create_staffsystem("StaffSystem.csv")
     )

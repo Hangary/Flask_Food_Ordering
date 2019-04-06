@@ -129,8 +129,12 @@ class OrderSystem:
         if (order.is_payed):
             for items_list in order.items.values():
                 for item in items_list:
-                    for ingredient in item.ingredients.values():
-                        self._inventory.update_stock(ingredient.name,-ingredient.amount)
+                    for ingredient_list in item.ingredients.values():
+                        if dict == type(ingredient_list):
+                            for ingredient in ingredient_list.values():                    
+                                self._inventory.update_stock(ingredient.name,-ingredient.amount)
+                        else:
+                            self._inventory.update_stock(ingredient_list.name,-ingredient_list.amount)
 
 
     '''
