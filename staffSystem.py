@@ -35,7 +35,7 @@ class StaffSystem(object):
         for staff_member in self._staff:
             if staff_member.authenticate(username, password):
                 self._is_authenticated = True
-            return True
+                return True
         return False
 
     def add_staff(self,username,password):
