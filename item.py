@@ -241,8 +241,8 @@ class Wrap(Main):
         }
         # dict<int>
         self._max_limit = {
-            'Wrap':      False,
-            'Patty':    False
+            'Wrap':      1000,
+            'Patty':    1000
             # and other ingredients
         }
 
