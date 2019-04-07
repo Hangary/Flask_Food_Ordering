@@ -52,7 +52,7 @@ def test_add_order(setup):
         setup.get_item(someList[3])
     )
     for itemName in someList:
-        assert(itemName in setup._get_order(1).items.keys())
+        assert(itemName in setup._get_pendingorder(1).items.keys())
 
 def test_remove_order(setup):
     
@@ -60,15 +60,15 @@ def test_remove_order(setup):
     someList = ["Coke Can","Nugget 6 pack","OrangeJuice_Small"]
     setup.del_items_in_orders(1,someList[0],someList[1],someList[2])
     for itemName in someList:
-        assert(itemName not in setup._get_order(1).items.keys())
-    assert("Med Fries" in setup._get_order(1).items.keys())
+        assert(itemName not in setup._get_pendingorder(1).items.keys())
+    assert("Med Fries" in setup._get_pendingorder(1).items.keys())
 
 def test_add_mains_to_order(setup):
 
     assert setup.total_order == 1
     setup.add_items_in_orders(1,setup.get_item("Burger"),setup.get_item("Wrap"))
-    assert "Burger" in setup._get_order(1).items.keys()
-    assert "Wrap" in setup._get_order(1).items.keys()
+    assert "Burger" in setup._get_pendingorder(1).items.keys()
+    assert "Wrap" in setup._get_pendingorder(1).items.keys()
     
 def test_modify_mains(setup):
 
@@ -92,18 +92,18 @@ def test_modify_mains(setup):
     IngListWrap = [wrap,chicken_patty,vegetarian_patty,beef_patty,
                 tomato,lettuce,cheddar_cheese,swiss_cheese,sauce]
 
-    setup._get_order(1).items["Burger"][0].modify_buns(
+    setup._get_pendingorder(1).items["Burger"][0].modify_buns(
         setup.inventory,
         sesame_bun,
         muffin_bun
     )
-    setup._get_order(1).items["Burger"][0].modify_patties(
+    setup._get_pendingorder(1).items["Burger"][0].modify_patties(
         setup.inventory,
         chicken_patty,
         vegetarian_patty,
         beef_patty
     )
-    setup._get_order(1).items["Burger"][0].modify_other_ingredients(
+    setup._get_pendingorder(1).items["Burger"][0].modify_other_ingredients(
         setup.inventory,
         tomato,
         lettuce,
@@ -111,19 +111,19 @@ def test_modify_mains(setup):
         swiss_cheese,
         sauce
     )
-    setup._get_order(1).calculate_price()
-    assert setup._get_order(1).price == 28.5
-    setup._get_order(1).items["Wrap"][0].modify_wraps(
+    setup._get_pendingorder(1).calculate_price()
+    assert setup._get_pendingorder(1).price == 28.5
+    setup._get_pendingorder(1).items["Wrap"][0].modify_wraps(
         setup.inventory,
         wrap
     )
-    setup._get_order(1).items["Wrap"][0].modify_patties(
+    setup._get_pendingorder(1).items["Wrap"][0].modify_patties(
         setup.inventory,
         chicken_patty,
         vegetarian_patty,
         beef_patty
     )
-    setup._get_order(1).items["Wrap"][0].modify_other_ingredients(
+    setup._get_pendingorder(1).items["Wrap"][0].modify_other_ingredients(
         setup.inventory,
         tomato,
         lettuce,
@@ -131,25 +131,25 @@ def test_modify_mains(setup):
         swiss_cheese,
         sauce
     ) 
-    setup._get_order(1).calculate_price()
-    assert setup._get_order(1).price == 38
+    setup._get_pendingorder(1).calculate_price()
+    assert setup._get_pendingorder(1).price == 38
     
-    for things in setup._get_order(1).items["Wrap"][0].ingredients.values():
+    for things in setup._get_pendingorder(1).items["Wrap"][0].ingredients.values():
         for stuff in IngListWrap:
             if stuff.name in things.keys():
                 assert stuff.amount == things[stuff.name].amount and stuff.additional_price == things[stuff.name].additional_price
 
-    for things in setup._get_order(1).items["Burger"][0].ingredients.values():
+    for things in setup._get_pendingorder(1).items["Burger"][0].ingredients.values():
         for stuff in IngListBurger:
             if stuff.name in things.keys():
                 assert stuff.amount == things[stuff.name].amount and stuff.additional_price == things[stuff.name].additional_price
 
 def test_add_more_mains_to_order(setup):
-    assert setup._get_order(1).price == 38
+    assert setup._get_pendingorder(1).price == 38
     setup.add_items_in_orders(1,setup.get_item("Burger"),setup.get_item("Wrap"))
     setup.display_order(1)
-    assert len(setup._get_order(1).items['Burger']) == 2
-    assert len(setup._get_order(1).items['Wrap']) == 2
+    assert len(setup._get_pendingorder(1).items['Burger']) == 2
+    assert len(setup._get_pendingorder(1).items['Wrap']) == 2
 
 def test_modify_mains_2_cant_add_more_than_max(setup):
     #Creating Ingredients
@@ -170,18 +170,18 @@ def test_modify_mains_2_cant_add_more_than_max(setup):
     IngListBurger = [sesame_bun,muffin_bun,chicken_patty,vegetarian_patty,beef_patty,
                 tomato,lettuce,cheddar_cheese,swiss_cheese,sauce]
 
-    setup._get_order(1).items["Burger"][1].modify_buns(
+    setup._get_pendingorder(1).items["Burger"][1].modify_buns(
         setup.inventory,
         sesame_bun,
         muffin_bun
     )
-    setup._get_order(1).items["Burger"][1].modify_patties(
+    setup._get_pendingorder(1).items["Burger"][1].modify_patties(
         setup.inventory,
         chicken_patty,
         vegetarian_patty,
         beef_patty
     )
-    setup._get_order(1).items["Burger"][1].modify_other_ingredients(
+    setup._get_pendingorder(1).items["Burger"][1].modify_other_ingredients(
         setup.inventory,
         tomato,
         lettuce,
@@ -190,21 +190,21 @@ def test_modify_mains_2_cant_add_more_than_max(setup):
         sauce
     )
     setup.display_order(1)
-    setup._get_order(1).calculate_price()
+    setup._get_pendingorder(1).calculate_price()
     # Second burger should reject beef patty (amount of beef patty in burger should be nan)
-    for things in setup._get_order(1).items["Burger"][1].ingredients.values():
+    for things in setup._get_pendingorder(1).items["Burger"][1].ingredients.values():
         for stuff in IngListBurger:
             if stuff.name in things.keys():
                 if stuff.name == 'Beef Patty':
                     assert(isNaN(things[stuff.name].amount))
                 else:
                     assert stuff.amount == things[stuff.name].amount and stuff.additional_price == things[stuff.name].additional_price
-    assert(setup._get_order(1).price == 65.5)
+    assert(setup._get_pendingorder(1).price == 65.5)
 
 def test_check_out_simple(setup):
-    assert(not setup._get_order(1).is_payed)
+    assert(not setup._get_pendingorder(1).is_payed)
     setup.checkout(1)
-    assert(setup._get_order(1).is_payed)
+    assert(setup._get_pendingorder(1).is_payed)
     setup.display_order(1)
 
 def test_inventory_simple(setup):
@@ -223,7 +223,7 @@ def test_inventory_simple(setup):
     assert(setup.inventory.get_ingredient('Wrap').amount == 100-2)
 
 def test_staff_mark_order(setup):
-    order1 = setup._get_order(1)
+    order1 = setup._get_pendingorder(1)
     assert(not order1.is_prepared)
     setup.update_order(1,'Kanadech','4568')
     assert(order1.is_prepared)

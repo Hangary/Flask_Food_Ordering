@@ -58,9 +58,17 @@ class OrderSystem:
     def _add_order(self, new_order: Order):
         self._pending_orders.append(new_order)
 
-    # return an order based on an order id
-    def _get_order(self, order_id: int) -> Order:
+    # return an order based on an order id from pending order
+    def _get_pendingorder(self, order_id: int) -> Order:
         for order in self._pending_orders:
+            if order.order_id == order_id:
+                return order
+        else:
+            return None
+    
+    # return an order based on an order id from pending order
+    def _get_completedorder(self, order_id: int) -> Order:
+        for order in self._completed_orders:
             if order.order_id == order_id:
                 return order
         else:
@@ -77,7 +85,7 @@ class OrderSystem:
     # Display the details of an order
     # Use this function to display order at anytime
     def display_order(self, order_id: int):
-        order = self._get_order(order_id)
+        order = self._get_pendingorder(order_id)
         if order == None:
             for order in self._completed_orders:
                 if order.order_id == order_id:
@@ -87,18 +95,19 @@ class OrderSystem:
 
     # TODO: Add items into an order
     def add_items_in_orders(self, order_id: int, *argv: Item):
-        order = self._get_order(order_id)
+        order = self._get_pendingorder(order_id)
         for item in argv:
             if not item.is_available(self._inventory):
                 print(f"{item.name} is not available!")
             else:
+
                 item = deepcopy(item)
                 order.add_items(item)
         #order.add_items(*argv)
 
     # TODO: Delete items from an order
     def del_items_in_orders(self, order_id: int, *argv: str):
-        order = self._get_order(order_id)
+        order = self._get_pendingorder(order_id)
         order.delete_items(*argv)
 
 
@@ -119,11 +128,14 @@ class OrderSystem:
             if self._staff_system.login(username,password) == False:
                 print('Invalid login')
                 return
-        order = self._get_order(order_id)
+        order = self._get_pendingorder(order_id)
         if(order and order in self._pending_orders):
-            order.is_prepared  = True
-            self._pending_orders.remove(order)
-            self._completed_orders.append(order)
+            if(order.is_payed == True):
+                order.is_prepared  = True
+                self._pending_orders.remove(order)
+                self._completed_orders.append(order)
+            else:
+                print("Payment for the order not completed")
         else:
             print("Order already completed")
 
@@ -136,7 +148,7 @@ class OrderSystem:
             print(complete_orders)
     #checking out after placing order
     def checkout(self,order_id: int):
-        order = self._get_order(order_id)
+        order = self._get_pendingorder(order_id)
         if not order:
             print("Order does not exist")
             return
@@ -155,6 +167,8 @@ class OrderSystem:
                                 assert(ingredient.__class__.__name__ == "Ingredient")
                                 if not isNaN(ingredient.amount):
                                     self._inventory.update_stock(ingredient.name,-ingredient.amount)
+        else:
+            self._pending_orders.remove(order)
 
 
     '''
