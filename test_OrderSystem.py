@@ -245,6 +245,31 @@ def test_checkout_order_with_lots_of_items(setup):
     setup.display_order(orderID)
     setup.checkout(orderID)
     setup.display_order(orderID)
-    assert(setup.inventory.get_ingredient('Nugget').amount == 1)
-    assert(0)
+    #assert(setup.inventory.get_ingredient('Nugget').amount == 1)
+    assert(setup.inventory.get_ingredient('OrangeJuice').amount == 1000-1000)
+    assert(setup.inventory.get_ingredient('Ice').amount == 1000-80)
 
+    #Try making new order and reordering OrangeJuice
+    #Should return empty item as OrangeJuice is out of stock
+    orderID_next = setup.make_order()
+    setup.add_items_in_orders(orderID_next,
+            setup.get_item(someList[2]))
+    assert(not setup._get_pendingorder(orderID_next).items)
+
+    #Try adding lettuce in burger
+    setup.add_items_in_orders(orderID_next, setup.get_item("Burger"))
+    lettuce = Ingredient(name="Lettuce", amount=4, additional_price=0.2)
+    swiss_cheese = Ingredient(name = "Swiss Cheese", amount = 6, additional_price= 0.5)
+    setup._get_pendingorder(orderID_next).items["Burger"][0].modify_other_ingredients(
+        setup.inventory,
+        swiss_cheese,
+        lettuce
+    )
+    assert setup._get_pendingorder(orderID_next).items["Burger"][0].ingredients['Other']["Swiss Cheese"].amount == 6
+    assert isNaN(setup._get_pendingorder(orderID_next).items["Burger"][0].ingredients['Other']["Lettuce"].amount)
+
+def test_inventory_unavailable(setup):
+    assert len(setup.inventory.display_unavailable_ingredients()) == 2
+    assert "OrangeJuice" in setup.inventory.display_unavailable_ingredients()
+    assert "Nugget" in setup.inventory.display_unavailable_ingredients()
+    assert(0)
