@@ -228,3 +228,23 @@ def test_staff_mark_order(setup):
     setup.update_order(1,'Kanadech','4568')
     assert(order1.is_prepared)
 
+def test_checkout_order_with_lots_of_items(setup):
+
+    orderID = setup.make_order()
+    someList = ["Coke Can","Nugget 6 pack","OrangeJuice_Small","Med Fries"]
+    setup.add_items_in_orders(orderID,setup.get_item(someList[1]),
+            setup.get_item(someList[1]),
+            setup.get_item(someList[1]),
+            setup.get_item(someList[1]),
+            setup.get_item(someList[1]),
+            setup.get_item(someList[2]),
+            setup.get_item(someList[2]),
+            setup.get_item(someList[2]),
+            setup.get_item(someList[2])
+    )
+    setup.display_order(orderID)
+    setup.checkout(orderID)
+    setup.display_order(orderID)
+    assert(setup.inventory.get_ingredient('Nugget').amount == 1)
+    assert(0)
+
