@@ -81,17 +81,17 @@ def test_mains_no_checkout():
     Modify burger
     '''
 
-    system._get_order(orderID).items["Burger"][0].modify_buns(
+    system._get_pendingorder(orderID).items["Burger"][0].modify_buns(
         system.inventory,
         sesame_bun,
         muffin_bun
     )
-    system._get_order(orderID).items["Burger"][0].modify_patties(
+    system._get_pendingorder(orderID).items["Burger"][0].modify_patties(
         system.inventory,
         chicken_patty,
         vegetarian_patty
     )
-    system._get_order(orderID).items["Burger"][0].modify_other_ingredients(
+    system._get_pendingorder(orderID).items["Burger"][0].modify_other_ingredients(
         system.inventory,
         tomato,
         lettuce
@@ -101,12 +101,12 @@ def test_mains_no_checkout():
     Modify Wrap
     '''
 
-    system._get_order(orderID).items["Wrap"][0].modify_wraps(
+    system._get_pendingorder(orderID).items["Wrap"][0].modify_wraps(
         system.inventory,
         
     )
 
-    system._get_order(orderID).calculate_price()
+    system._get_pendingorder(orderID).calculate_price()
     system.display_order(orderID)
     system.checkout(orderID)
 
@@ -169,17 +169,17 @@ def test_mains_checkout():
     Modify burger
     '''
 
-    system._get_order(orderID).items["Burger"][0].modify_buns(
+    system._get_pendingorder(orderID).items["Burger"][0].modify_buns(
         system.inventory,
         sesame_bun,
         muffin_bun
     )
-    system._get_order(orderID).items["Burger"][0].modify_patties(
+    system._get_pendingorder(orderID).items["Burger"][0].modify_patties(
         system.inventory,
         chicken_patty,
         vegetarian_patty
     )
-    system._get_order(orderID).items["Burger"][0].modify_other_ingredients(
+    system._get_pendingorder(orderID).items["Burger"][0].modify_other_ingredients(
         system.inventory,
         tomato,
         lettuce
@@ -189,12 +189,12 @@ def test_mains_checkout():
     Modify Wrap
     '''
 
-    system._get_order(orderID).items["Wrap"][0].modify_wraps(
+    system._get_pendingorder(orderID).items["Wrap"][0].modify_wraps(
         system.inventory,
         
     )
 
-    system._get_order(orderID).calculate_price()
+    system._get_pendingorder(orderID).calculate_price()
     system.display_order(orderID)
     print(f"Checking out Order {orderID}")
     system.checkout(orderID)
@@ -260,18 +260,18 @@ def test_money():
     swiss_cheese = Ingredient(name = "Swiss Cheese", amount = 1, additional_price= 0.5)
     sauce = Ingredient(name = "Tomato Sauce", amount= 1, additional_price=0.1)
     setup.add_items_in_orders(1,setup.get_item("Burger"),setup.get_item("Wrap"))
-    setup._get_order(1).items["Burger"][0].modify_buns(
+    setup._get_pendingorder(1).items["Burger"][0].modify_buns(
         setup.inventory,
         sesame_bun,
         muffin_bun
     )
-    setup._get_order(1).items["Burger"][0].modify_patties(
+    setup._get_pendingorder(1).items["Burger"][0].modify_patties(
         setup.inventory,
         chicken_patty,
         vegetarian_patty,
         beef_patty
     )
-    setup._get_order(1).items["Burger"][0].modify_other_ingredients(
+    setup._get_pendingorder(1).items["Burger"][0].modify_other_ingredients(
         setup.inventory,
         tomato,
         lettuce,
@@ -279,19 +279,19 @@ def test_money():
         swiss_cheese,
         sauce
     )
-    setup._get_order(1).calculate_price()
+    setup._get_pendingorder(1).calculate_price()
 
-    setup._get_order(1).items["Wrap"][0].modify_wraps(
+    setup._get_pendingorder(1).items["Wrap"][0].modify_wraps(
         setup.inventory,
         wrap
     )
-    setup._get_order(1).items["Wrap"][0].modify_patties(
+    setup._get_pendingorder(1).items["Wrap"][0].modify_patties(
         setup.inventory,
         chicken_patty,
         vegetarian_patty,
         beef_patty
     )
-    setup._get_order(1).items["Wrap"][0].modify_other_ingredients(
+    setup._get_pendingorder(1).items["Wrap"][0].modify_other_ingredients(
         setup.inventory,
         tomato,
         lettuce,
@@ -299,7 +299,7 @@ def test_money():
         swiss_cheese,
         sauce
     ) 
-    setup._get_order(1).calculate_price()
+    setup._get_pendingorder(1).calculate_price()
     setup.display_order(1)
 
 if __name__ == "__main__":
