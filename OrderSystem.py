@@ -193,6 +193,7 @@ class OrderSystem:
                 self._pending_orders.remove(order)
         else:
             print("Order unavailable due to shortage of ingredients")
+            self._pending_orders.remove(order)
 
 
     '''
