@@ -129,6 +129,7 @@ class OrderSystem:
     def update_order(self,order_id,username = 'NONE',password = 'NONE'):
         #authorising to make sure only staff can remove orders
         if self._staff_system.is_authenticated == False:
+            print('hi')
             if self._staff_system.login(username,password) == False:
                 print('Invalid login')
                 return
@@ -160,7 +161,11 @@ class OrderSystem:
             print("Order does not exist")
             return
         print("Your final order is")
+        if(len(order.items.values()) == 0):
+            print("Order cant be empty")
+            return
         self.display_order(order_id)
+        unavailable_order = 0
         new_inventory = deepcopy(self._inventory)
         for items_list in order.items.values():
             for item in items_list:
