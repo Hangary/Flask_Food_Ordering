@@ -107,9 +107,10 @@ Kanadech, Gary, Gaurang
 
 **Work Asignned**:
 
-- *Gaurang*: Finsh the staff login part and the `pytest` part
+- *Gaurang, Kanadech*: Finsh the staff login part and the `pytest` part
 
 **Tasks to do**:
 
 - Staff login
 - User-stories tests
+
