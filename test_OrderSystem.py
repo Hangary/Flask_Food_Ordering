@@ -62,3 +62,74 @@ def test_remove_order(setup):
     for itemName in someList:
         assert(itemName not in setup._get_order(1).items.keys())
     assert("Med Fries" in setup._get_order(1).items.keys())
+
+def test_add_mains_to_order(setup):
+
+    assert setup.total_order == 1
+    setup.add_items_in_orders(1,setup.get_item("Burger"),setup.get_item("Wrap"))
+    assert "Burger" in setup._get_order(1).items.keys()
+    assert "Wrap" in setup._get_order(1).items.keys()
+    
+def test_modify_mains(setup):
+
+    #Creating Ingredients
+    sesame_bun = Ingredient(name="Sesame Bun", amount=1, additional_price=1)
+    muffin_bun = Ingredient(name="Muffin Bun", amount=1, additional_price=1)
+    wrap = Ingredient(name = "Wrap", amount= 2, additional_price=1)
+    # patties
+    chicken_patty = Ingredient(name="Chicken Patty", amount=1, additional_price=2)
+    vegetarian_patty = Ingredient(name="Vegetarian Patty",amount=1, additional_price=2)
+    beef_patty = Ingredient(name="Beef Patty",amount=1,additional_price=2)
+    # other
+    tomato = Ingredient(name="Tomato", amount=1, additional_price=0.2)
+    lettuce = Ingredient(name="Lettuce", amount=1, additional_price=0.2)
+    cheddar_cheese = Ingredient(name = "Cheddar Cheese", amount=1, additional_price= 0.5)
+    swiss_cheese = Ingredient(name = "Swiss Cheese", amount = 1, additional_price= 0.5)
+    sauce = Ingredient(name = "Tomato Sauce", amount= 1, additional_price=0.1)
+
+    IngList = [sesame_bun,muffin_bun,wrap,chicken_patty,vegetarian_patty,beef_patty,
+                tomato,lettuce,cheddar_cheese,swiss_cheese,sauce]
+
+    setup._get_order(1).items["Burger"][0].modify_buns(
+        setup.inventory,
+        sesame_bun,
+        muffin_bun
+    )
+    setup._get_order(1).items["Burger"][0].modify_patties(
+        setup.inventory,
+        chicken_patty,
+        vegetarian_patty,
+        beef_patty
+    )
+    setup._get_order(1).items["Burger"][0].modify_other_ingredients(
+        setup.inventory,
+        tomato,
+        lettuce,
+        cheddar_cheese,
+        swiss_cheese,
+        sauce
+    )
+    setup._get_order(1).calculate_price()
+    assert setup._get_order(1).price == 28.5
+
+    setup._get_order(1).items["Wrap"][0].modify_wraps(
+        setup.inventory,
+        wrap
+    )
+    setup._get_order(1).items["Wrap"][0].modify_patties(
+        setup.inventory,
+        chicken_patty,
+        vegetarian_patty,
+        beef_patty
+    )
+    setup._get_order(1).items["Wrap"][0].modify_other_ingredients(
+        setup.inventory,
+        tomato,
+        lettuce,
+        cheddar_cheese,
+        swiss_cheese,
+        sauce
+    ) 
+    setup._get_order(1).calculate_price()
+    setup.display_order(1)
+    assert setup._get_order(1).price == 38

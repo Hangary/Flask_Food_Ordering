@@ -235,9 +235,77 @@ def test_staff_mark_order():
     with open('full_order.dat','wb') as f:
         pickle.dump(system,f,pickle.HIGHEST_PROTOCOL)   
 
+def test_money():
+
+    setup = create_system(
+        mains=create_mains_menu("docs/Menus.csv"),
+        sides=create_sides_menu("docs/Menus.csv"),
+        drinks=create_drinks_menu("docs/Menus.csv"),
+        inventory=create_inventory("docs/Inventory.csv"),
+        staff_system=create_staffsystem("docs/StaffSystem.csv")
+    )
+    setup.make_order()
+    #Creating Ingredients
+    sesame_bun = Ingredient(name="Sesame Bun", amount=1, additional_price=1)
+    muffin_bun = Ingredient(name="Muffin Bun", amount=1, additional_price=1)
+    wrap = Ingredient(name = "Wrap", amount= 1, additional_price=1)
+    # patties
+    chicken_patty = Ingredient(name="Chicken Patty", amount=1, additional_price=2)
+    vegetarian_patty = Ingredient(name="Vegetarian Patty",amount=1, additional_price=2)
+    beef_patty = Ingredient(name="Beef Patty",amount=1,additional_price=2)
+    # other
+    tomato = Ingredient(name="Tomato", amount=1, additional_price=0.2)
+    lettuce = Ingredient(name="Lettuce", amount=1, additional_price=0.2)
+    cheddar_cheese = Ingredient(name = "Cheddar Cheese", amount=1, additional_price= 0.5)
+    swiss_cheese = Ingredient(name = "Swiss Cheese", amount = 1, additional_price= 0.5)
+    sauce = Ingredient(name = "Tomato Sauce", amount= 1, additional_price=0.1)
+    setup.add_items_in_orders(1,setup.get_item("Burger"),setup.get_item("Wrap"))
+    setup._get_order(1).items["Burger"][0].modify_buns(
+        setup.inventory,
+        sesame_bun,
+        muffin_bun
+    )
+    setup._get_order(1).items["Burger"][0].modify_patties(
+        setup.inventory,
+        chicken_patty,
+        vegetarian_patty,
+        beef_patty
+    )
+    setup._get_order(1).items["Burger"][0].modify_other_ingredients(
+        setup.inventory,
+        tomato,
+        lettuce,
+        cheddar_cheese,
+        swiss_cheese,
+        sauce
+    )
+    setup._get_order(1).calculate_price()
+
+    setup._get_order(1).items["Wrap"][0].modify_wraps(
+        setup.inventory,
+        wrap
+    )
+    setup._get_order(1).items["Wrap"][0].modify_patties(
+        setup.inventory,
+        chicken_patty,
+        vegetarian_patty,
+        beef_patty
+    )
+    setup._get_order(1).items["Wrap"][0].modify_other_ingredients(
+        setup.inventory,
+        tomato,
+        lettuce,
+        cheddar_cheese,
+        swiss_cheese,
+        sauce
+    ) 
+    setup._get_order(1).calculate_price()
+    setup.display_order(1)
+
 if __name__ == "__main__":
-    test_mains_checkout()   #create & checkout order 1
-    test_mains_checkout()   #create & checkout order 2
-    test_mains_checkout()   #create & checkout order 3
-    test_mains_checkout()   #create & checkout order 4
-    test_staff_mark_order() #mark order 1 as completed
+    # test_mains_checkout()   #create & checkout order 1
+    # test_mains_checkout()   #create & checkout order 2
+    # test_mains_checkout()   #create & checkout order 3
+    # test_mains_checkout()   #create & checkout order 4
+    # test_staff_mark_order() #mark order 1 as completed
+    test_money()

@@ -12,8 +12,8 @@ This is a helper function,
 which will read data from a file and output a system with correct menus and inventory.
 '''
 
-BURGER_BASE_PRICE = 10
-WRAP_BASE_PRICE = 9
+BURGER_BASE_PRICE = 8
+WRAP_BASE_PRICE = 8
 MAX_BUNS = 4
 MAX_PATTIES = 3
 
