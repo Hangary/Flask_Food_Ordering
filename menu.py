@@ -1,8 +1,7 @@
-from item import *
+from item import Item, Burger, Wrap, Drink, Side
 from order import Order
 '''
-Finished:
-This is a class used to store menu information, which is composed of items.
+Menu: a class used to store menu information, which is composed of items.
 '''
 
 

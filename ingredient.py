@@ -1,9 +1,8 @@
 '''
-Finished:
-This is a class used to store ingredients.
+Ingredient: a class used to store ingredients.
 '''
 
-# a function used to check whether a variable is Nan
+# a function used to check whether a float variable is Nan
 def isNaN(num):
     return num != num
 

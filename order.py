@@ -1,8 +1,8 @@
-from item import Item
+from item import Item, Burger, Wrap, Side, Drink
 from inventory import Inventory
 from ingredient import Ingredient
 '''
-TODO: This is a class used to store information about online orders.
+Order: a class used to store information about online orders.
 '''
 
 
@@ -107,5 +107,4 @@ class Order(object):
 
 
 if __name__ == "__main__":
-    
     pass

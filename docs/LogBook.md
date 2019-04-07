@@ -22,9 +22,7 @@ Kanadech, Gary, Gaurang
 
 ## 23/3 Week 05 Regular Meeting
 
-*Location: Library*
-*Participants: Kanadech, Gary, Gaurang*
-*Duration: 2 hrs*
+*Location: Library | Participants: Kanadech, Gary, Gaurang | Duration: 2 hrs*
 
 **Decisions**:
 
@@ -45,21 +43,19 @@ Kanadech, Gary, Gaurang
 
 ## 27/3 Week 06 Regular Meeting
 
-*Location: Lab*
-*Participants: Kanadech, Gary, Gaurang*
-*Duration: 2 hrs*
+*Location: Lab | Participants: Kanadech, Gary, Gaurang | Duration: 2 hrs*
 
-Decisions:
+**Decisions**:
 
 - Finish the basic skeleton for the codes
 - Finish the first version of the Class Diagram
 - Begin implementing more features based on the draft codes
 
+-------
+
 ## 30/3 Week 06 Online Discussion
 
-*Location: Online, Messenger*
-*Participants: Kanadech, Gary, Gaurang*
-*Duration: 1 hrs*
+*Location: Online, Messenger | Participants: Kanadech, Gary, Gaurang | Duration: 1 hrs*
 
 **Milestones**: Finish the basic skeleton of the project codes
 
@@ -69,7 +65,7 @@ Decisions:
 - Finish the first version of the Class Diagram
 - Begin implementing more features based on the draft codes
 
-**Work Asignned**:
+**Work Assigned**:
 
 - *Kanadech*: Use `Pickle` to store class information; Create the system creator to read data from an external file and initialize the online order system
 - *Gary*: Finish the user story part 1 and some basic tests
@@ -79,10 +75,9 @@ Decisions:
 
 ## 1/4 Week 07 Review Meeting
 
-*Location: Columbo Theatre*
-*Participants: Kanadech, Gary*
+*Location: Columbo Theatre | Participants: Kanadech, Gary*
 
-**Milestones:** Finish the `system_creator` and user stories for drinks and sides.
+**Milestones:** Finish the `system_creator` and user stories for ordering drinks and sides.
 
 **Content**:
 
@@ -95,3 +90,26 @@ Decisions:
 
 1. Refactor our codes and fix some logical bugs
 2. Add more features like `exception handling` into our codes
+
+--------
+
+### 5/4 Week 07 Group Meeting
+
+*Location: CSE Building | Participants: Kanadech, Gary, Gaurang | Duration: 1 hrs*
+
+**Milestones:** Finished all the functional requirements for our user stories, and the integration test for the order system
+
+**Content**:
+
+- Clarified the customer workflow of our codes
+
+- Decided to integrate our unit tests and transform the integration test into more specific user-stories tests via `pytest`
+
+**Work Asignned**:
+
+- *Gaurang*: Finsh the staff login part and the `pytest` part
+
+**Tasks to do**:
+
+- Staff login
+- User-stories tests

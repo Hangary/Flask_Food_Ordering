@@ -1,7 +1,6 @@
 from ingredient import Ingredient
 '''
-TODO: 
-This is a class used to store inventory.
+Inventory: a class used to store inventory.
 '''
 ### add minimum amount to sell
 
