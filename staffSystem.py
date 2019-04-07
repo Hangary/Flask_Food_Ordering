@@ -46,6 +46,9 @@ class StaffSystem(object):
         new_staff = Staff(username,password)
         self._staff.append(new_staff)
 
+    def logout(self):
+        self._is_authenticated = False
+
 
     @property
     def is_authenticated(self):

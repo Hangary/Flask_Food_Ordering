@@ -215,4 +215,8 @@ class OrderSystem:
     @property
     def total_order(self):
         return self._norder
+    
+    @property
+    def staff_system(self):
+        return self._staff_system
 
