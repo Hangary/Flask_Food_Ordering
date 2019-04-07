@@ -242,19 +242,27 @@ def test_checkout_order_with_lots_of_items(setup):
             setup.get_item(someList[2]),
             setup.get_item(someList[2])
     )
-    setup.display_order(orderID)
     setup.checkout(orderID)
-    setup.display_order(orderID)
-    #assert(setup.inventory.get_ingredient('Nugget').amount == 1)
-    assert(setup.inventory.get_ingredient('OrangeJuice').amount == 1000-1000)
-    assert(setup.inventory.get_ingredient('Ice').amount == 1000-80)
+    # Numbers should remain intact as the order got rejected
+    assert(setup.inventory.get_ingredient('Nugget').amount == 25)
+    assert(setup.inventory.get_ingredient('OrangeJuice').amount == 1000)
+    assert(setup.inventory.get_ingredient('Ice').amount == 1000)
+
+    #Doing so will delete order number 2 from the system customer has to create a new one
 
     #Try making new order and reordering OrangeJuice
     #Should return empty item as OrangeJuice is out of stock
     orderID_next = setup.make_order()
     setup.add_items_in_orders(orderID_next,
-            setup.get_item(someList[2]))
-    assert(not setup._get_pendingorder(orderID_next).items)
+            setup.get_item(someList[2]),
+            setup.get_item(someList[2]),
+            setup.get_item(someList[2]),
+            setup.get_item(someList[2]),
+            setup.get_item(someList[1]),
+            setup.get_item(someList[1]),
+            setup.get_item(someList[1]),
+            setup.get_item(someList[1])
+            )
 
     #Try adding lettuce in burger
     setup.add_items_in_orders(orderID_next, setup.get_item("Burger"))
@@ -267,9 +275,28 @@ def test_checkout_order_with_lots_of_items(setup):
     )
     assert setup._get_pendingorder(orderID_next).items["Burger"][0].ingredients['Other']["Swiss Cheese"].amount == 6
     assert isNaN(setup._get_pendingorder(orderID_next).items["Burger"][0].ingredients['Other']["Lettuce"].amount)
+    setup.checkout(orderID_next)
+    assert(setup.inventory.get_ingredient('OrangeJuice').amount == 0)
+    assert(setup.inventory.get_ingredient('Ice').amount == 1000-80)
+    assert(setup.inventory.get_ingredient('Nugget').amount == 1)
 
 def test_inventory_unavailable(setup):
     assert len(setup.inventory.display_unavailable_ingredients()) == 2
     assert "OrangeJuice" in setup.inventory.display_unavailable_ingredients()
     assert "Nugget" in setup.inventory.display_unavailable_ingredients()
-    assert(0)
+    setup.display_order_lists()
+
+def test_customer_check_status(setup):
+    #For front end we will use display_order() to show customer their order
+    order1 = setup._get_completedorder(1)
+    assert(order1.is_payed)
+    assert(order1.is_prepared)
+    
+    order3 = setup._get_pendingorder(3)
+    assert(order3.is_payed)
+    assert(not order3.is_prepared)
+
+    setup.update_order(3,'Kanadech','4568')
+
+    assert(order3.is_payed)
+    assert(order3.is_prepared)
