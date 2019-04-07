@@ -100,7 +100,6 @@ class OrderSystem:
             if not item.is_available(self._inventory):
                 print(f"{item.name} is not available!")
             else:
-
                 item = deepcopy(item)
                 order.add_items(item)
         #order.add_items(*argv)
@@ -154,21 +153,46 @@ class OrderSystem:
             return
         print("Your final order is")
         self.display_order(order_id)
-        self._pay_order(order)
+        new_inventory = deepcopy(self._inventory)
+        for items_list in order.items.values():
+            for item in items_list:
+                for ingredient_list in item.ingredients.values():
+                    if ingredient_list.__class__.__name__ == "Ingredient":
+                        new_inventory.update_stock(ingredient_list.name,-ingredient_list.amount)
+                        if (new_inventory.is_available(ingredient_list.name,1) == True):
+                            unavailable_order = 0 
+                        else:
+                            unavailable_order = 1
+                            break
+                    else: 
+                        for ingredient in ingredient_list.values():
+                            assert(ingredient.__class__.__name__ == "Ingredient")
+                            if not isNaN(ingredient.amount):
+                                new_inventory.update_stock(ingredient.name,-ingredient.amount)
+                                if (new_inventory.is_available(ingredient.name,1) == True):
+                                    unavailable_order = 0 
+                                else:
+                                    unavailable_order = 1
+                                    break
+                    
+        if unavailable_order == 0:
+            self._pay_order(order)
         #updating inventory after order is paid
-        if (order.is_payed):
-            for items_list in order.items.values():
-                for item in items_list:
-                    for ingredient_list in item.ingredients.values():
-                        if ingredient_list.__class__.__name__ == "Ingredient":
-                            self._inventory.update_stock(ingredient_list.name,-ingredient_list.amount)
-                        else: 
-                            for ingredient in ingredient_list.values():
-                                assert(ingredient.__class__.__name__ == "Ingredient")
-                                if not isNaN(ingredient.amount):
-                                    self._inventory.update_stock(ingredient.name,-ingredient.amount)
+            if (order.is_payed):
+                for items_list in order.items.values():
+                    for item in items_list:
+                        for ingredient_list in item.ingredients.values():
+                            if ingredient_list.__class__.__name__ == "Ingredient":
+                                self._inventory.update_stock(ingredient_list.name,-ingredient_list.amount)
+                            else: 
+                                for ingredient in ingredient_list.values():
+                                    assert(ingredient.__class__.__name__ == "Ingredient")
+                                    if not isNaN(ingredient.amount):
+                                        self._inventory.update_stock(ingredient.name,-ingredient.amount)
+            else:
+                self._pending_orders.remove(order)
         else:
-            self._pending_orders.remove(order)
+            print("Order unavailable due to shortage of ingredients")
 
 
     '''
