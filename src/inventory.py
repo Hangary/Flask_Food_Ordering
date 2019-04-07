@@ -41,7 +41,7 @@ class Inventory(object):
         return unavailable_ingredients
     
     #get ingredient details
-    def get_ingredient(self,name):
+    def get_ingredient(self, name: str) -> Ingredient:
         return self._ingredients[name]
 
     def __str__(self):

@@ -95,7 +95,7 @@ class OrderSystem:
         if order:
             order.display()
 
-    # TODO: Add items into an order
+    # Add items into an order
     def add_items_in_orders(self, order_id: int, *argv: Item):
         order = self._get_pendingorder(order_id)
         for item in argv:
@@ -106,13 +106,14 @@ class OrderSystem:
                 order.add_items(item)
         #order.add_items(*argv)
 
-    # TODO: Delete items from an order
+
+    # Delete items from an order
     def del_items_in_orders(self, order_id: int, *argv: str):
         order = self._get_pendingorder(order_id)
         order.delete_items(*argv)
 
 
-    # TODO: Authorise payment for an order
+    # Authorise payment for an order
     def _pay_order(self, order: Order):
         print('Order: {}, total price: ${:.2f}'.format(order.order_id, order.price))
 
@@ -122,6 +123,8 @@ class OrderSystem:
             order.update_payment_status(True)
         else:
             print('Payment not authorised.')
+
+
     # function for staff to remove orders which are completed from the list
     def update_order(self,order_id,username = 'NONE',password = 'NONE'):
         #authorising to make sure only staff can remove orders
@@ -140,6 +143,7 @@ class OrderSystem:
         else:
             print("Order already completed")
 
+
     def display_order_lists(self):
         print("-----List of Pending orders---------")
         for orders in self._pending_orders:
@@ -147,8 +151,10 @@ class OrderSystem:
         print("-----List of completed orders---------")
         for complete_orders in self._completed_orders:
             print(complete_orders)
+    
+
     #checking out after placing order
-    def checkout(self,order_id: int):
+    def checkout(self, order_id: int):
         order = self._get_pendingorder(order_id)
         if not order:
             print("Order does not exist")

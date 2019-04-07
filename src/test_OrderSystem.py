@@ -1,12 +1,15 @@
+import csv
+import pytest
 from item import *
 from order import *
 from menu import *
 from inventory import *
 from staff_system import *
 from system_creator import *
-import csv
-import pytest
 
+'''
+This is a test for the Order System, which covers the Epic story 1 and 2.
+'''
 
 @pytest.fixture(scope = "module")
 def setup():

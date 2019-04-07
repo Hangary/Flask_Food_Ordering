@@ -1,14 +1,21 @@
+import pytest
 from ingredient import Ingredient
 from inventory import Inventory
 from system_creator import create_inventory
-import pytest
 
+'''
+This is a test for inventory part, which covers the tests for the Epic story 3: Staff - Inventory Maintainence.
+'''
 
 @pytest.fixture(scope='module')
 def test_fixture():
     inventory = create_inventory("../docs/Inventory.csv")
     return inventory
 
+'''
+Test whether we can get a valid ingredient by its name.
+(US 3.1)
+'''
 def test_get_valid_ingredient(test_fixture):
     ingredient = test_fixture.get_ingredient("Fries")
     assert(ingredient.name == "Fries")
@@ -28,19 +35,29 @@ def test_get_valid_ingredient(test_fixture):
     assert(ingredient.is_soldout == False)
     assert(ingredient.unit == "slice")
 
+'''
+Test whether we can get an invalid ingredient. 
+'''
 def test_get_invalid_ingredient(test_fixture):
     try:
         test_fixture.get_ingredient("BAD NUGGET")
         assert(False)
     except KeyError:
         assert(True)
-        
+
+'''
+Test whether we can change the number of the stock.
+(US 3.2)
+'''
 def test_changing_stock_number(test_fixture):
     test_fixture.update_stock("Fries",100)
     assert test_fixture.get_ingredient("Fries").amount == 400
     test_fixture.update_stock("Ice",-600)
     assert test_fixture.get_ingredient("Fries").amount == 400
 
+'''
+Test whether we check the availability of an item or ingredient.
+'''
 def test_availability(test_fixture):
     test_fixture.update_stock("Lettuce",-6)
     assert test_fixture.get_ingredient("Lettuce").amount == 20
