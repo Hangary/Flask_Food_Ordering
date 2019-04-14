@@ -1,5 +1,5 @@
-from ingredient import Ingredient, isNaN
-from inventory import Inventory
+from src.ingredient import Ingredient, isNaN
+from src.inventory import Inventory
 import math
 '''
 This is a class for food items such as burgers, wraps, drinks and sides.

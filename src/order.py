@@ -1,6 +1,6 @@
-from item import Item, Burger, Wrap, Side, Drink
-from inventory import Inventory
-from ingredient import Ingredient
+from src.item import Item, Burger, Wrap, Side, Drink
+from src.inventory import Inventory
+from src.ingredient import Ingredient
 '''
 Order: a class used to store information about online orders.
 '''

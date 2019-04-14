@@ -1,4 +1,4 @@
-from ingredient import Ingredient
+from src.ingredient import Ingredient
 '''
 Inventory: a class used to store inventory.
 '''

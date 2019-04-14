@@ -1,12 +1,28 @@
-from flask import render_template, request, redirect, url_for, abort
+from flask import render_template, request, redirect, url_for, abort, session
 from server import app, system
 from datetime import datetime
 
-
+'''
+Website Structure:
+- Home page '/'
+- #Customer '/customer'
+    - Menu pages '/customer/menu' 
+        - Mains '/customer/mains'
+            - Creation '/customer/mains/creation'
+        - Sides '/customer/sides'
+        - Drinks /customer/drinks'
+    - Review order '/customer/review/<order_id>'
+    - Order tracking  '/customer/order/<order_id>'
+- #Staff '/staff'
+    - Login '/staff/login'
+    - Logout '/staff/logout'
+    - Order '/staff/order'
+    - Inventory '/staff/inventory'
+'''
 
 
 '''
-Dedicated page for "page not found"
+page for "page not found"
 '''
 @app.route('/404')
 @app.errorhandler(404)
@@ -14,6 +30,58 @@ def page_not_found(e=None):
     return render_template('404.html'), 404
 
 
+@app.route('/', methods=["GET", "POST"])
+def home_page():
+    if request.method == 'POST': 
+        if request.form["button"] == "make_order":
+            # make a session for its order
+            #if 'order_ID' not in session:
+            order_id = system.make_order()
+            session['order_ID'] = order_id
+            return redirect('/customer/menu/Mains')
+        elif request.form["button"] == "search_order":
+            return redirect(url_for('track_order'))
+
+    return render_template('home_page.html')
+
+
+'''
+Customer pages:
+'''
+@app.route('/customer/menu/<menu_name>', methods=["GET", "POST"])
+def display_menu(menu_name):
+    menu = system.get_menu(menu_name)
+    if not menu:
+        return redirect(url_for('page_not_found'))
+
+    if request.method == 'POST':
+        #item = menu.get_item(request.form["button"])
+        item = system.get_item(request.form["button"])
+        system.add_items_in_orders(session['order_ID'], item)
+    
+    return render_template('menus.html', menu_name=menu_name, menu=menu.display(), inventory=system.inventory)
+    
+
+@app.route('/customer/review', methods=["GET", "POST"])
+def review_order():
+    if 'order_ID' not in session:
+        return "Sorry, we cannot find your order."
+
+    order = system.get_order(session['order_ID'])
+    if request.method == 'POST':
+        system.del_items_in_orders(order.order_id, request.form["button"])
+    
+    return render_template('review_order.html', order=order)
+
+
+
+@app.route('/customer/order/<order_id>')
+def track_order(order_id):
+    return render_template('track_order.html', order=system.get_order(order_id))
+
+'''
+Staff pages:
+'''
 
 
 
@@ -25,7 +93,7 @@ def page_not_found(e=None):
 '''
 Search for Cars
 '''
-@app.route('/', methods=["GET", "POST"])
+@app.route('/car', methods=["GET", "POST"])
 def cars():
 
     if request.method == 'POST':
@@ -44,8 +112,6 @@ def cars():
     return render_template('cars.html', cars = system.cars)
 
 
-
-
 '''
 Display car details for the car with given rego
 '''
@@ -62,7 +128,7 @@ def car(rego):
 '''
 Make a booking for a car with given rego
 '''
-from src.forms import BookingForm
+#from src.forms import BookingForm
 @app.route('/cars/book/<rego>', methods=["GET", "POST"])
 def book(rego):
     car = system.get_car(rego)

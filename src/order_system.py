@@ -1,9 +1,9 @@
-from ingredient import Ingredient, isNaN
-from item import Item, Burger, Wrap, Side, Drink
-from order import Order
-from menu import Menu
-from inventory import Inventory
-from staff_system import StaffSystem
+from src.ingredient import Ingredient, isNaN
+from src.item import Item, Burger, Wrap, Side, Drink
+from src.order import Order
+from src.menu import Menu
+from src.inventory import Inventory
+from src.staff_system import StaffSystem
 from copy import deepcopy
 import math
 '''
@@ -45,9 +45,9 @@ class OrderSystem:
         return f"{item_name} not in the system"
 
     # display a menu
-    def display_menu(self, menu_name: str):
+    def display_menu(self, menu_name: str) -> Item:
         if menu_name in self._menus.keys():
-            self._menus[menu_name].display()
+            return self._menus[menu_name].display()
         else:
             print(f"{menu_name} menu not exist!")
             return f"{menu_name} menu not exist!"
@@ -60,6 +60,7 @@ class OrderSystem:
     def _add_order(self, new_order: Order):
         self._pending_orders.append(new_order)
 
+
     # return an order based on an order id from pending order
     def _get_pendingorder(self, order_id: int) -> Order:
         for order in self._pending_orders:
@@ -68,6 +69,7 @@ class OrderSystem:
         else:
             return None
     
+
     # return an order based on an order id from pending order
     def _get_completedorder(self, order_id: int) -> Order:
         for order in self._completed_orders:
@@ -76,13 +78,25 @@ class OrderSystem:
         else:
             return None
 
+
     # Make a new online order, add it into the system, and then return the order id
     def make_order(self) -> int:
-        new_orderId = self._norder + 1
-        new_order = Order(new_orderId)
+        new_orderID = self._norder + 1
+        new_order = Order(new_orderID)
         self._norder += 1
         self._add_order(new_order)
-        return new_orderId
+        return new_orderID
+
+
+    # get an order by its ID
+    def get_order(self, order_id: int) -> Order:
+        if self._get_pendingorder(order_id):
+            return self._get_pendingorder(order_id)
+        elif self._get_completedorder(order_id):
+            return self._get_completedorder(order_id)
+        else:
+            return None
+
 
     # Display the details of an order
     # Use this function to display order at anytime
@@ -95,6 +109,7 @@ class OrderSystem:
         if order:
             order.display()
 
+
     # Add items into an order
     def add_items_in_orders(self, order_id: int, *argv: Item):
         order = self._get_pendingorder(order_id)
@@ -104,6 +119,7 @@ class OrderSystem:
             else:
                 item = deepcopy(item)
                 order.add_items(item)
+                print(f"add {item.name} into order {order_id}")
         #order.add_items(*argv)
 
 
@@ -231,4 +247,3 @@ class OrderSystem:
     @property
     def staff_system(self):
         return self._staff_system
-
