@@ -7,7 +7,7 @@ from system_creator import *
 import csv
 import pytest
 
-@pytest.fixture(scope = "module")
+@pytest.fixture()
 def setup():
     system = create_system(
         mains=create_mains_menu("../docs/Menus.csv"),
