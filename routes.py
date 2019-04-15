@@ -41,7 +41,7 @@ def home_page():
         elif request.form["button"] == "continue_order":
             return redirect('/customer/menu/Mains')
         elif request.form["button"] == "search_order":
-            return redirect(url_for('track_order'))
+            return redirect(url_for('search_order', order_id=request.form['order_id']))
         elif request.form["button"] == "staff":
             return redirect(url_for('staff_homepage'))
 
@@ -85,8 +85,8 @@ def review_order():
 
 
 @app.route('/customer/order/<order_id>')
-def track_order(order_id):
-    return render_template('track_order.html', order=system.get_order(order_id))
+def search_order(order_id):
+    return render_template('search_order_result.html', order=system.get_order(int(order_id)))
 
 
 '''
@@ -128,14 +128,17 @@ def staff_order():
         return redirect(url_for('staff_login')) 
 
     if request.method == 'POST':
-        if request.form['button'] == "logout":
-            return redirect(url_for('staff_logout'))
-        else:
-            order_id = int(request.form['button'])
-            system.update_order(order_id)
+        order_id = int(request.form['button'])
+        system.update_order(order_id)
 
     return render_template('staff_order.html', system=system)
 
+@app.route('/staff/inventory', methods=["GET", "POST"])
+def staff_inventory():
+    if not system.is_authenticated:
+        return redirect(url_for('staff_login'))
+
+    return render_template('staff_inventory.html', system=system)
 
 '''
 ---- Supplied codes ----:

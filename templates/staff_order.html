@@ -1,17 +1,7 @@
-{% extends 'base.html' %}
-
-{% block body %}
-<br/>
+{% extends 'base_staff.html' %}
+{% block staff_block %}
 
 <div>
-    <form method="POST">
-        <button name="button" value="logout" type="submit">Log out</button> 
-    </form>
-</div>
-
-<div>
-    
-</div>
 <h3>Current Orders:</h3>
 <form method="POST">
     <ul>
@@ -25,6 +15,7 @@
     {% endfor %}
     </ul>
 </form>
+</div>
 
 <div>
 <h3>Completed Orders:</h3>

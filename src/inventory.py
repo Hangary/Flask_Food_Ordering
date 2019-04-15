@@ -37,9 +37,12 @@ class Inventory(object):
                 unavailable_ingredients.append(ingredient.name)
         return unavailable_ingredients
     
-    #get ingredient details
+    # get ingredient details
     def get_ingredient(self, name: str) -> Ingredient:
         return self._ingredients[name]
+
+    def get_ingredients(self):
+        return [ingredient for ingredient in self._ingredients.values()] 
 
     def __str__(self):
         l = [f"{ingredient.name}: {ingredient.amount}" for ingredient in self._ingredients.values()]
