@@ -59,6 +59,7 @@ def display_menu(menu_name):
     if request.method == 'POST':
         #item = menu.get_item(request.form["button"])
         item = system.get_item(request.form["button"])
+        print(item)
         system.add_items_in_orders(session['order_ID'], item)
     
     return render_template('menus.html', menu_name=menu_name, menu=menu.display(), inventory=system.inventory)
