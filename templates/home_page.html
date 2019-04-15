@@ -4,12 +4,20 @@
 <h1>Online Order System</h1>
 <h3 style=" position: absolute;top: 8px;right: 16px;font-size: 18px;">Are you staff member , click here</h3>
 <form method="POST">
-	<div align="center"> <button name='button' type='submit' value='make_new_order'>Make an Order!</button> </div>
+	<div align="center"> 
+		<button name='button' type='submit' value='make_new_order'>Make an Order!</button> 
+	</div>
 	{% if 'order_ID' in session %}
-	<div align="center"> <button name='button' type='submit' value='continue_order'>Continue your Order</button> </div>
+	<div align="center"> 
+		<button name='button' type='submit' value='continue_order'>Continue your Order</button> 
+	</div>
 	{% endif %}
-	<div align="center"> <button name='button' type='submit' value='search_order'>Search your Order</button> </div>
-	<div style=" position: absolute;top: 60px;right: 16px;font-size: 18px;"> <button name='button' type='submit' value='search_order'>For staff</button> </div>
+	<div align="center"> 
+		<button name='button' type='submit' value='search_order'>Search your Order</button> 
+	</div>
+	<div style=" position: absolute;top: 60px;right: 16px;font-size: 18px;"> 
+		<button name='button' type='submit' value='staff'><i class="fab fa-black-tie"></i> &nbsp For Staff</button> 
+	</div>
 </form>
 
 {% endblock %}

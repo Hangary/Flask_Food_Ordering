@@ -25,7 +25,7 @@ class OrderSystem:
         self._staff_system = Staff_system
 
     '''
-    Menu part
+    Menu parp
     '''
 
     # get a menu
@@ -141,6 +141,18 @@ class OrderSystem:
             print('Payment not authorised.')
 
 
+    '''
+    Staff part
+    '''
+
+    def staff_login(self, username: str, password: str) -> bool:
+        return self.staff_system.login(username, password)
+    
+    
+    def staff_logout(self):
+        self.staff_system.logout()
+
+
     # function for staff to remove orders which are completed from the list
     def update_order(self,order_id,username = 'NONE',password = 'NONE'):
         #authorising to make sure only staff can remove orders
@@ -247,3 +259,7 @@ class OrderSystem:
     @property
     def staff_system(self):
         return self._staff_system
+
+    @property
+    def is_authenticated(self):
+        return self.staff_system.is_authenticated 

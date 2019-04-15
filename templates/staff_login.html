@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<br/>
+
+<div>
+    <form method="POST">
+        username: <input name="username" value="{{username if username}}"> <br>
+        password: <input name="password" value=""> <br>
+        {% if error %} 
+            <font size="3" color="red" float: left>Invalid username or password!</font> <br>
+        {% endif %}
+        <button name="button" value="login" type="submit">Login</button> 
+        <button name="button" value="cancel" type="submit">Cancel</button> 
+    </form>
+</div>
+
+{% endblock %}

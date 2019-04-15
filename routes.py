@@ -41,6 +41,8 @@ def home_page():
             return redirect('/customer/menu/Mains')
         elif request.form["button"] == "search_order":
             return redirect(url_for('track_order'))
+        elif request.form["button"] == "staff":
+            return redirect(url_for('staff_homepage'))
 
     return render_template('home_page.html')
 
@@ -82,7 +84,45 @@ def track_order(order_id):
 '''
 Staff pages:
 '''
+@app.route('/staff')
+def staff_homepage():
+    if system.is_authenticated:
+        return redirect(url_for('staff_order'))
+    else:
+        return redirect(url_for('staff_login'))
 
+
+@app.route('/staff/login', methods=["GET", "POST"])
+def staff_login():
+
+    if request.method == 'POST':
+        if request.form['button'] == "login":
+            if system.staff_login(request.form['username'], request.form['password']):
+                return redirect(url_for('staff_order'))
+            else:
+                return render_template('staff_login.html', username=request.form['username'], error=True)
+        
+        elif request.form['button'] == "cancel":
+            return redirect(url_for('home_page')) 
+    
+    return render_template('staff_login.html', username=None, error=None)
+
+@app.route('/staff/logout')
+def staff_logout():
+    system.staff_logout()
+    return redirect(url_for('home_page'))
+
+@app.route('/staff/order', methods=["GET", "POST"])
+def staff_order():
+    if not system.is_authenticated:
+        return redirect(url_for('staff_login')) 
+
+    if request.method == 'POST':
+        if request.form['button'] == "logout":
+            return redirect(url_for('staff_logout'))
+        #TODO: update orders
+
+    return render_template('staff_order.html', orders=system._pending_orders)
 
 
 '''

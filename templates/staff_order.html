@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<br/>
+
+<div>
+    <form method="POST">
+        <button name="button" value="logout" type="submit">Log out</button> 
+    </form>
+</div>
+
+<div>
+    
+</div>
+
+<form method="POST">
+    <ul>
+    {% for order in orders %}
+    <li> 
+        {{ order }}
+        <button name='button' type='submit' value={{ order.order_id }}> <i class="far fa-check-square"></i> </button> 
+    </li> 
+    {% endfor %}
+    </ul>
+</form>
+
+{% endblock %}
