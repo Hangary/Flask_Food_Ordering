@@ -45,7 +45,10 @@ class Order(object):
     def delete_items(self, *argv: str):
         for item_name in argv:
             if item_name in self._items.keys():
-                del self._items[item_name]
+                if len(self._items[item_name]) == 1:
+                    del self._items[item_name]
+                else:
+                    del self._items[item_name][-1]
             else:
                 print(f"Cannot find {item_name} in the order!")
         self.calculate_price()
