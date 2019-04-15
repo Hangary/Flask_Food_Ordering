@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block body %}
+
+{% if order %}
+    <ul>
+    {% for item_list in order.items.values() %}
+        {% for item in item_list %}
+            <li> {{ item }} </li> 
+        {% endfor %}
+    {% endfor %}
+    </ul>
+{% endif %}
+
+{% endblock %}

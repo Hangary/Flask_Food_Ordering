@@ -12,10 +12,10 @@
 <div>
     
 </div>
-
+<h3>Current Orders:</h3>
 <form method="POST">
     <ul>
-    {% for order in orders %}
+    {% for order in system.pending_orders %}
         {% if order.is_payed %}
         <li> 
         {{ order }}
@@ -25,5 +25,14 @@
     {% endfor %}
     </ul>
 </form>
+
+<div>
+<h3>Completed Orders:</h3>
+    <ul>
+        {% for order in system.completed_orders %}
+            <li>  {{ order }} </li> 
+        {% endfor %}
+    </ul>
+</div>
 
 {% endblock %}

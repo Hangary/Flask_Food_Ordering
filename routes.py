@@ -32,6 +32,7 @@ def page_not_found(e=None):
 
 @app.route('/', methods=["GET", "POST"])
 def home_page():
+    print(session)
     if request.method == 'POST': 
         if request.form["button"] == "make_new_order":
             order_id = system.make_order()
@@ -73,8 +74,10 @@ def review_order():
     order = system.get_order(session['order_ID'])
     if request.method == 'POST':
         if request.form["button"] == "checkout":
-            system.checkout(session['order_ID'])
-            return render_template("order_result.html") 
+            order_id = session['order_ID']
+            system.checkout(order_id)
+            session.pop('order_ID')
+            return render_template("order_result.html", order_id=order_id) 
         else:
             system.del_items_in_orders(order.order_id, request.form["button"])
     
@@ -131,7 +134,7 @@ def staff_order():
             order_id = int(request.form['button'])
             system.update_order(order_id)
 
-    return render_template('staff_order.html', orders=system._pending_orders)
+    return render_template('staff_order.html', system=system)
 
 
 '''

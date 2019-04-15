@@ -7,10 +7,10 @@
 	<div align="center"> 
 		<button name='button' type='submit' value='make_new_order'>Make an Order!</button> 
 	</div>
-	{% if 'order_ID' in session %}
-	<div align="center"> 
-		<button name='button' type='submit' value='continue_order'>Continue your Order</button> 
-	</div>
+	{% if 'order_ID' in session.keys() %}
+		<div align="center"> 
+			<button name='button' type='submit' value='continue_order'>Continue your Order</button> 
+		</div>
 	{% endif %}
 	<div align="center"> 
 		<button name='button' type='submit' value='search_order'>Search your Order</button> 
