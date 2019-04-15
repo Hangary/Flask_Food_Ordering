@@ -1,0 +1,15 @@
+{% extends 'base_staff.html' %}
+{% block staff_block %}
+
+<h3>Real-time Inventory:</h3>
+<form method="POST">
+    <ul>
+        {% for ingredient in system.inventory.get_ingredients() %}
+            <li> 
+            {{ ingredient }}
+            </li> 
+        {% endfor %}
+    </ul>
+</form>
+
+{% endblock %}

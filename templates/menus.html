@@ -1,21 +1,16 @@
-{% extends 'base.html' %}
-{% block body %}
+{% extends 'base_menus_review_checkout.html' %}
+{% block menus_block %}
 
 <h1> {{ menu_name }} Menu:</h1>
-
-<a href="{{ url_for('display_menu', menu_name='Mains') }}"><i class="fas fa-hamburger"></i> Mains</a>
-<a href="{{ url_for('display_menu', menu_name='Sides') }}"><i class="fas fa-pizza-slice"></i> Sides</a>
-<a href="{{ url_for('display_menu', menu_name='Drinks') }}"><i class="fas fa-cocktail"></i> Drinks</a>
-<br>
-
-<a href="{{ url_for('review_order') }}"><i class="fas fa-shopping-cart"></i> My Order</a>
 
 <form method="POST">
     <ul>
     {% for item in menu %}
         {% if item.is_available(inventory) %}
-        <li> <p style="white-space: pre;">{{ item }}</p> 
-        <button name='button' type='submit' value={{ item.name }}> <i class="fas fa-plus-circle"></i> </button> </li> 
+        <li> 
+            {{ item }}
+            <button name='button' type='submit' value="{{ item.name }}"> <i class="fas fa-plus-circle"></i> </button> 
+        </li> 
         {% endif %}
     {% endfor %}
     </ul>

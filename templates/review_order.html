@@ -1,26 +1,27 @@
-{% extends 'base.html' %}
-{% block body %}
+{% extends 'base_menus_review_checkout.html' %}
+{% block menus_block %}
 
 <h1> Order Review:</h1>
-
-<a href="{{ url_for('display_menu', menu_name='Mains') }}"><i class="fas fa-hamburger"></i> Mains</a>
-<a href="{{ url_for('display_menu', menu_name='Sides') }}"><i class="fas fa-pizza-slice"></i> Sides</a>
-<a href="{{ url_for('display_menu', menu_name='Drinks') }}"><i class="fas fa-cocktail"></i> Drinks</a>
-<br>
-
-<a href="{{ url_for('review_order') }}"><i class="fas fa-shopping-cart"></i> My Order</a>
-
 <div> {{ order }} </div>
 
 <form method="POST">
 {% if order %}
     <ul>
-    {% for item in order.items.values() %}
-        <li> <p style="white-space: pre;">{{ item }}</p> 
-        <button name='button' type='submit' value={{ item.name }}> <i class="fas fa-minus-circle"></i> </button> </li> 
+    {% for item_list in order.items.values() %}
+    {% for item in item_list %}
+    <li> 
+        {{ item }}
+        <button name='button' type='submit' value="{{ item.name }}"> <i class="fas fa-minus-circle"></i> </button> 
+    </li> 
+    {% endfor %}
     {% endfor %}
     </ul>
 {% endif %}
+<div>
+    <button name='button' type='submit' value="checkout"> 
+        <i class="fas fa-money-bill"></i> Checkout</a>
+    </button>
+</div>
 </form>
 
 {% endblock %}

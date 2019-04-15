@@ -32,15 +32,18 @@ def page_not_found(e=None):
 
 @app.route('/', methods=["GET", "POST"])
 def home_page():
+    print(session)
     if request.method == 'POST': 
-        if request.form["button"] == "make_order":
-            # make a session for its order
-            #if 'order_ID' not in session:
+        if request.form["button"] == "make_new_order":
             order_id = system.make_order()
             session['order_ID'] = order_id
             return redirect('/customer/menu/Mains')
+        elif request.form["button"] == "continue_order":
+            return redirect('/customer/menu/Mains')
         elif request.form["button"] == "search_order":
-            return redirect(url_for('track_order'))
+            return redirect(url_for('search_order', order_id=request.form['order_id']))
+        elif request.form["button"] == "staff":
+            return redirect(url_for('staff_homepage'))
 
     return render_template('home_page.html')
 
@@ -57,6 +60,7 @@ def display_menu(menu_name):
     if request.method == 'POST':
         #item = menu.get_item(request.form["button"])
         item = system.get_item(request.form["button"])
+        print(item)
         system.add_items_in_orders(session['order_ID'], item)
     
     return render_template('menus.html', menu_name=menu_name, menu=menu.display(), inventory=system.inventory)
@@ -69,21 +73,72 @@ def review_order():
 
     order = system.get_order(session['order_ID'])
     if request.method == 'POST':
-        system.del_items_in_orders(order.order_id, request.form["button"])
+        if request.form["button"] == "checkout":
+            order_id = session['order_ID']
+            system.checkout(order_id)
+            session.pop('order_ID')
+            return render_template("order_result.html", order_id=order_id) 
+        else:
+            system.del_items_in_orders(order.order_id, request.form["button"])
     
     return render_template('review_order.html', order=order)
 
 
-
 @app.route('/customer/order/<order_id>')
-def track_order(order_id):
-    return render_template('track_order.html', order=system.get_order(order_id))
+def search_order(order_id):
+    return render_template('search_order_result.html', order=system.get_order(int(order_id)))
+
 
 '''
 Staff pages:
 '''
+@app.route('/staff')
+def staff_homepage():
+    if system.is_authenticated:
+        return redirect(url_for('staff_order'))
+    else:
+        return redirect(url_for('staff_login'))
 
 
+@app.route('/staff/login', methods=["GET", "POST"])
+def staff_login():
+
+    if request.method == 'POST':
+        if request.form['button'] == "login":
+            if system.staff_login(request.form['username'], request.form['password']):
+                return redirect(url_for('staff_order'))
+            else:
+                return render_template('staff_login.html', username=request.form['username'], error=True)
+        
+        elif request.form['button'] == "cancel":
+            return redirect(url_for('home_page')) 
+    
+    return render_template('staff_login.html', username=None, error=None)
+
+
+@app.route('/staff/logout')
+def staff_logout():
+    system.staff_logout()
+    return redirect(url_for('home_page'))
+
+
+@app.route('/staff/order', methods=["GET", "POST"])
+def staff_order():
+    if not system.is_authenticated:
+        return redirect(url_for('staff_login')) 
+
+    if request.method == 'POST':
+        order_id = int(request.form['button'])
+        system.update_order(order_id)
+
+    return render_template('staff_order.html', system=system)
+
+@app.route('/staff/inventory', methods=["GET", "POST"])
+def staff_inventory():
+    if not system.is_authenticated:
+        return redirect(url_for('staff_login'))
+
+    return render_template('staff_inventory.html', system=system)
 
 '''
 ---- Supplied codes ----:

@@ -25,7 +25,7 @@ class OrderSystem:
         self._staff_system = Staff_system
 
     '''
-    Menu part
+    Menu parp
     '''
 
     # get a menu
@@ -141,8 +141,20 @@ class OrderSystem:
             print('Payment not authorised.')
 
 
+    '''
+    Staff part
+    '''
+
+    def staff_login(self, username: str, password: str) -> bool:
+        return self.staff_system.login(username, password)
+    
+    
+    def staff_logout(self):
+        self.staff_system.logout()
+
+
     # function for staff to remove orders which are completed from the list
-    def update_order(self,order_id,username = 'NONE',password = 'NONE'):
+    def update_order(self, order_id: int, username = 'NONE', password = 'NONE'):
         #authorising to make sure only staff can remove orders
         if self._staff_system.is_authenticated == False:
             print('hi')
@@ -150,8 +162,8 @@ class OrderSystem:
                 print('Invalid login')
                 return
         order = self._get_pendingorder(order_id)
-        if(order and order in self._pending_orders):
-            if(order.is_payed == True):
+        if order:
+            if order.is_payed == True:
                 order.is_prepared  = True
                 self._pending_orders.remove(order)
                 self._completed_orders.append(order)
@@ -168,62 +180,27 @@ class OrderSystem:
         print("-----List of completed orders---------")
         for complete_orders in self._completed_orders:
             print(complete_orders)
-    
 
-    #checking out after placing order
+    # MODIFIED, maybe need some tests: checking out after placing order
     def checkout(self, order_id: int):
+        # check order
         order = self._get_pendingorder(order_id)
         if not order:
             print("Order does not exist")
             return
-        print("Your final order is")
-        if(len(order.items.values()) == 0):
-            print("Order cant be empty")
+        elif len(order.items.values()) == 0:
+            print("Order cannot be empty")
             return
+        # display order
+        print("Your final order is")
         self.display_order(order_id)
-        unavailable_order = 0
-        new_inventory = deepcopy(self._inventory)
-        for items_list in order.items.values():
-            for item in items_list:
-                for ingredient_list in item.ingredients.values():
-                    if ingredient_list.__class__.__name__ == "Ingredient":
-                        new_inventory.update_stock(ingredient_list.name,-ingredient_list.amount)
-                        if (new_inventory.is_available(ingredient_list.name,1) == True):
-                            unavailable_order = 0 
-                        else:
-                            unavailable_order = 1
-                            break
-                    else: 
-                        for ingredient in ingredient_list.values():
-                            assert(ingredient.__class__.__name__ == "Ingredient")
-                            if not isNaN(ingredient.amount):
-                                new_inventory.update_stock(ingredient.name,-ingredient.amount)
-                                if (new_inventory.is_available(ingredient.name,1) == True):
-                                    unavailable_order = 0 
-                                else:
-                                    unavailable_order = 1
-                                    break
-                    
-        if unavailable_order == 0:
-            self._pay_order(order)
-        #updating inventory after order is paid
-            if (order.is_payed):
-                for items_list in order.items.values():
-                    for item in items_list:
-                        for ingredient_list in item.ingredients.values():
-                            if ingredient_list.__class__.__name__ == "Ingredient":
-                                self._inventory.update_stock(ingredient_list.name,-ingredient_list.amount)
-                            else: 
-                                for ingredient in ingredient_list.values():
-                                    assert(ingredient.__class__.__name__ == "Ingredient")
-                                    if not isNaN(ingredient.amount):
-                                        self._inventory.update_stock(ingredient.name,-ingredient.amount)
-            else:
-                self._pending_orders.remove(order)
-        else:
-            print("Order unavailable due to shortage of ingredients")
-            self._pending_orders.remove(order)
-
+        # check availablity in the inventory
+        if not order.check_order_availability(self.inventory):
+            return
+        # make payment and update inventory
+        self._pay_order(order)
+        order.update_order_inventory(self.inventory) 
+            
 
     '''
     property
@@ -247,3 +224,7 @@ class OrderSystem:
     @property
     def staff_system(self):
         return self._staff_system
+
+    @property
+    def is_authenticated(self):
+        return self.staff_system.is_authenticated 

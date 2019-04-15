@@ -1,11 +1,11 @@
 import csv
 import pytest
-from item import *
-from order import *
-from menu import *
-from inventory import *
-from staff_system import *
-from system_creator import *
+from src.item import *
+from src.order import *
+from src.menu import *
+from src.inventory import *
+from src.staff_system import *
+from src.system_creator import *
 
 '''
 This is a test for the Order System, which covers the Epic story 1 and 2.
@@ -14,22 +14,22 @@ This is a test for the Order System, which covers the Epic story 1 and 2.
 @pytest.fixture
 def setup():
     system = create_system(
-        mains=create_mains_menu("../docs/Menus.csv"),
-        sides=create_sides_menu("../docs/Menus.csv"),
-        drinks=create_drinks_menu("../docs/Menus.csv"),
-        inventory=create_inventory("../docs/Inventory.csv"),
-        staff_system=create_staffsystem("../docs/StaffSystem.csv")
+        mains=create_mains_menu("docs/Menus.csv"),
+        sides=create_sides_menu("docs/Menus.csv"),
+        drinks=create_drinks_menu("docs/Menus.csv"),
+        inventory=create_inventory("docs/Inventory.csv"),
+        staff_system=create_staffsystem("docs/StaffSystem.csv")
     )
     return system
 
 @pytest.fixture
 def setup1():
     system = create_system(
-        mains=create_mains_menu("../docs/Menus.csv"),
-        sides=create_sides_menu("../docs/Menus.csv"),
-        drinks=create_drinks_menu("../docs/Menus.csv"),
-        inventory=create_inventory("../docs/Inventory.csv"),
-        staff_system=create_staffsystem("../docs/StaffSystem.csv")
+        mains=create_mains_menu("docs/Menus.csv"),
+        sides=create_sides_menu("docs/Menus.csv"),
+        drinks=create_drinks_menu("docs/Menus.csv"),
+        inventory=create_inventory("docs/Inventory.csv"),
+        staff_system=create_staffsystem("docs/StaffSystem.csv")
     )
     system.make_order()
     itemList = ["Coke Can", "Nugget 6 pack", "OrangeJuice_Small", "Med Fries"]
@@ -107,7 +107,7 @@ def test_wrong_item(setup):
 
 
 def test_correct_item(setup):
-    with open("../docs/Menus.csv") as f:
+    with open("docs/Menus.csv") as f:
         nameList = []
         reader = csv.DictReader(f)
         for row in reader:
