@@ -82,7 +82,7 @@ class Order(object):
                     else:
                         for ingredient in ingredient_list.values():
                             assert(ingredient.__class__.__name__ == "Ingredient")
-                            if not isNaN(ingredient.amount) and not self.inventory.is_available(ingredient.name, ingredient.amount):
+                            if not isNaN(ingredient.amount) and not inventory.is_available(ingredient.name, ingredient.amount):
                                 print(f"Inventory not engough for {ingredient.amount} {ingredient.name}")
                                 return False
         return True

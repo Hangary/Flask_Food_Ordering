@@ -107,7 +107,7 @@ def test_wrong_item(setup):
 
 
 def test_correct_item(setup):
-    with open("../docs/Menus.csv") as f:
+    with open("docs/Menus.csv") as f:
         nameList = []
         reader = csv.DictReader(f)
         for row in reader:
