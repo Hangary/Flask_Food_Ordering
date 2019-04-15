@@ -33,11 +33,11 @@ def page_not_found(e=None):
 @app.route('/', methods=["GET", "POST"])
 def home_page():
     if request.method == 'POST': 
-        if request.form["button"] == "make_order":
-            # make a session for its order
-            #if 'order_ID' not in session:
+        if request.form["button"] == "make_new_order":
             order_id = system.make_order()
             session['order_ID'] = order_id
+            return redirect('/customer/menu/Mains')
+        elif request.form["button"] == "continue_order":
             return redirect('/customer/menu/Mains')
         elif request.form["button"] == "search_order":
             return redirect(url_for('track_order'))

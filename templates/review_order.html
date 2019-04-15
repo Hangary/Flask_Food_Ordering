@@ -16,8 +16,10 @@
 {% if order %}
     <ul>
     {% for item in order.items.values() %}
-        <li> <p style="white-space: pre;">{{ item }}</p> 
-        <button name='button' type='submit' value={{ item.name }}> <i class="fas fa-minus-circle"></i> </button> </li> 
+        <li> 
+            {{ item }}
+            <button name='button' type='submit' value={{ item.name }}> <i class="fas fa-minus-circle"></i> </button> 
+    </li> 
     {% endfor %}
     </ul>
 {% endif %}

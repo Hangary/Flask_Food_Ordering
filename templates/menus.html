@@ -14,8 +14,10 @@
     <ul>
     {% for item in menu %}
         {% if item.is_available(inventory) %}
-        <li> <p style="white-space: pre;">{{ item }}</p> 
-        <button name='button' type='submit' value={{ item.name }}> <i class="fas fa-plus-circle"></i> </button> </li> 
+        <li> 
+            {{ item }}
+            <button name='button' type='submit' value={{ item.name }}> <i class="fas fa-plus-circle"></i> </button> 
+        </li> 
         {% endif %}
     {% endfor %}
     </ul>

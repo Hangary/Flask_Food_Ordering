@@ -1,14 +1,18 @@
 {% extends 'base.html' %}
 {% block body %}
 
-<h1 align = "center">BURGERS!!!</h1>
-<h3>Select from these delicious item what you want in your burger</h3>
+<h1 align = "center">{{ item.name }} Creation:</h1>
+<h3>Select from these delicious item what you want in your {{ item.name }}</h3>
 
 <form method="POST">
     <ul>
     {% for ingredients in menu %}
         {% if ingredient.is_available(inventory) %}
-        <li style="width:200px"> <p style="white-space: pre;">{{ingredient}         <button style="display: inline-block" name='button' type='submit' value={{ingredient.amount }}><i class="fas fa-plus-circle"></i> </button> <span>Number</span> </p> </li> 
+        <li style="width:200px"> 
+            <p style="white-space: pre;"> {{ ingredient }}
+            <button style="display: inline-block" name='button' type='submit' value={{ ingredient.amount }}>
+            <i class="fas fa-plus-circle"></i> </button> <span>Number</span> </p> 
+        </li> 
         {% endif %}
     {% endfor %}
     </ul>
