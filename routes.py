@@ -72,6 +72,7 @@ def review_order():
 
     order = system.get_order(session['order_ID'])
     if request.method == 'POST':
+        print(request.form)
         system.del_items_in_orders(order.order_id, request.form["button"])
     
     return render_template('review_order.html', order=order)
