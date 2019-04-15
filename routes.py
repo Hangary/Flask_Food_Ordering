@@ -72,16 +72,19 @@ def review_order():
 
     order = system.get_order(session['order_ID'])
     if request.method == 'POST':
-        print(request.form)
-        system.del_items_in_orders(order.order_id, request.form["button"])
+        if request.form["button"] == "checkout":
+            system.checkout(session['order_ID'])
+            return render_template("order_result.html") 
+        else:
+            system.del_items_in_orders(order.order_id, request.form["button"])
     
     return render_template('review_order.html', order=order)
-
 
 
 @app.route('/customer/order/<order_id>')
 def track_order(order_id):
     return render_template('track_order.html', order=system.get_order(order_id))
+
 
 '''
 Staff pages:
@@ -109,10 +112,12 @@ def staff_login():
     
     return render_template('staff_login.html', username=None, error=None)
 
+
 @app.route('/staff/logout')
 def staff_logout():
     system.staff_logout()
     return redirect(url_for('home_page'))
+
 
 @app.route('/staff/order', methods=["GET", "POST"])
 def staff_order():
@@ -122,7 +127,9 @@ def staff_order():
     if request.method == 'POST':
         if request.form['button'] == "logout":
             return redirect(url_for('staff_logout'))
-        #TODO: update orders
+        else:
+            order_id = int(request.form['button'])
+            system.update_order(order_id)
 
     return render_template('staff_order.html', orders=system._pending_orders)
 

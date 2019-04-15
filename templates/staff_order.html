@@ -16,10 +16,12 @@
 <form method="POST">
     <ul>
     {% for order in orders %}
-    <li> 
+        {% if order.is_payed %}
+        <li> 
         {{ order }}
         <button name='button' type='submit' value={{ order.order_id }}> <i class="far fa-check-square"></i> </button> 
-    </li> 
+        </li> 
+        {% endif %}
     {% endfor %}
     </ul>
 </form>

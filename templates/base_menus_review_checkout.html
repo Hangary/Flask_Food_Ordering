@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block body %}
+
+<!-- Tab Menu -->
+<div>
+<a href="{{ url_for('display_menu', menu_name='Mains') }}"><i class="fas fa-hamburger"></i> Mains</a>
+<a href="{{ url_for('display_menu', menu_name='Sides') }}"><i class="fas fa-pizza-slice"></i> Sides</a>
+<a href="{{ url_for('display_menu', menu_name='Drinks') }}"><i class="fas fa-cocktail"></i> Drinks</a>
+</div>
+
+<div>
+<a href="{{ url_for('review_order') }}"><i class="fas fa-shopping-cart"></i> My Order</a>
+</div>
+
+<!-- Main Content -->
+{% block menus_block %}{% endblock %}
+
+
+{% endblock %}

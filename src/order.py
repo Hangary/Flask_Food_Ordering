@@ -1,6 +1,6 @@
 from src.item import Item, Burger, Wrap, Side, Drink
 from src.inventory import Inventory
-from src.ingredient import Ingredient
+from src.ingredient import Ingredient, isNaN
 '''
 Order: a class used to store information about online orders.
 '''
@@ -68,8 +68,35 @@ class Order(object):
         print("Paid?",self.is_payed)
         print("Prepared?",self.is_prepared)
 
+    def check_order_availability(self, inventory: Inventory) -> bool:
+        for items_list in self.items.values():
+            for item in items_list:
+                for ingredient_list in item.ingredients.values():
+                    if ingredient_list.__class__.__name__ == "Ingredient":
+                        if not inventory.is_available(ingredient_list.name, ingredient_list.amount):
+                            print(f"Inventory not engough for {ingredient_list.amount} {ingredient_list.name}")
+                            return False
+                    else:
+                        for ingredient in ingredient_list.values():
+                            assert(ingredient.__class__.__name__ == "Ingredient")
+                            if not isNaN(ingredient.amount) and not self.inventory.is_available(ingredient.name, ingredient.amount):
+                                print(f"Inventory not engough for {ingredient.amount} {ingredient.name}")
+                                return False
+        return True
 
-    
+    # update inventory for the order
+    def update_order_inventory(self, inventory: Inventory):
+        for items_list in self.items.values():
+            for item in items_list:
+                for ingredient_list in item.ingredients.values():
+                    if ingredient_list.__class__.__name__ == "Ingredient":
+                        inventory.update_stock(ingredient_list.name,-ingredient_list.amount)
+                    else: 
+                        for ingredient in ingredient_list.values():
+                            assert(ingredient.__class__.__name__ == "Ingredient")
+                            if not isNaN(ingredient.amount):
+                                inventory.update_stock(ingredient.name,-ingredient.amount)
+
     '''
     Property
     '''
