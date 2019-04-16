@@ -45,7 +45,7 @@ def home_page():
         elif request.form["button"] == "staff":
             return redirect(url_for('staff_homepage'))
 
-    return render_template('home_page.html')
+    return render_template('home_page.html', system=system)
 
 
 '''
@@ -58,7 +58,6 @@ def display_menu(menu_name):
         return redirect(url_for('page_not_found'))
 
     if request.method == 'POST':
-        #item = menu.get_item(request.form["button"])
         item = system.get_item(request.form["button"])
         print(item)
         system.add_items_in_orders(session['order_ID'], item)
@@ -68,8 +67,13 @@ def display_menu(menu_name):
 
 @app.route('/customer/review', methods=["GET", "POST"])
 def review_order():
+    
+    # check whether order_id in the session
     if 'order_ID' not in session:
-        return "Sorry, we cannot find your order."
+        return render_template("error.html", error="Sorry, you need to create a new order first.")
+    # check whether the order_id is in the system
+    if not system.get_order(session['order_ID']):
+        return render_template("error.html", error="Sorry, your order ID is no longer valid.")
 
     order = system.get_order(session['order_ID'])
     if request.method == 'POST':
