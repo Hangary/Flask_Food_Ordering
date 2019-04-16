@@ -81,6 +81,7 @@ def review_order():
             order_id = session['order_ID']
             system.checkout(order_id)
             session.pop('order_ID')
+            system.save_state()
             return render_template("order_result.html", order_id=order_id) 
         else:
             system.del_items_in_orders(order.order_id, request.form["button"])
@@ -134,6 +135,7 @@ def staff_order():
     if request.method == 'POST':
         order_id = int(request.form['button'])
         system.update_order(order_id)
+        system.save_state() 
 
     return render_template('staff_order.html', system=system)
 
@@ -141,11 +143,13 @@ def staff_order():
 def staff_inventory():
     if not system.is_authenticated:
         return redirect(url_for('staff_login'))
+    
     if request.method == 'POST':
-        for k,v in request.form.items():
-            if v:
-                system.inventory.update_stock(k,float(v))
+        for name, amount in request.form.items():
+            if amount:
+                system.inventory.update_stock(name, float(amount))
         system.save_state()
+    
     return render_template('staff_inventory.html', system=system)
 
 '''
