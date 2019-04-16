@@ -141,6 +141,7 @@ def staff_inventory():
         for k,v in request.form.items():
             if v:
                 system.inventory.update_stock(k,float(v))
+        system.save_state()
     return render_template('staff_inventory.html', system=system)
 
 '''

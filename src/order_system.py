@@ -5,6 +5,7 @@ from src.menu import Menu
 from src.inventory import Inventory
 from src.staff_system import StaffSystem
 from copy import deepcopy
+import pickle
 import math
 '''
 This is the main interface for both customers and staff.
@@ -201,6 +202,11 @@ class OrderSystem:
         self._pay_order(order)
         order.update_order_inventory(self.inventory) 
             
+    def save_state(self):
+        with open('full_order.dat','wb') as f:
+            print('Saving')
+            pickle.dump(self,f,pickle.HIGHEST_PROTOCOL)
+
 
     '''
     property
