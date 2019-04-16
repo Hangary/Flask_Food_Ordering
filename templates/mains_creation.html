@@ -1,20 +1,26 @@
+<div style = "display: none">
 {% extends 'base.html' %}
 {% block body %}
+</div>>
 
-<h1 align = "center">{{ item.name }} Creation:</h1>
-<h3>Select from these delicious item what you want in your {{ item.name }}</h3>
+<h1 align = "center"><div style = "display: none">{{ item.name }}</div>> Creation:</h1>
+<h3>Select from these delicious item what you want in your <div style = "display: none">{{ item.name }}</div>></h3>
 
 <form method="POST">
     <ul>
+    <div style = "display: none">
     {% for ingredients in menu %}
         {% if ingredient.is_available(inventory) %}
+        </div>>
         <li style="width:200px"> 
             <p style="white-space: pre;"> {{ ingredient }}
             <button style="display: inline-block" name='button' type='submit' value={{ ingredient.amount }}>
             <i class="fas fa-plus-circle"></i> </button> <span>Number</span> </p> 
         </li> 
+        <div style = "display: none">
         {% endif %}
     {% endfor %}
+        </div>
     </ul>
 </form>
 
@@ -22,4 +28,7 @@
         <button style="display: inline-block" name='button' type='submit'}}>submit</button>
         <button style="display: inline-block" name='button' type='reset'}}>cancel</button>
 
+</form>
+<div style = "display: none">
 {% endblock %}
+</div>

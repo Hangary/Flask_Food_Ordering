@@ -1,20 +1,27 @@
+<div style = "display: none">
 {% extends 'base_menus_review_checkout.html' %}
 {% block menus_block %}
+</div>
 
 <h1> {{ menu_name }} Menu:</h1>
 
 <form method="POST">
     <ul>
-    {% for item in menu %}
-        {% if item.is_available(inventory) %}
+            <div style = "display: none">
+             {% for item in menu %}
+            {% if item.is_available(inventory) %}
+            </div>
         <li> 
             {{ item }}
             <button name='button' type='submit' value="{{ item.name }}"> <i class="fas fa-plus-circle"></i> </button> 
         </li> 
+        <div style = "display: none">
         {% endif %}
     {% endfor %}
+    </div>
     </ul>
 </form>
-
+<div style = "display: none">
 {% endblock %}
+</div>
 
