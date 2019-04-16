@@ -1,0 +1,46 @@
+<div style = "display: none">
+        {% extends 'base.html' %}
+        {% block body %}
+        </div>>
+        
+        <h1 align = "center"><div style = "display: none">{{ item.name }}</div>> Sides and drinks:</h1>
+        <h3>Select from these delicious item what you want in your <div style = "display: none">{{ item.name }}</div>></h3>
+        <div style=" position: absolute;top: 8px;right: 16px;font-size: 18px; border: orange">
+            <h2>Your current order</h2>
+            <h3 align = "right"> Mains</h3>
+                <ul>
+                    <li>Item 1</li>>
+                    <li>Item 2</li>>
+                </ul>
+            <h3 align = "right"> Sides and drinks</h3>
+            <ul>
+                <li>Item 1</li>>
+                <li>Item 2</li>>
+            </ul>
+        </div>
+        <form method="POST">
+            <ul>
+            <div style = "display: none">
+            {% for ingredients in menu %}
+                {% if ingredient.is_available(inventory) %}
+                </div>>
+                <li style="width:200px"> 
+                    <p style="white-space: pre;"> {{ ingredient }}
+                    <button style="display: inline-block" name='button' type='submit' value={{ ingredient.amount }}>
+                    <i class="fas fa-plus-circle"></i> </button> <span>Number</span> </p> 
+                </li> 
+                <div style = "display: none">
+                {% endif %}
+            {% endfor %}
+                </div>
+            </ul>
+        </form>
+        
+        <form method="POST">
+                <button style="display: inline-block" name='button' type='submit'}}>submit</button>
+                <button style="display: inline-block" name='button' type='reset'}}>cancel</button>
+        
+        </form>
+        <div style = "display: none">
+        {% endblock %}
+        </div>

@@ -1,12 +1,16 @@
+<div style = "display: none">
 {% extends 'base.html' %}
 {% block body %}
+</div>
 
 
 {% if order %}
     <div> {{ order }} </div>
     <ul>
+        <div style = "display: none">
     {% for item_list in order.items.values() %}
         {% for item in item_list %}
+        </div>>
         <li> {{ item }} </li> 
         {% endfor %}
     {% endfor %}
@@ -21,5 +25,6 @@
 {% else %}
     Sorry, we cannot find your order.
 {% endif %}
-
+<div style = "display: none">
 {% endblock %}
+</div>

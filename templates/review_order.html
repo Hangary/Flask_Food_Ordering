@@ -1,28 +1,37 @@
+<div style = "display: none">
 {% extends 'base_menus_review_checkout.html' %}
 {% block menus_block %}
+</div>
 
 <h1> Order Review:</h1>
 <div> {{ order }} </div>
 
 <form method="POST">
-{% if order %}
+        <div style = "display: none">
+        {% if order %}
+        </div>
     <ul>
-    {% for item_list in order.items.values() %}
-    {% for item in item_list %}
+        <div style = "display: none">
+        {% for item_list in order.items.values() %}
+        {% for item in item_list %}
+        </div>
     <li> 
         {{ item }}
         <button name='button' type='submit' value="{{ item.name }}"> <i class="fas fa-minus-circle"></i> </button> 
     </li> 
+    <div style = "display: none">
     {% endfor %}
     {% endfor %}
     </ul>
 {% endif %}
+</div>
 <div>
     <button name='button' type='submit' value="checkout"> 
         <i class="fas fa-money-bill"></i> Checkout</a>
     </button>
 </div>
 </form>
-
+<div style = "display: none">
 {% endblock %}
+</div>
 

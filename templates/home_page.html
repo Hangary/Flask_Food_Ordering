@@ -1,5 +1,7 @@
+<div style = "display: none">
 {% extends 'base.html' %}
 {% block body %}
+</div>>
 
 <h1>Online Order System</h1>
 <h3 style=" position: absolute;top: 8px;right: 16px;font-size: 18px;">Are you staff member , click here</h3>
@@ -8,11 +10,15 @@
 	<div align="center"> 
 		<button name='button' type='submit' value='make_new_order'>Make an Order!</button> 
 	</div>
+	<div style = "display: none">
 	{% if 'order_ID' in session.keys() and system.get_order(session['order_ID']) %}
+	</div>
 		<div align="center"> 
 			<button name='button' type='submit' value='continue_order'>Continue your Order</button> 
 		</div>
+	<div style = "display: none">
 	{% endif %}
+	</div>
 
 	<br>
 
@@ -25,5 +31,6 @@
 		<button name='button' type='submit' value='staff'><i class="fab fa-black-tie"></i> &nbsp For Staff</button> 
 	</div>
 </form>
-
+<div style = "display: none">
 {% endblock %}
+</div>
