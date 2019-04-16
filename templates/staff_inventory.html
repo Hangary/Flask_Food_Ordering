@@ -6,9 +6,10 @@
     <ul>
         {% for ingredient in system.inventory.get_ingredients() %}
             <li> 
-            {{ ingredient }}
+            {{ ingredient }}: <input type="number" name="{{ ingredient.name }}" style="width: 4em" min="1" >
             </li> 
         {% endfor %}
+        <input type="submit" value="Update">    <input type="reset" value="Clear">
     </ul>
 </form>
 

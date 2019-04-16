@@ -137,7 +137,10 @@ def staff_order():
 def staff_inventory():
     if not system.is_authenticated:
         return redirect(url_for('staff_login'))
-
+    if request.method == 'POST':
+        for k,v in request.form.items():
+            if v:
+                system.inventory.update_stock(k,float(v))
     return render_template('staff_inventory.html', system=system)
 
 '''
