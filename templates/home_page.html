@@ -8,7 +8,7 @@
 	<div align="center"> 
 		<button name='button' type='submit' value='make_new_order'>Make an Order!</button> 
 	</div>
-	{% if 'order_ID' in session.keys() %}
+	{% if 'order_ID' in session.keys() and system.get_order(session['order_ID']) %}
 		<div align="center"> 
 			<button name='button' type='submit' value='continue_order'>Continue your Order</button> 
 		</div>

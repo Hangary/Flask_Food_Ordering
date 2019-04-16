@@ -45,7 +45,7 @@ def home_page():
         elif request.form["button"] == "staff":
             return redirect(url_for('staff_homepage'))
 
-    return render_template('home_page.html')
+    return render_template('home_page.html', system=system)
 
 
 '''
@@ -58,7 +58,6 @@ def display_menu(menu_name):
         return redirect(url_for('page_not_found'))
 
     if request.method == 'POST':
-        #item = menu.get_item(request.form["button"])
         item = system.get_item(request.form["button"])
         print(item)
         system.add_items_in_orders(session['order_ID'], item)
@@ -68,8 +67,13 @@ def display_menu(menu_name):
 
 @app.route('/customer/review', methods=["GET", "POST"])
 def review_order():
+    
+    # check whether order_id in the session
     if 'order_ID' not in session:
-        return "Sorry, we cannot find your order."
+        return render_template("error.html", error="Sorry, you need to create a new order first.")
+    # check whether the order_id is in the system
+    if not system.get_order(session['order_ID']):
+        return render_template("error.html", error="Sorry, your order ID is no longer valid.")
 
     order = system.get_order(session['order_ID'])
     if request.method == 'POST':
@@ -77,6 +81,7 @@ def review_order():
             order_id = session['order_ID']
             system.checkout(order_id)
             session.pop('order_ID')
+            system.save_state()
             return render_template("order_result.html", order_id=order_id) 
         else:
             system.del_items_in_orders(order.order_id, request.form["button"])
@@ -130,6 +135,7 @@ def staff_order():
     if request.method == 'POST':
         order_id = int(request.form['button'])
         system.update_order(order_id)
+        system.save_state() 
 
     return render_template('staff_order.html', system=system)
 
@@ -137,7 +143,13 @@ def staff_order():
 def staff_inventory():
     if not system.is_authenticated:
         return redirect(url_for('staff_login'))
-
+    
+    if request.method == 'POST':
+        for name, amount in request.form.items():
+            if amount:
+                system.inventory.update_stock(name, float(amount))
+        system.save_state()
+    
     return render_template('staff_inventory.html', system=system)
 
 '''

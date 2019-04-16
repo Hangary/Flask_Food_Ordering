@@ -1,6 +1,7 @@
 from src.item import Item, Burger, Wrap, Side, Drink
 from src.inventory import Inventory
 from src.ingredient import Ingredient, isNaN
+from copy import deepcopy
 '''
 Order: a class used to store information about online orders.
 '''
@@ -72,19 +73,24 @@ class Order(object):
         print("Prepared?",self.is_prepared)
 
     def check_order_availability(self, inventory: Inventory) -> bool:
+        temp_inventory = deepcopy(inventory)
         for items_list in self.items.values():
             for item in items_list:
                 for ingredient_list in item.ingredients.values():
                     if ingredient_list.__class__.__name__ == "Ingredient":
-                        if not inventory.is_available(ingredient_list.name, ingredient_list.amount):
-                            print(f"Inventory not engough for {ingredient_list.amount} {ingredient_list.name}")
+                        if not temp_inventory.is_available(ingredient_list.name, ingredient_list.amount):
+                            print(f"Inventory not enough for {ingredient_list.amount} {ingredient_list.name}")
                             return False
+                        temp_inventory.update_stock(ingredient_list.name, -ingredient_list.amount)
+
                     else:
                         for ingredient in ingredient_list.values():
                             assert(ingredient.__class__.__name__ == "Ingredient")
-                            if not isNaN(ingredient.amount) and not inventory.is_available(ingredient.name, ingredient.amount):
-                                print(f"Inventory not engough for {ingredient.amount} {ingredient.name}")
+                            if not isNaN(ingredient.amount) and not temp_inventory.is_available(ingredient.name, ingredient.amount):
+                                print(f"Inventory not enough for {ingredient.amount} {ingredient.name}")
                                 return False
+                            temp_inventory.update_stock(ingredient.name, -ingredient.amount)
+
         return True
 
     # update inventory for the order

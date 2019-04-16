@@ -6,7 +6,7 @@
 <div>
     <form method="POST">
         username: <input name="username" value="{{username if username}}"> <br>
-        password: <input name="password" value=""> <br>
+        password: <input type="password" name="password" value=""> <br>
         {% if error %} 
             <font size="3" color="red" float: left>Invalid username or password!</font> <br>
         {% endif %}
