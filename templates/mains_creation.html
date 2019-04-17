@@ -3,7 +3,7 @@
 
 
 <h3 align = "center">{{ item.name }} Creation</h3>
-<p>Select from these delicious ingredients what you want in your {{ item.name }}: </p>
+<p>Select from these delicious ingredients what you want in your {{ item.name }} by typing in the number you want: </p>
 
 <form method="POST">
 {% for ingredient_type in item.ingredientsDict.keys() %}
@@ -12,14 +12,13 @@
     {% for ingredient in item.ingredientsDict[ingredient_type].values() %}
         <li style="width:200px"> 
             <p style="white-space: pre;"> {{ ingredient }}
-            <button name='button' type='submit' value="{{ ingredient.name }}">
-            <i class="fas fa-plus-circle"></i> </button> </p> 
+            <input type="number" name="{{ ingredient.name }}" style="width: 4em" min="0" >
         </li> 
     {% endfor %}
     </ul>
 {% endfor %}
 
-        <button style="display: inline-block" name='button' type='submit'}}>submit</button>
+        <button style="display: inline-block" name='button' type='submit' value ='submit'}}>submit</button>
         <button style="display: inline-block" name='button' type='reset'}}>cancel</button>
 
 </form>

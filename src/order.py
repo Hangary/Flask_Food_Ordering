@@ -76,7 +76,7 @@ class Order(object):
         temp_inventory = deepcopy(inventory)
         for items_list in self.items.values():
             for item in items_list:
-                for ingredient_list in item.ingredients.values():
+                for ingredient_list in item._ingredients.values():
                     if ingredient_list.__class__.__name__ == "Ingredient":
                         if not temp_inventory.is_available(ingredient_list.name, ingredient_list.amount):
                             print(f"Inventory not enough for {ingredient_list.amount} {ingredient_list.name}")
@@ -97,7 +97,7 @@ class Order(object):
     def update_order_inventory(self, inventory: Inventory):
         for items_list in self.items.values():
             for item in items_list:
-                for ingredient_list in item.ingredients.values():
+                for ingredient_list in item._ingredients.values():
                     if ingredient_list.__class__.__name__ == "Ingredient":
                         inventory.update_stock(ingredient_list.name,-ingredient_list.amount)
                     else: 

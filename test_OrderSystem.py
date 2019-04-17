@@ -235,12 +235,12 @@ def test_modify_mains(setup):
     setup._get_pendingorder(1).calculate_price()
     assert setup._get_pendingorder(1).price == 35
     
-    for things in setup._get_pendingorder(1).items["Wrap"][0].ingredients.values():
+    for things in setup._get_pendingorder(1).items["Wrap"][0]._ingredients.values():
         for stuff in IngListWrap:
             if stuff.name in things.keys():
                 assert stuff.amount == things[stuff.name].amount and stuff.additional_price == things[stuff.name].additional_price
 
-    for things in setup._get_pendingorder(1).items["Burger"][0].ingredients.values():
+    for things in setup._get_pendingorder(1).items["Burger"][0]._ingredients.values():
         for stuff in IngListBurger:
             if stuff.name in things.keys():
                 assert stuff.amount == things[stuff.name].amount and stuff.additional_price == things[stuff.name].additional_price
@@ -299,7 +299,7 @@ def test_modify_mains_2_cant_add_more_than_max(setup):
     )
     setup._get_pendingorder(1).calculate_price()
     # Second burger should reject beef patty (amount of beef patty in burger should be nan)
-    for things in setup._get_pendingorder(1).items["Burger"][0].ingredients.values():
+    for things in setup._get_pendingorder(1).items["Burger"][0]._ingredients.values():
         for stuff in IngListBurger:
             if stuff.name in things.keys():
                 if stuff.name == 'Beef Patty':
@@ -412,8 +412,8 @@ def test_checkout_order_with_lots_of_items(setup):
         swiss_cheese,
         lettuce
     )
-    assert setup._get_pendingorder(orderID_next).items["Burger"][0].ingredients['Other']["Swiss Cheese"].amount == 6
-    assert isNaN(setup._get_pendingorder(orderID_next).items["Burger"][0].ingredients['Other']["Lettuce"].amount)
+    assert setup._get_pendingorder(orderID_next).items["Burger"][0]._ingredients['Other']["Swiss Cheese"].amount == 6
+    assert isNaN(setup._get_pendingorder(orderID_next).items["Burger"][0]._ingredients['Other']["Lettuce"].amount)
     setup.checkout(orderID_next)
     assert(setup.inventory.get_ingredient('OrangeJuice').amount == 0)
     assert(setup.inventory.get_ingredient('Ice').amount == 1000-80)
