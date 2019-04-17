@@ -223,6 +223,10 @@ class Burger(Main):
         }
 
     @property
+    def ingredientsDict(self):
+        return self._ingredients
+
+    @property
     def ingredients(self):
         Buns = [f"{bun.name}: {bun.amount}" for bun in self._ingredients['Bun'].values() if not isNaN(bun.amount) and bun.amount > 0]
         Patties = [f"{patty.name}: {patty.amount}" for patty in self._ingredients['Patty'].values() if not isNaN(patty.amount) and patty.amount > 0]

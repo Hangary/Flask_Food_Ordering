@@ -1,35 +1,22 @@
-
 {% extends 'base.html' %}
 {% block body %}
 
 
-<h1 align = "center">{{ item.name }} Creation:</h1>
-<h3>Select from these delicious item what you want in your {{ item.name }}</h3>
-<div style=" position: absolute;top: 8px;right: 16px;font-size: 18px; border:solid">
-    <h2>Your current order</h2>
-    <h3 align = "right"> Mains</h3>
-        <ul>
-            <li>Item 1</li>>
-            <li>Item 2</li>>
-        </ul>
-    <h3 align = "right"> Sides and drinks</h3>
-    <ul>
-        <li>Item 1</li>>
-        <li>Item 2</li>>
-    </ul>
-</div>
+<h3 align = "center">{{ item.name }} Creation</h3>
+<p>Select from these delicious ingredients what you want in your {{ item.name }}: </p>
+
 <form method="POST">
+{% for ingredient_type in item.ingredientsDict.keys() %}
     <ul>
-    {% for ingredients in menu %}
-        {% if ingredient.is_available(inventory) %}
+    {% for ingredient in item.ingredientsDict[ingredient_type].values() %}
         <li style="width:200px"> 
             <p style="white-space: pre;"> {{ ingredient }}
-            <button style="display: inline-block" name='button' type='submit' value={{ ingredient.amount }}>
-            <i class="fas fa-plus-circle"></i> </button> <span>Number</span> </p> 
+            <button name='button' type='submit' value="{{ ingredient.name }}">
+            <i class="fas fa-plus-circle"></i> </button> </p> 
         </li> 
-        {% endif %}
     {% endfor %}
     </ul>
+{% endfor %}
 </form>
 
 <form method="POST">

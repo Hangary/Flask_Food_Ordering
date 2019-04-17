@@ -53,18 +53,36 @@ Customer pages:
 '''
 @app.route('/customer/menu/<menu_name>', methods=["GET", "POST"])
 def display_menu(menu_name):
+    
+    if request.method == 'POST':
+        if "add_btn" in request.form.keys():
+            item = system.get_item(request.form["add_btn"])
+            system.add_items_in_orders(session['order_ID'], item)
+        elif "mod_btn" in request.form.keys():
+            item = system.get_item(request.form["mod_btn"])
+            return redirect(url_for("modify_mains", item_name=item.name))
+    
     menu = system.get_menu(menu_name)
     if not menu:
+        print(f"not found {menu_name}")
         return redirect(url_for('page_not_found'))
 
-    if request.method == 'POST':
-        item = system.get_item(request.form["button"])
-        print(item)
-        system.add_items_in_orders(session['order_ID'], item)
-    
     return render_template('menus.html', menu_name=menu_name, menu=menu.display(), inventory=system.inventory)
     
 
+@app.route('/customer/creation/<item_name>', methods=["GET", "POST"])
+def modify_mains(item_name):
+    item = system.get_item(item_name)
+
+    # TODO: modify
+    if request.method == 'POST':
+        pass
+
+    return render_template("mains_creation.html", item=item, inventory=system.inventory)
+
+
+
+# TODO: button
 @app.route('/customer/review', methods=["GET", "POST"])
 def review_order():
     
