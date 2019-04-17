@@ -33,7 +33,7 @@ class Item(object):
 
         # other fields:
         self._ingredients = {}                  # dict<ingredient>
-
+                               # error messages
     # add ingredients into the item
     def add_ingredients(self, *argv: Ingredient):
         for ingredient in argv:
@@ -106,7 +106,7 @@ class Main(Item):
         self._max_limit = {}
         # float, price + additional price
         self._total_price = price
-        self.__localCounter = {'Bun':0,'Wrap':0,'Patty':0}
+        self._errors = {}
 
     # Code to add ingredients in the main
     def add_ingredients(self, *argv: Ingredient):
@@ -150,15 +150,16 @@ class Main(Item):
                     #print("Total before add",total_amount+self.getSumInMain(ingredient_type))
                     if (total_amount+self.getSumInMain(ingredient_type)) > self._max_limit[ingredient_type]:
                         print(f"{ingredient_type} are more than the max amount!")
+                        self._errors[ingredient_type] = f"{ingredient_type} are more than the max amount!"
                         return
-                       # return f"{ingredient_type} are more than the max amount!"
-                # if ingredient available, update inventory
                 if not inventory.is_available(ingredient.name, ingredient.amount):
                     print(f"{ingredient.name} is not enough in the inventory!")
+                    self._errors[ingredient.name] = f"{ingredient.name} is not enough in the inventory!"
                     return
-                   # return f"{ingredient_type} are more than the max amount!"
                 self._ingredients[ingredient_type][ingredient.name] = Ingredient(ingredient.name,ingredient.amount,additional_price= ingredient.additional_price)
-                #inventory.update_stock(ingredient.name, -ingredient.amount)
+                ## At this stage we should remove the error from the list
+                self._errors.pop(ingredient_type,None)
+                self._errors.pop(ingredient.name,None)
                 total_amount = 0
         elif ingredient_type is "Other":
             for ingredient in argv:
@@ -167,12 +168,12 @@ class Main(Item):
                     if ingredient.amount > self._max_limit[ingredient.name]:
                         print(f"{ingredient.name} are more than the max amount!")
                         return f"{ingredient.name} are more than the max amount!"
-                # if ingredient available, update inventory
                 if not inventory.is_available(ingredient.name, ingredient.amount):
                     print(f"{ingredient.name} is not enough in the inventory!")
-                    return #f"{ingredient.name} are more than the max amount!"
+                    self._errors[ingredient.name] = f"{ingredient.name} is not enough in the inventory!"
+                    return
                 self._ingredients[ingredient_type][ingredient.name] = Ingredient(ingredient.name,ingredient.amount,additional_price= ingredient.additional_price)
-                #inventory.update_stock(ingredient.name, -ingredient.amount)
+                self._errors.pop(ingredient.name,None)
         else:
             print("invalid ingredient type!")
         
@@ -250,7 +251,6 @@ class Burger(Main):
         Others = [f"{other.name}: {other.amount}" for other in self._ingredients['Other'].values() if not isNaN(other.amount) and other.amount > 0]
         return (f"{self._type}: {self._name} \nIngredients: \n\t- Buns: {Buns} \n\t- Patties: {Patties} \n\t- Others: {Others} \nNet Price: ${self.price:.2f} \nDescription: {self._description}")
 
-
 class Wrap(Main):
 
     def __init__(self, name: str, price: float = 0, description: str = 'N/A', availability: bool = True):
@@ -267,10 +267,11 @@ class Wrap(Main):
             'Patty':    1000
             # and other ingredients
         }
+
     @property
     def ingredientsDict(self):
         return self._ingredients
-        
+
     @property
     def ingredients(self):
         Wraps = [f"{wrap.name}: {wrap.amount}" for wrap in self._ingredients['Wrap'].values() if not isNaN(wrap.amount) and wrap.amount >= 0]
@@ -313,3 +314,5 @@ if __name__ == "__main__":
         Ingredient("Veg Bun", amount=1, additional_price=1)
     )
     print(big_mac)
+    a = Burger()
+    a._errors

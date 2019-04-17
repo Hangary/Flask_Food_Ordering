@@ -93,9 +93,10 @@ def modify_mains(item_name):
                         item.modify_other_ingredients(system.inventory,ingredient)
             system.add_items_in_orders(session['order_ID'], item)
             print(item)
-        return redirect(url_for('display_menu',menu_name = 'Mains'))
+        #return redirect(url_for('display_menu',menu_name = 'Mains'))
+        return render_template("mains_creation.html", item=item, inventory=system.inventory,error = item._errors)
 
-    return render_template("mains_creation.html", item=item, inventory=system.inventory)
+    return render_template("mains_creation.html", item=item, inventory=system.inventory,error = item._errors)
 
 
 
