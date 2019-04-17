@@ -14,7 +14,13 @@
         {% if item.type == "Mains" %} 
             <b>{{ item.name }}</b>       <br>
             Price: ${{ item.price }}    <br>
-            Ingredient: {{item.ingredient}} <br>
+            {% for ingredient_type in item.ingredientsDict.keys() %}
+            {% for ingredient in item.ingredientsDict[ingredient_type].values() %}
+            {% if ingredient.amount|int != 0 %}
+            Ingredient: {{ingredient.name}} {{ingredient.amount}} <br>
+            {% endif %}
+            {% endfor %}
+            {% endfor %}
             Description: {{ item.description }} 
             <button name='button' type='submit' value="modify {{ item.name }}"><i class="fas fa-pen-square"></i></button>
         {% else %}
