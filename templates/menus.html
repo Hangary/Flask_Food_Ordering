@@ -7,11 +7,19 @@
 
 <form method="POST">
     <ul>
-
-             {% for item in menu %}
-            {% if item.is_available(inventory) %}
+    {% for item in menu %}
+        {% if item.is_available(inventory) %}
         <li> 
-            {{ item }}
+            {% if item.type == "Mains" %}
+                <b>{{ item.name }}</b>          <br>
+                Base Price: ${{ item.price }}    <br>
+                Description: {{ item.description }} 
+                <button name='button' type='submit' value="modify {{ item.name }}"><i class="fas fa-pen-square"></i></button>
+            {% else %}
+                <b>{{ item.name }}</b>      <br>
+                Price: ${{ item.price }}    <br>
+                Description: {{ item.description }} 
+            {% endif %}
             <button name='button' type='submit' value="{{ item.name }}"> <i class="fas fa-plus-circle"></i> </button> 
         </li> 
         {% endif %}

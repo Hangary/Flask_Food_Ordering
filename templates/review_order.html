@@ -10,8 +10,18 @@
     <ul>
         {% for item_list in order.items.values() %}
         {% for item in item_list %}
-    <li> 
-        {{ item }}
+    <li>
+        {% if item.type == "Mains" %} 
+            <b>{{ item.name }}</b>       <br>
+            Price: ${{ item.price }}    <br>
+            Ingredient: {{item.ingredient}} <br>
+            Description: {{ item.description }} 
+            <button name='button' type='submit' value="modify {{ item.name }}"><i class="fas fa-pen-square"></i></button>
+        {% else %}
+            <b>{{ item.name }}</b>       <br>
+            Price: ${{ item.price }}    <br>
+            Description: {{ item.description }} 
+        {% endif %}
         <button name='button' type='submit' value="{{ item.name }}"> <i class="fas fa-minus-circle"></i> </button> 
     </li> 
     {% endfor %}
