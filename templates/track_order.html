@@ -1,19 +1,19 @@
-<div style = "display: none">
+
 {% extends 'base.html' %}
 {% block body %}
 {% if order %}
-</div>
+
     <ul>
-            <div style = "display: none">
+
     {% for item_list in order.items.values() %}
         {% for item in item_list %}
-        ></div>
+        >
             <li> {{ item }} </li> 
-            <div style = "display: none">
+  
         {% endfor %}
     {% endfor %}
     </ul>
 {% endif %}
 
 {% endblock %}
-</div>
+
