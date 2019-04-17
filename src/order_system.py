@@ -41,6 +41,8 @@ class OrderSystem:
         for menu in self._menus.values():
             item = menu.get_item(item_name)
             if item:
+                if item.type == "Mains":
+                    return deepcopy(item)
                 return item
         print(f"{item_name} not in the system")
         return f"{item_name} not in the system"

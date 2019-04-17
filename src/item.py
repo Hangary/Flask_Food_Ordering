@@ -106,6 +106,7 @@ class Main(Item):
         self._max_limit = {}
         # float, price + additional price
         self._total_price = price
+        self.__localCounter = {'Bun':0,'Wrap':0,'Patty':0}
 
     # Code to add ingredients in the main
     def add_ingredients(self, *argv: Ingredient):
@@ -126,6 +127,13 @@ class Main(Item):
             return f"<{ingredient_name}> not in the item!"
         self._max_limit[ingredient_name] = amount
 
+    def getSumInMain(self,ingredient_type: str):
+
+        sum = 0
+        for ingredient in self._ingredients[ingredient_type].values():
+            sum += ingredient.amount if not isNaN(ingredient.amount) else 0
+        return sum
+    
     '''
     modify functions
     '''
@@ -138,7 +146,9 @@ class Main(Item):
                 total_amount += ingredient.amount
                 # if more than max limit, reject
                 if ingredient_type in self._max_limit.keys():
-                    if total_amount > self._max_limit[ingredient_type]:
+                   # print(self.getSumInMain(ingredient_type),ingredient_type, ingredient.amount)
+                    #print("Total before add",total_amount+self.getSumInMain(ingredient_type))
+                    if (total_amount+self.getSumInMain(ingredient_type)) > self._max_limit[ingredient_type]:
                         print(f"{ingredient_type} are more than the max amount!")
                         return
                        # return f"{ingredient_type} are more than the max amount!"
@@ -149,6 +159,7 @@ class Main(Item):
                    # return f"{ingredient_type} are more than the max amount!"
                 self._ingredients[ingredient_type][ingredient.name] = Ingredient(ingredient.name,ingredient.amount,additional_price= ingredient.additional_price)
                 #inventory.update_stock(ingredient.name, -ingredient.amount)
+                total_amount = 0
         elif ingredient_type is "Other":
             for ingredient in argv:
                 # if more than max limit, reject
@@ -256,7 +267,10 @@ class Wrap(Main):
             'Patty':    1000
             # and other ingredients
         }
-
+    @property
+    def ingredientsDict(self):
+        return self._ingredients
+        
     @property
     def ingredients(self):
         Wraps = [f"{wrap.name}: {wrap.amount}" for wrap in self._ingredients['Wrap'].values() if not isNaN(wrap.amount) and wrap.amount >= 0]
