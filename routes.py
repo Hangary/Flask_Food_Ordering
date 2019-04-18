@@ -72,9 +72,9 @@ def display_menu(menu_name):
 
 @app.route('/customer/creation/<item_name>', methods=["GET", "POST"])
 def modify_mains(item_name):
+    
     item = system.get_item(item_name)
     print(item)
-    # TODO: modify
     if request.method == 'POST':
         if request.form['button'] == 'submit':
             for name,amount in request.form.items():
@@ -97,10 +97,7 @@ def modify_mains(item_name):
                 return render_template("mains_creation.html", item=item, inventory=system.inventory,error = item._errors)
             else:
                 system.add_items_in_orders(session['order_ID'], item)
-            
-
-        #return redirect(url_for('display_menu',menu_name = 'Mains'))
-        
+                return redirect(url_for('review_order'))
 
     return render_template("mains_creation.html", item=item, inventory=system.inventory,error = item._errors)
 

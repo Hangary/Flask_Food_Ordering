@@ -4,7 +4,10 @@
 
 <h3 align = "center">{{ item.name }} Creation</h3>
 <p>Select from these delicious ingredients what you want in your {{ item.name }} by typing in the number you want: </p>
-
+{% if error %}
+<h3>Modification Not Successful, Please Modify Again!<br/>
+<font color="darkorange">Orange numbers</font> show previous successful modification, Please re-enter these fields too </h3>
+{% endif %}
 <form method="POST">
 {% for ingredient_type in item.ingredientsDict.keys() %}
     <h5>{{ ingredient_type }}:</h5>
@@ -14,7 +17,7 @@
     <ul>
     {% for ingredient in item.ingredientsDict[ingredient_type].values() %}
         <li style="width:200px"> 
-            <p style="white-space: pre;"> {{ ingredient }} 
+            <p style="white-space: pre;"> {{ ingredient.name }}  <font size="5" color="darkorange">{% if ingredient.amount|int != 0 %}{{ingredient.amount}}{% endif %}</font><br/>
                 {% if error[ingredient.name] %} 
                     <font size="3" color="red">{{error[ingredient.name]}}</font><br/>
                 {% endif %}
