@@ -75,6 +75,7 @@ def modify_mains(item_name):
     
     item = system.get_item(item_name)
     print(item)
+    print(system.inventory.display_unavailable_ingredients())
     if request.method == 'POST':
         if request.form['button'] == 'submit':
             for name,amount in request.form.items():
