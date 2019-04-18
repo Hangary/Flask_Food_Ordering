@@ -219,7 +219,7 @@ class Main(Item):
 
 class Burger(Main):
 
-    def __init__(self, name: str, price: float = 0, description: str = 'N/A', availability: bool = True):
+    def __init__(self, name: str = 'Big Mac', price: float = 0, description: str = 'N/A', availability: bool = True):
         super().__init__(name, price, description, availability)
         # dict<Ingredient>
         self._ingredients = {
@@ -233,7 +233,12 @@ class Burger(Main):
             'Patty':   False
             # and other ingredients
         }
-
+    def make_default_burger(self,invent: Inventory):
+        self._name = "Big Mac"
+        self.add_ingredients(Ingredient("Muffin Bun", additional_price=1),Ingredient("Chicken Patty",additional_price=2),Ingredient("Cheddar Cheese",additional_price=0.5))
+        self.modify_buns(invent,Ingredient("Muffin Bun", amount=1, additional_price=1))
+        self.modify_patties(invent,Ingredient("Chicken Patty",amount=1,additional_price=2))
+        self.modify_other_ingredients(invent,Ingredient("Cheddar Cheese",amount=1,additional_price=0.5))
     @property
     def ingredientsDict(self):
         return self._ingredients
