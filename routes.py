@@ -2,6 +2,7 @@ from flask import render_template, request, redirect, url_for, abort, session
 from server import app, system
 from datetime import datetime
 from src.ingredient import Ingredient
+import sys
 '''
 Website Structure:
 - Home page '/'
@@ -10,7 +11,8 @@ Website Structure:
         - Mains '/customer/mains'
             - Creation '/customer/mains/creation'
         - Sides '/customer/sides'
-        - Drinks /customer/drinks'
+        - Drinks '/customer/drinks'
+        - Sundaes '/customer/sundaes'
     - Review order '/customer/review/<order_id>'
     - Order tracking  '/customer/order/<order_id>'
 - #Staff '/staff'
@@ -84,22 +86,15 @@ def modify_mains(item_name):
                 if amount:
                     price = system.inventory.get_ingredient(name)._additional_price
                     ingredient = Ingredient(name,int(amount),additional_price=price)
-                    if 'Bun' in name:
-                        item.modify_buns(system.inventory,ingredient)
-                    elif 'Wrap' in name:
-                        item.modify_wraps(system.inventory,ingredient)
-                    elif 'Patty' in name:
-                        item.modify_patties(system.inventory,ingredient)
-                    else:
-                        item.modify_other_ingredients(system.inventory,ingredient)
+                    if 'Bun' in name:       item.modify_buns(system.inventory,ingredient)
+                    elif 'Wrap' in name:    item.modify_wraps(system.inventory,ingredient)
+                    elif 'Patty' in name:   item.modify_patties(system.inventory,ingredient)
+                    else:                   item.modify_other_ingredients(system.inventory,ingredient)
             if(item._errors):
-                print(item)
-                print(item._errors)
                 return render_template("mains_creation.html", item=item, inventory=system.inventory,error = item._errors)
             else:
                 system.add_items_in_orders(session['order_ID'], item)
                 return redirect(url_for('review_order'))
-
     return render_template("mains_creation.html", item=item, inventory=system.inventory,error = item._errors)
 
 
@@ -125,7 +120,6 @@ def review_order():
             return render_template("order_result.html", order_id=order_id) 
         else:
             system.del_items_in_orders(order.order_id, request.form["button"])
-    
     return render_template('review_order.html', order=order)
 
 
@@ -217,56 +211,3 @@ def cars():
         return render_template('cars.html', cars = cars)
     
     return render_template('cars.html', cars = system.cars)
-
-
-'''
-Display car details for the car with given rego
-'''
-@app.route('/cars/<rego>')
-def car(rego):
-    car = system.get_car(rego)
-
-    if not car:
-        abort(404)
-
-    return render_template('car_details.html', car=car)
-
-
-'''
-Make a booking for a car with given rego
-'''
-#from src.forms import BookingForm
-@app.route('/cars/book/<rego>', methods=["GET", "POST"])
-def book(rego):
-    car = system.get_car(rego)
-
-    if not car:
-        abort(404)
-    if request.method == 'POST':
-        form = BookingForm(request.form)
-        # 1. If form is not valid, then display appropriate error messages
-        if not form.is_valid:
-            errors = {field.name: form.get_error(field.name) for field in form._fields}
-            errors["period"] = form.get_error("period")
-            return render_template('booking_form.html', car=car,errors=errors,checked=False,form=form) 
-            # 2. If the user has pressed the 'check' button, then display the fee
-        
-        if request.form['button'] == "check_booking":
-            fee = system.check_fee(car, form.start_date, form.end_date)
-            return render_template('booking_form.html', car=car,errors={},checked=True,fee=fee,form=form)
-        # 3. Otherwise, if the user has pressed the 'confirm' button, then 
-        #   make the booking and display the confirmation page
-        elif request.form['button'] == "confirm":
-            customer = Customer(form.customer_name, form.customer_licence)
-            booking = system.make_booking(customer, car, form.start_date, form.end_date, form.start_location, form.end_location)
-            return render_template('booking_confirm.html', booking=booking)
-        elif request.form['button'] == "cancel":
-            pass
-    return render_template('booking_form.html', car=car,errors={},checked=False,form=None)
-
-'''
-Display list of all bookings for the car with given 'rego'
-'''
-@app.route('/cars/bookings/<rego>')
-def car_bookings(rego):
-    return render_template('bookings.html', bookings=system.get_bookings_by_car_rego(rego))

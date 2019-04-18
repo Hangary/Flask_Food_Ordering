@@ -18,6 +18,7 @@ Class:
       - Wrap
     - Drink
     - Side
+    - Sundae
 '''
 
 
@@ -135,7 +136,6 @@ class Main(Item):
         self._max_limit[ingredient_name] = amount
 
     def getSumInMain(self,ingredient_type: str):
-
         sum = 0
         for ingredient in self._ingredients[ingredient_type].values():
             sum += ingredient.amount if not isNaN(ingredient.amount) else 0
@@ -168,7 +168,7 @@ class Main(Item):
                 self._errors.pop(ingredient_type,None)
                 self._errors.pop(ingredient.name,None)
                 total_amount = 0
-        elif ingredient_type is "Other":
+        elif ingredient_type == "Other":
             for ingredient in argv:
                 # if more than max limit, reject
                 if ingredient.name in self._max_limit.keys():
@@ -304,6 +304,11 @@ class Drink(Item):
     def __init__(self, name: str, price: float, description='N/A', availability=True):
         super().__init__(name, price, "Drinks", description, availability)
 
+class Sundae(Item):
+
+    def __init__(self, name: str, price: float, description='N/A', availability=True):
+        super().__init__(name, price, "Sundaes", description, availability)
+
 
 if __name__ == "__main__":
     invent = Inventory()
@@ -321,5 +326,3 @@ if __name__ == "__main__":
         Ingredient("Veg Bun", amount=1, additional_price=1)
     )
     print(big_mac)
-    a = Burger()
-    a._errors

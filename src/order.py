@@ -24,13 +24,16 @@ class Order(object):
         # string, some special notes by the customer
         self._notes = ''
 
+
     # if Order is payed
     def update_payment_status(self, status: bool):
         self._is_payed = status
 
+
     # if Order is ready
     def update_preparation_status(self, status: bool):
         self._is_prepared = status
+
 
     # add new items into an order
     # dont call this
@@ -41,6 +44,7 @@ class Order(object):
             else:
                 self._items[item.name] = [item]
             self.calculate_price()
+
 
     #function to delete items from order
     def delete_items(self, itemID: str):
@@ -68,6 +72,7 @@ class Order(object):
                 price = price + item.price
         self._price = price
 
+
     # Display the items of orders
     def display(self):
         print('Order {0} has items:'.format(self._order_id))
@@ -77,6 +82,7 @@ class Order(object):
         print('Total price: ${}'.format(self._price))
         print("Paid?",self.is_payed)
         print("Prepared?",self.is_prepared)
+
 
     def check_order_availability(self, inventory: Inventory) -> bool:
         temp_inventory = deepcopy(inventory)
@@ -96,7 +102,6 @@ class Order(object):
                                 print(f"Inventory not enough for {ingredient.amount} {ingredient.name}")
                                 return False
                             temp_inventory.update_stock(ingredient.name, -ingredient.amount)
-
         return True
 
     # update inventory for the order
