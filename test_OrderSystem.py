@@ -298,7 +298,7 @@ def test_modify_mains_2_cant_add_more_than_max(setup):
         sauce
     )
     print(setup._get_pendingorder(1).items["Burger"][0]._errors)
-    assert(0)
+    #assert(0)
     setup._get_pendingorder(1).calculate_price()
     # Second burger should reject beef patty (amount of beef patty in burger should be nan)
     for things in setup._get_pendingorder(1).items["Burger"][0]._ingredients.values():

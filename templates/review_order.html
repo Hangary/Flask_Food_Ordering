@@ -13,7 +13,7 @@
     <li>
         {% if item.type == "Mains" %} 
             <b>{{ item.name }}</b>       <br>
-            Price: ${{ item.price }}    <br>
+            Price: ${{'%.2f'| format(item.price) }}    <br>
             {% for ingredient_type in item.ingredientsDict.keys() %}
             {% for ingredient in item.ingredientsDict[ingredient_type].values() %}
             {% if ingredient.amount|int != 0 %}
