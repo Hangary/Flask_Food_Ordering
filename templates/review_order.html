@@ -2,9 +2,10 @@
 {% extends 'base_menus_review_checkout.html' %}
 {% block menus_block %}
 
+
+<div class="pure-u-3-4 main_content">
 <h1> Order Review:</h1>
 <div> {{ order }} </div>
-
 <form method="POST">
         {% if order %}
     <ul>

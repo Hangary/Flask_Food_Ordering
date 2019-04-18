@@ -1,16 +1,37 @@
 {% extends 'base.html' %}
 {% block body %}
 
-<!-- Tab Menu -->
-<div style="  background-color:#01FF70; position: absolute; bottom: 20px;width: 100%; border:3px solid #8AC007; font-size: 20px; margin: 0 auto;", align='center'>
-<a href="{{ url_for('display_menu', menu_name='Mains') }}"><i class="fas fa-hamburger"></i> Mains</a>
-<a href="{{ url_for('display_menu', menu_name='Sides') }}"><i class="fas fa-pizza-slice"></i> Sides</a>
-<a href="{{ url_for('display_menu', menu_name='Drinks') }}"><i class="fas fa-cocktail"></i> Drinks</a>
-<a href="{{ url_for('display_menu', menu_name='Sundaes') }}"><i class="fas fa-ice-cream"></i> Sundeas</a>
-</div>
+<style>
+.custom-restricted-width {
+    /* To limit the menu width to the content of the menu: */
+    display: inline-block;
+}
+</style>
 
-<div style=" position: absolute;top: 150px;right: 16px;font-size: 18px;">
-<a href="{{ url_for('review_order') }}"><i class="fas fa-shopping-cart"></i> My Order</a>
+
+<!-- Tabs -->
+<div class="pure-u-1-8 pure-menu custom-restricted-width" style="background-color: #eaf5ff">
+    
+    <ul class="pure-menu-list">
+        <li class="pure-menu-item">
+        <a href="{{ url_for('review_order') }}" class="pure-menu-link">
+            <i class="fas fa-shopping-cart"></i>
+            My Order
+        </a>
+        </li>
+        <li class="pure-menu-item">
+            <a href="{{ url_for('display_menu', menu_name='Mains') }}" class="pure-menu-link"><i class="fas fa-hamburger"></i> Mains</a>
+        </li>
+        <li class="pure-menu-item">
+                <a href="{{ url_for('display_menu', menu_name='Sides') }}" class="pure-menu-link"><i class="fas fa-pizza-slice"></i> Sides</a>
+        </li>
+        <li class="pure-menu-item">
+            <a href="{{ url_for('display_menu', menu_name='Drinks') }}" class="pure-menu-link"><i class="fas fa-cocktail"></i> Drinks</a>
+        </li>
+        <li class="pure-menu-item">
+            <a href="{{ url_for('display_menu', menu_name='Sundaes') }}" class="pure-menu-link"><i class="fas fa-ice-cream"></i> Sundeas</a>
+        </li>
+    </ul>
 </div>
 
 <!-- Main Content -->
