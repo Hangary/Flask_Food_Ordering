@@ -53,10 +53,19 @@ class Order(object):
             else:
                 print(f"Cannot find {item_name} in the order!")
         self.calculate_price()
+
+    # adding the default burger
     def add_default_burger(self,inventory: Inventory):
         default_burger = Burger()
         default_burger.make_default_burger(inventory)
         self.add_items(default_burger)
+
+    # adding the default wrap
+    def add_default_wrap(self,inventory: Inventory):
+        default_wrap = Wrap()
+        default_wrap.make_default_wrap(inventory)
+        self.add_items(default_wrap)
+        
     # calculate order price
     def calculate_price(self):
         price = 0
