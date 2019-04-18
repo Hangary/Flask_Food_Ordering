@@ -1,4 +1,4 @@
-from ingredient import Ingredient
+from src.ingredient import Ingredient
 '''
 Inventory: a class used to store inventory.
 '''
@@ -23,10 +23,7 @@ class Inventory(object):
     def is_available(self, ingredient_name: str, amount: float =None):
         available_amount = self._ingredients[ingredient_name].amount/self._ingredients[ingredient_name].multiplier
         if amount or (amount == 0):
-            if( available_amount >= amount):
-                return True
-            else:
-                return False 
+            return True if available_amount >= amount else False
         else:
             return self._ingredients[ingredient_name].is_soldout
 
@@ -40,9 +37,12 @@ class Inventory(object):
                 unavailable_ingredients.append(ingredient.name)
         return unavailable_ingredients
     
-    #get ingredient details
+    # get ingredient details
     def get_ingredient(self, name: str) -> Ingredient:
         return self._ingredients[name]
+
+    def get_ingredients(self):
+        return [ingredient for ingredient in self._ingredients.values()] 
 
     def __str__(self):
         l = [f"{ingredient.name}: {ingredient.amount}" for ingredient in self._ingredients.values()]

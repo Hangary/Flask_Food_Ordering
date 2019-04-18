@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block body %}
+
+
+<h3 align = "center">{{ item.name }} Creation</h3>
+<p>Select from these delicious ingredients what you want in your {{ item.name }} by typing in the number you want: </p>
+{% if error %}
+<h3>Modification Not Successful, Please Modify Again!<br/>
+<font color="darkorange">Orange numbers</font> show previous successful modification, Please re-enter these fields too </h3>
+{% endif %}
+<form method="POST">
+{% for ingredient_type in item.ingredientsDict.keys() %}
+    <h5>{{ ingredient_type }}:</h5>
+    {% if error[ingredient_type] %}
+        <font size="3" color="red">{{error[ingredient_type]}}</font><br/>
+    {% endif %}
+    <ul>
+    {% for ingredient in item.ingredientsDict[ingredient_type].values() %}
+        <li style="width:200px"> 
+            {% if ingredient.name not in inventory.display_unavailable_ingredients() %}
+            <p style="white-space: pre;"> {{ ingredient.name }}  <font size="5" color="darkorange">{% if ingredient.amount|int != 0 %}{{ingredient.amount}}{% endif %}</font><br/>
+                {% if error[ingredient.name] %} 
+                    <font size="3" color="red">{{error[ingredient.name]}}</font><br/>
+                {% endif %}
+            <input type="number" name="{{ ingredient.name }}" style="width: 4em" min="0" >
+            {% else %}
+            <font size="3" color="red"><p style="white-space: pre;"> {{ ingredient.name }} is unavailable</font>
+            {% endif %}
+        </li> 
+    {% endfor %}
+    </ul>
+{% endfor %}
+
+        <button style="display: inline-block" name='button' type='submit' value ='submit'}}>submit</button>
+        <button style="display: inline-block" name='button' type='reset'}}>cancel</button>
+
+</form>
+{% endblock %}

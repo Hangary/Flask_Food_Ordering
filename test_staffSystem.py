@@ -1,20 +1,20 @@
-from item import *
-from order import Order
-from menu import Menu
-from inventory import Inventory
-from staff_system import *
-from system_creator import *
+from src.item import *
+from src.order import Order
+from src.menu import Menu
+from src.inventory import Inventory
+from src.staff_system import *
+from src.system_creator import *
 import csv
 import pytest
 
-@pytest.fixture(scope = "module")
+@pytest.fixture()
 def setup():
     system = create_system(
-        mains=create_mains_menu("../docs/Menus.csv"),
-        sides=create_sides_menu("../docs/Menus.csv"),
-        drinks=create_drinks_menu("../docs/Menus.csv"),
-        inventory=create_inventory("../docs/Inventory.csv"),
-        staff_system=create_staffsystem("../docs/StaffSystem.csv")
+        mains=create_mains_menu("docs/Menus.csv"),
+        sides=create_sides_menu("docs/Menus.csv"),
+        drinks=create_drinks_menu("docs/Menus.csv"),
+        inventory=create_inventory("docs/Inventory.csv"),
+        staff_system=create_staffsystem("docs/StaffSystem.csv")
     )
     return system
 

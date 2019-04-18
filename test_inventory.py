@@ -1,15 +1,15 @@
 import pytest
-from ingredient import Ingredient
-from inventory import Inventory
-from system_creator import create_inventory
+from src.ingredient import Ingredient
+from src.inventory import Inventory
+from src.system_creator import create_inventory
 
 '''
 This is a test for inventory part, which covers the tests for the Epic story 3: Staff - Inventory Maintainence.
 '''
 
-@pytest.fixture(scope='module')
+@pytest.fixture()
 def test_fixture():
-    inventory = create_inventory("../docs/Inventory.csv")
+    inventory = create_inventory("docs/Inventory.csv")
     return inventory
 
 '''

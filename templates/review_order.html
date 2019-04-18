@@ -1,0 +1,43 @@
+
+{% extends 'base_menus_review_checkout.html' %}
+{% block menus_block %}
+
+<h1> Order Review:</h1>
+<div> {{ order }} </div>
+
+<form method="POST">
+        {% if order %}
+    <ul>
+        {% for item_list in order.items.values() %}
+        {% for item in item_list %}
+    <li>
+        {% if item.type == "Mains" %} 
+            <b>{{ item.name }}</b>       <br>
+            Price: ${{'%.2f'| format(item.price) }}    <br>
+            {% for ingredient_type in item.ingredientsDict.keys() %}
+            {% for ingredient in item.ingredientsDict[ingredient_type].values() %}
+            {% if ingredient.amount|int != 0 %}
+            Ingredient: {{ingredient.name}} {{ingredient.amount}} <br>
+            {% endif %}
+            {% endfor %}
+            {% endfor %}
+            Description: {{ item.description }} 
+        {% else %}
+            <b>{{ item.name }}</b>       <br>
+            Price: ${{ item.price }}    <br>
+            Description: {{ item.description }} 
+        {% endif %}
+        <button name='button' type='submit' value="{{ item.uniqueid }}"> <i class="fas fa-minus-circle"></i> </button> 
+    </li> 
+    {% endfor %}
+    {% endfor %}
+    </ul>
+{% endif %}
+<div>
+    <button name='button' type='submit' value="checkout"> 
+        <i class="fas fa-money-bill"></i> Checkout</a>
+    </button>
+</div>
+</form>
+{% endblock %}
+

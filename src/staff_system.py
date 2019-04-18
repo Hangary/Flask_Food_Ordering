@@ -18,7 +18,8 @@ class StaffSystem(object):
                 return True
         return False
 
-    def add_staff(self,username,password):
+
+    def add_staff(self, username, password):
         for staff_member in self._staff:
             if username == staff_member.username:
                 print('User-name already taken, please enter another username')

@@ -1,9 +1,9 @@
-from menu import *
-from item import *
-from ingredient import *
-from inventory import *
-from order_system import *
-from staff_system import *
+from src.menu import *
+from src.item import *
+from src.ingredient import *
+from src.inventory import *
+from src.order_system import *
+from src.staff_system import *
 import csv
 import pickle
 

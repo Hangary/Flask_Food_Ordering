@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block body %}
+
+<!-- Tab Menu -->
+<div>
+    <a href="{{ url_for('staff_order') }}"><i class="fas fa-clipboard-list"></i> Order</a>
+    <a href="{{ url_for('staff_inventory') }}"><i class="fas fa-dolly-flatbed"></i> Inventory</a>
+</div>
+
+<div>
+    <a href="{{ url_for('staff_logout') }}"><i class="fas fa-sign-out-alt"></i> Log Out</a>
+</div>
+
+<!-- Main Content -->
+{% block staff_block %}{% endblock %}
+
+
+{% endblock %}

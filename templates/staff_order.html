@@ -1,0 +1,29 @@
+{% extends 'base_staff.html' %}
+{% block staff_block %}
+
+<div>
+<h3>Current Orders:</h3>
+<form method="POST">
+    <ul>
+    {% for order in system.pending_orders %}
+        {% if order.is_payed %}
+        <li> 
+        {{ order }}
+        <button name='button' type='submit' value={{ order.order_id }}> <i class="far fa-check-square"></i> </button> 
+        </li> 
+        {% endif %}
+    {% endfor %}
+    </ul>
+</form>
+</div>
+
+<div>
+<h3>Completed Orders:</h3>
+    <ul>
+        {% for order in system.completed_orders %}
+            <li>  {{ order }} </li> 
+        {% endfor %}
+    </ul>
+</div>
+
+{% endblock %}

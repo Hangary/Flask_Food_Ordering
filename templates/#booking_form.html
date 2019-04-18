@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% block body %}
+<img src="https://easydrawingguides-7512.kxcdn.com/wp-content/uploads/2017/01/How-to-Draw-a-cartoon-car-20.png" width="100px" height="100px"/>
+
+<br/>
+
+<div>
+  <h2>{{car}}</h2>
+</div>
+
+
+<!--
+Here are some HTML tags you might find useful:
+
+  Form:               <form method="POST"></form>
+  Input field:        <input name="field_name" value="placeholder string"/>
+  Readonly field:     ??? (figure it out yourself)
+
+  Section:            <div></div>
+  Newline:            <br>
+  Red text:           <font size="3" color="red">ERROR MESSAGE</font> 
+  Submit button:      <button name="button_name" type="submit">Say Hi!</button>
+-->
+
+<!--
+{% raw %} This tag is to prevent Jinja from converting any of the Jinja templates below
+
+Here are some Jinja templates you might find useful:
+
+  1. Printing a variable:                       {{variable}}
+  2. If statement to check if variable exists:  {% if var %} ... {% endif %}
+  3. If statement with multiple conditions:     {% if var and var.name == 'Isaac' %}
+  4. If-Else statement:                         ???
+  5. For loop:                                  {% for booking in bookings %} ... {% endfor %}
+  6. Advanced features that may be useful for cleaner Jinja templating: 
+        {% macro %}, {% block %}, more at http://jinja.pocoo.org/docs/2.10/templates/
+
+{% endraw %}
+-->
+
+<div>
+  
+  {% if not checked %}
+    <form method="POST">
+      <input name="customer_name" value="{{form.customer_name if form.customer_name}}"> Customer Name <br>
+      {% if errors['customer_name'] %} 
+      <font size="3" color="red" float: left>{{errors["customer_name"]}}</font> <br>
+      {% endif %}
+      <input name="customer_licence" value="{{form.customer_licence if form.customer_licence}}"> Customer License <br>
+      {% if errors['customer_licence'] %} 
+      <font size="3" color="red">{{errors["customer_license"]}}</font> <br> 
+      {% endif %}
+      <input name="start_location" value="{{form.start_location if form.start_location}}"> Start Location <br>
+      {% if errors['start_location'] %} 
+      <font size="3" color="red">{{errors["start_location"]}}</font> <br> 
+      {% endif %}
+      <input name="end_location" value="{{form.end_location if form.end_location}}"> End Location <br>
+      {% if errors['end_location'] %} 
+      <font size="3" color="red">{{errors["end_location"]}}</font> <br> 
+      {% endif %}
+      <input name="start_date" value="{{form.start_date.strftime('%Y-%m-%d') if form.start_date else 'YYYY-mm-dd'}}"> Start Date <br>
+      {% if errors['start_date'] %} 
+      <font size="3" color="red">{{errors["start_date"]}}</font> <br> 
+      {% endif %}
+      <input name="end_date" value="{{form.end_date.strftime('%Y-%m-%d') if form.end_date else 'YYYY-mm-dd'}}"> End Date <br>
+      {% if errors['end_date'] %} 
+      <font size="3" color="red">{{errors["end_date"]}}</font> <br> 
+      {% endif %}
+      {% if errors['period'] %} 
+      <font size="3" color="red">{{errors["period"]}}</font> <br> 
+      {% endif %}
+      <button name="button" value="check_booking" type="submit">Check Booking</button> <br>
+    </form>
+  {% else %}
+  <form method="POST">
+    <input name="customer_name" value="{{form.customer_name}}" readonly> Customer Name <br>
+    <input name="customer_licence" value="{{form.customer_licence}}" readonly> Customer License <br>
+    <input name="start_location" value="{{form.start_location}}" readonly> Start Location <br>
+    <input name="end_location" value="{{form.end_location}}" readonly> End Location <br>
+    <input name="start_date" value="{{form.start_date.strftime('%Y-%m-%d')}}" readonly> Start Date <br>
+    <input name="end_date" value="{{form.end_date.strftime('%Y-%m-%d')}}" readonly> End Date <br>
+    <p> Total fee: ${{ fee }} </p>
+    <button name="button" value="confirm" type="submit">Confirm</button> 
+    <button name="button" value="cancel" type="submit">Cancel</button> 
+  </form>
+  {% endif %}
+</div>
+{% endblock %}

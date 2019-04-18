@@ -1,0 +1,29 @@
+
+{% extends 'base.html' %}
+{% block body %}
+
+
+
+{% if order %}
+    <div> {{ order }} </div>
+    <ul>
+
+    {% for item_list in order.items.values() %}
+        {% for item in item_list %}
+
+        <li> {{ item }} </li> 
+        {% endfor %}
+    {% endfor %}
+    </ul>
+
+    <p> Order Payment: 
+        {% if order.is_payed %} <i class="fas fa-check"></i> {% else %} <i class="fas fa-times"></i> {% endif %} 
+    </p>
+    <p> Order Preparation: {% if order.is_prepared %} 
+        <i class="fas fa-check-double"></i> {% else %} <i class="fas fa-times"></i> {% endif %} 
+    </p>
+{% else %}
+    Sorry, we cannot find your order.
+{% endif %}
+
+{% endblock %}
