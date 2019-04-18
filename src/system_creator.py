@@ -116,12 +116,31 @@ def create_drinks_menu(file_address: str) -> Menu:
 
     return drinks_menu
 
+def create_sundaes_menu(file_address: str) -> Menu:
+    sundaes_menu = Menu("Sundaes")
+
+    with open(file_address, encoding='utf-8-sig') as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            if row["Type"] != "Sundae":
+                continue
+            sundae = Sundae(row["Item Name"], float(row["Price"]))
+            ingredients = row["Ingredients"].split(' | ')
+            for ingredient in ingredients:
+                ingredient = ingredient.split(":")
+                sundae.add_ingredients(Ingredient(
+                    ingredient[0], float(ingredient[1])))
+            sundaes_menu.add_items(sundae)
+
+    return sundaes_menu
+
 ### Creating system with pickling
-def create_save_system(mains: Menu, sides: Menu, drinks: Menu, inventory: Inventory, staff_system: StaffSystem) -> OrderSystem:
+def create_save_system(mains: Menu, sides: Menu, drinks: Menu, sundaes: Menu, inventory: Inventory, staff_system: StaffSystem) -> OrderSystem:
     system = OrderSystem(
         Menus={"Mains": mains,
                "Sides": sides,
-               "Drinks": drinks},
+               "Drinks": drinks,
+               "Sundaes": sundaes},
         Inventory=inventory,
         Staff_system=staff_system
     )
@@ -132,11 +151,12 @@ def create_save_system(mains: Menu, sides: Menu, drinks: Menu, inventory: Invent
     return system
 
 ### Creating system without pickling
-def create_system(mains: Menu, sides: Menu, drinks: Menu, inventory: Inventory, staff_system: StaffSystem) -> OrderSystem:
+def create_system(mains: Menu, sides: Menu, drinks: Menu, sundaes: Menu, inventory: Inventory, staff_system: StaffSystem) -> OrderSystem:
     system = OrderSystem(
         Menus={"Mains": mains,
                "Sides": sides,
-               "Drinks": drinks},
+               "Drinks": drinks,
+               "Sundaes": sundaes},
         Inventory=inventory,
         Staff_system=staff_system
     )
@@ -148,6 +168,7 @@ if __name__ == "__main__":
         mains=create_mains_menu("docs/Menus.csv"),
         sides=create_sides_menu("docs/Menus.csv"),
         drinks=create_drinks_menu("docs/Menus.csv"),
+        sundaes=create_sundaes_menu("docs/Menus.csv"),
         inventory=create_inventory("docs/Inventory.csv"),
         staff_system=create_staffsystem("docs/StaffSystem.csv")
     )

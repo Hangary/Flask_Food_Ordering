@@ -7,6 +7,7 @@ from src.staff_system import StaffSystem
 from copy import deepcopy
 import pickle
 import math
+import sys
 '''
 This is the main interface for both customers and staff.
 '''
@@ -34,7 +35,7 @@ class OrderSystem:
         if menu_name in self._menus.keys():
             return self._menus[menu_name]
         else:
-            print(f"{menu_name} menu not exist!")
+            print(f"{menu_name} menu not exist!", file=sys.stderr)
     
     # get an item from its menus
     def get_item(self, item_name: str) -> Item:
@@ -44,7 +45,7 @@ class OrderSystem:
                 if item.type == "Mains":
                     return deepcopy(item)
                 return item
-        print(f"{item_name} not in the system")
+        print(f"{item_name} not in the system", file=sys.stderr)
         return f"{item_name} not in the system"
 
     # display a menu
@@ -52,7 +53,7 @@ class OrderSystem:
         if menu_name in self._menus.keys():
             return self._menus[menu_name].display()
         else:
-            print(f"{menu_name} menu not exist!")
+            print(f"{menu_name} menu not exist!", file=sys.stderr)
             return f"{menu_name} menu not exist!"
 
     '''
@@ -118,12 +119,12 @@ class OrderSystem:
         order = self._get_pendingorder(order_id)
         for item in argv:
             if not item.is_available(self._inventory):
-                print(f"{item.name} is not available!")
+                print(f"{item.name} is not available!", file=sys.stderr)
             else:
                 item = deepcopy(item)
                 item.generateID()
                 order.add_items(item)
-                print(f"add {item.name} into order {order_id}")
+                print(f"add {item.name} into order {order_id}", file=sys.stderr)
         #order.add_items(*argv)
 
 
@@ -140,10 +141,10 @@ class OrderSystem:
 
         answer = 'yes' #input('Authorise payment? (yes/no) ')
         if answer.lower() == 'yes':
-            print('Payment authorised.')
+            print('Payment authorised.', file=sys.stderr)
             order.update_payment_status(True)
         else:
-            print('Payment not authorised.')
+            print('Payment not authorised.', file=sys.stderr)
 
 
     '''
@@ -164,7 +165,7 @@ class OrderSystem:
         if self._staff_system.is_authenticated == False:
             print('hi')
             if self._staff_system.login(username,password) == False:
-                print('Invalid login')
+                print('Invalid login', file=sys.stderr)
                 return
         order = self._get_pendingorder(order_id)
         if order:
@@ -173,9 +174,9 @@ class OrderSystem:
                 self._pending_orders.remove(order)
                 self._completed_orders.append(order)
             else:
-                print("Payment for the order not completed")
+                print("Payment for the order not completed", file=sys.stderr)
         else:
-            print("Order already completed")
+            print("Order already completed", file=sys.stderr)
 
 
     def display_order_lists(self):

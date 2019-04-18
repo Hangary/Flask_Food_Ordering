@@ -10,3 +10,5 @@ Coke Bottle,4,Drink,Coke:600
 Coke Can,2.5,Drink,Coke:375
 OrangeJuice_Small,3,Drink,OrangeJuice:250 | Ice:20
 OrangeJuice_Medium,5,Drink,OrangeJuice:450 | Ice:40
+Chocolate Sundae,3,Sundae,Ice:20
+Strawberry Sundae,3,Sundae,Ice:20 
