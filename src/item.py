@@ -1,6 +1,7 @@
 from src.ingredient import Ingredient, isNaN
 from src.inventory import Inventory
 import math
+import uuid
 '''
 This is a class for food items such as burgers, wraps, drinks and sides.
 A completely customized burger with many ingredients will be classified as an item to be put in an order.
@@ -33,6 +34,7 @@ class Item(object):
 
         # other fields:
         self._ingredients = {}                  # dict<ingredient>
+        self._uuid = ''
                                # error messages
     # add ingredients into the item
     def add_ingredients(self, *argv: Ingredient):
@@ -57,6 +59,8 @@ class Item(object):
         self._check_availability(inventory)
         return self._is_available
 
+    def generateID(self):
+        self._uuid = str(uuid.uuid4())
     '''
     Property
     '''
@@ -81,6 +85,9 @@ class Item(object):
     def ingredients(self):
         return self._ingredients
 
+    @property
+    def uniqueid(self):
+        return self._uuid
     '''
     str, equal, notequal
     '''

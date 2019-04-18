@@ -121,15 +121,17 @@ class OrderSystem:
                 print(f"{item.name} is not available!")
             else:
                 item = deepcopy(item)
+                item.generateID()
                 order.add_items(item)
                 print(f"add {item.name} into order {order_id}")
         #order.add_items(*argv)
 
 
-    # Delete items from an order
-    def del_items_in_orders(self, order_id: int, *argv: str):
+    # Delete single from an order
+    # Pass in the order unique id
+    def del_items_in_orders(self, order_id: int, itemID: str):
         order = self._get_pendingorder(order_id)
-        order.delete_items(*argv)
+        order.delete_items(itemID)
 
 
     # Authorise payment for an order

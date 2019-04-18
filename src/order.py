@@ -43,16 +43,22 @@ class Order(object):
             self.calculate_price()
 
     #function to delete items from order
-    def delete_items(self, *argv: str):
-        for item_name in argv:
-            if item_name in self._items.keys():
-                if len(self._items[item_name]) == 1:
+    def delete_items(self, itemID: str):
+        for item_name in self._items.keys():
+            if len(self._items[item_name]) == 1:
+                if self._items[item_name][0].uniqueid == itemID:
                     del self._items[item_name]
-                else:
-                    del self._items[item_name][-1]
+                    self.calculate_price()
+                    return
             else:
-                print(f"Cannot find {item_name} in the order!")
-        self.calculate_price()
+                count = 0
+                for inneritem in self._items[item_name]:
+                    if inneritem.uniqueid == itemID:
+                        del self._items[item_name][count]
+                        self.calculate_price()
+                        return
+                    count+=1
+        
 
     # calculate order price
     def calculate_price(self):

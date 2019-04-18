@@ -22,13 +22,12 @@
             {% endfor %}
             {% endfor %}
             Description: {{ item.description }} 
-            <button name='button' type='submit' value="modify {{ item.name }}"><i class="fas fa-pen-square"></i></button>
         {% else %}
             <b>{{ item.name }}</b>       <br>
             Price: ${{ item.price }}    <br>
             Description: {{ item.description }} 
         {% endif %}
-        <button name='button' type='submit' value="{{ item.name }}"> <i class="fas fa-minus-circle"></i> </button> 
+        <button name='button' type='submit' value="{{ item.uniqueid }}"> <i class="fas fa-minus-circle"></i> </button> 
     </li> 
     {% endfor %}
     {% endfor %}

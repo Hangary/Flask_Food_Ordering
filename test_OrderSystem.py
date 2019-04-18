@@ -151,7 +151,11 @@ def test_remove_order(setup):
         setup.get_item(itemList[2]),
         setup.get_item(itemList[3])
     )
-    setup.del_items_in_orders(1,itemList[0],itemList[1],itemList[2])
+    order = setup._get_pendingorder(1)
+    #order.items['Coke Can'][0].uniqueID
+    setup.del_items_in_orders(1,order.items['Coke Can'][0].uniqueid)
+    setup.del_items_in_orders(1,order.items['Nugget 6 pack'][0].uniqueid)
+    setup.del_items_in_orders(1,order.items['OrangeJuice_Small'][0].uniqueid)
     for itemName in itemList:
         if itemName != "Med Fries":
             assert(itemName not in setup._get_pendingorder(1).items.keys())
