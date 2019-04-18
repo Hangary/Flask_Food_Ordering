@@ -8,15 +8,16 @@
 <form method="POST">
 {% for ingredient_type in item.ingredientsDict.keys() %}
     <h5>{{ ingredient_type }}:</h5>
-    {{ % if error[ingredient_type] %}}
-    <font size="3" color="red">{{errors[ingredient_type]}}</font><br/>
-    {{ % end if %}}
+    {% if error[ingredient_type] %}
+        <font size="3" color="red">{{error[ingredient_type]}}</font><br/>
+    {% endif %}
     <ul>
     {% for ingredient in item.ingredientsDict[ingredient_type].values() %}
         <li style="width:200px"> 
-            <p style="white-space: pre;"> {{ ingredient }} {{ % if error[ingredient.name] %}} 
-                <font size="3" color="red">{{errors[ingredient.name]}}</font><br/>
-                {{ % end if %}}
+            <p style="white-space: pre;"> {{ ingredient }} 
+                {% if error[ingredient.name] %} 
+                    <font size="3" color="red">{{error[ingredient.name]}}</font><br/>
+                {% endif %}
             <input type="number" name="{{ ingredient.name }}" style="width: 4em" min="0" >
         </li> 
     {% endfor %}

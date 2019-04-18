@@ -91,10 +91,16 @@ def modify_mains(item_name):
                         item.modify_patties(system.inventory,ingredient)
                     else:
                         item.modify_other_ingredients(system.inventory,ingredient)
-            system.add_items_in_orders(session['order_ID'], item)
-            print(item)
+            if(item._errors):
+                print(item)
+                print(item._errors)
+                return render_template("mains_creation.html", item=item, inventory=system.inventory,error = item._errors)
+            else:
+                system.add_items_in_orders(session['order_ID'], item)
+            
+
         #return redirect(url_for('display_menu',menu_name = 'Mains'))
-        return render_template("mains_creation.html", item=item, inventory=system.inventory,error = item._errors)
+        
 
     return render_template("mains_creation.html", item=item, inventory=system.inventory,error = item._errors)
 
