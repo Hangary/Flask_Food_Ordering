@@ -65,13 +65,13 @@ class Order(object):
         
 
     # adding the default burger
-    def add_default_burger(self,inventory: Inventory):
+    def add_default_burger(self, inventory: Inventory):
         default_burger = Burger()
         default_burger.make_default_burger(inventory)
         self.add_items(default_burger)
 
     # adding the default wrap
-    def add_default_wrap(self,inventory: Inventory):
+    def add_default_wrap(self, inventory: Inventory):
         default_wrap = Wrap()
         default_wrap.make_default_wrap(inventory)
         self.add_items(default_wrap)

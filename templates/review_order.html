@@ -19,7 +19,7 @@
             {% for ingredient_type in item.ingredientsDict.keys() %}
             {% for ingredient in item.ingredientsDict[ingredient_type].values() %}
             {% if ingredient.amount|int != 0 %}
-            Ingredient: {{ingredient.name}} {{ingredient.amount}} <br>
+            - {{ingredient.name}}: {{ingredient.amount}} <br>
             {% endif %}
             {% endfor %}
             {% endfor %}

@@ -240,11 +240,18 @@ class Burger(Main):
             'Patty':   False
             # and other ingredients
         }
-    def make_default_burger(self,invent: Inventory):
-        self.add_ingredients(Ingredient("Muffin Bun", additional_price=1),Ingredient("Chicken Patty",additional_price=2),Ingredient("Cheddar Cheese",additional_price=0.5))
-        self.modify_buns(invent,Ingredient("Muffin Bun", amount=1, additional_price=1))
-        self.modify_patties(invent,Ingredient("Chicken Patty",amount=1,additional_price=2))
-        self.modify_other_ingredients(invent,Ingredient("Cheddar Cheese",amount=1,additional_price=0.5))
+    
+    def make_default_burger(self, invent: Inventory):
+        self.add_ingredients(
+            Ingredient("Muffin Bun", additional_price=1),
+            Ingredient("Chicken Patty", additional_price=2),
+            Ingredient("Cheddar Cheese", additional_price=0.5))
+        self.set_ingredient_limit("Bun", 2)
+        self.set_ingredient_limit("Patty", 1)
+        self.modify_buns(invent, Ingredient("Muffin Bun", amount=2, additional_price=1))
+        self.modify_patties(invent, Ingredient("Chicken Patty", amount=1, additional_price=2))
+        self.modify_other_ingredients(invent, Ingredient("Cheddar Cheese", amount=1, additional_price=0.5))
+    
     @property
     def ingredientsDict(self):
         return self._ingredients

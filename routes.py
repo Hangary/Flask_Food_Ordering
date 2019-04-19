@@ -59,7 +59,10 @@ def display_menu(menu_name):
     if request.method == 'POST':
         if "add_btn" in request.form.keys():
             item = system.get_item(request.form["add_btn"])
-            system.add_items_in_orders(session['order_ID'], item)
+            if menu_name == "Mains":
+                 system.add_default_main(session['order_ID'], item)
+            else:
+                system.add_items_in_orders(session['order_ID'], item)
         elif "mod_btn" in request.form.keys():
             item = system.get_item(request.form["mod_btn"])
             return redirect(url_for("modify_mains", item_name=item.name))
@@ -114,10 +117,11 @@ def review_order():
     if request.method == 'POST':
         if request.form["button"] == "checkout":
             order_id = session['order_ID']
-            system.checkout(order_id)
+            error = system.checkout(order_id)
+            if error:
+                return render_template("error.html", error=error)
             session.pop('order_ID')
-            system.save_state()
-            return render_template("order_result.html", order_id=order_id) 
+            return render_template("order_result.html", order_id=order_id)
         else:
             system.del_items_in_orders(order.order_id, request.form["button"])
     return render_template('review_order.html', order=order)

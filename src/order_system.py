@@ -127,6 +127,23 @@ class OrderSystem:
                 print(f"add {item.name} into order {order_id}", file=sys.stderr)
         #order.add_items(*argv)
 
+    def add_default_main(self, order_id: int, main: Item):
+        if isinstance(main, Burger):
+            self._add_default_burger(order_id)
+        elif isinstance(main, Wrap):
+            self._add_default_wrap(order_id) 
+
+    # adding the default burger
+    def _add_default_burger(self, order_id: int):
+        default_burger = Burger()
+        default_burger.make_default_burger(self.inventory)
+        self.add_items_in_orders(order_id, default_burger)
+
+    # adding the default wrap
+    def _add_default_wrap(self, order_id: int):
+        default_wrap = Wrap()
+        default_wrap.make_default_wrap(self.inventory)
+        self.add_items_in_orders(order_id, default_wrap)
 
     # Delete single from an order
     # Pass in the order unique id
@@ -187,26 +204,29 @@ class OrderSystem:
         for complete_orders in self._completed_orders:
             print(complete_orders)
 
-    # MODIFIED, maybe need some tests: checking out after placing order
-    def checkout(self, order_id: int):
+    
+    def checkout(self, order_id: int) -> str:
         # check order
         order = self._get_pendingorder(order_id)
         if not order:
             print("Order does not exist")
-            return
+            return "Order does not exist"
         elif len(order.items.values()) == 0:
             print("Order cannot be empty")
-            return
+            return "Order cannot be empty"
         # display order
         print("Your final order is")
         self.display_order(order_id)
         # check availablity in the inventory
         if not order.check_order_availability(self.inventory):
-            return
+            print("Some items are unavailable now!")
+            return "Some items are unavailable now!"
         # make payment and update inventory
         self._pay_order(order)
-        order.update_order_inventory(self.inventory) 
-            
+        order.update_order_inventory(self.inventory)
+        self.save_state()
+
+
     def save_state(self):
         with open('full_order.dat','wb') as f:
             print('Saving')
