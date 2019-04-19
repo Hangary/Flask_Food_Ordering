@@ -6,21 +6,39 @@
 <div class="pure-u-3-4 main_content">
 <h1> {{ menu_name }} Menu:</h1>
 <form method="POST">
-    <ul>
+    <ul class="menu pure-u-1-2">
     {% for item in menu %}
         {% if item.is_available(inventory) %}
-        <li> 
+        <li class="menu-item"> 
             {% if item.type == "Mains" %}
+            <div class="pure-u-3-4">
                 <b>{{ item.name }}</b>          <br>
                 Base Price: ${{ item.price }}    <br>
-                Description: {{ item.description }} 
-                <button name='mod_btn' type='submit' value="{{ item.name }}"><i class="fas fa-pen-square"></i></button>
+                Description: {{ item.description }}
+            </div>
+            <div class="pure-u-1-8">
+                <button name='mod_btn' type='submit' value="{{ item.name }}" class="pure-button tooltip">
+                    <i class="fas fa-pen-square"></i>
+                    <span class="tooltiptext">add one default {{ item.name }} into your oder</span>
+                </button>
+                <button name='add_btn' type='submit' value="{{ item.name }}" class="pure-button tooltip">
+                    <i class="fas fa-plus-circle"></i>
+                    <span class="tooltiptext">create your {{ item.name }}</span>
+                </button> 
+            </div>
             {% else %}
+            <div class="pure-u-3-4">
                 <b>{{ item.name }}</b>      <br>
                 Price: ${{ item.price }}    <br>
-                Description: {{ item.description }} 
+                Description: {{ item.description }}
+            </div>
+            <div class="pure-u-1-8">
+                <button name='add_btn' type='submit' value="{{ item.name }}" class="pure-button tooltip"> 
+                    <i class="fas fa-plus-circle"></i> 
+                    <span class="tooltiptext">add one {{ item.name }} into your order</span>
+                </button> 
+            </div> 
             {% endif %}
-            <button name='add_btn' type='submit' value="{{ item.name }}"> <i class="fas fa-plus-circle"></i> </button> 
         </li> 
         {% endif %}
     {% endfor %}
