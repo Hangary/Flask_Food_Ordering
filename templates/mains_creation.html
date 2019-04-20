@@ -4,11 +4,15 @@
 <div class="pure-u-7-8">
 <h3 align = "center">{{ item.name }} Creation</h3>
 <p>Select from these delicious ingredients what you want in your {{ item.name }} by typing in the number you want: </p>
+<!-- alert -->
 {% if error %}
-<h3>Modification Not Successful, Please Modify Again!<br/>
-<font color="darkorange">Orange numbers</font> show previous successful modification, Please re-enter these fields too </h3>
+<div class="alert pure-u-3-4">
+    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+    Modification Not Successful, Please Modify Again!
+</div>
 {% endif %}
-<form method="POST">
+
+<form method="POST" class="pure-form pure-form-aligned">
 {% for ingredient_type in item.ingredientsDict.keys() %}
     <h4>{{ ingredient_type }}:</h4>
     {% if error[ingredient_type] %}
@@ -16,23 +20,29 @@
     {% endif %}
     <ul>
     {% for ingredient in item.ingredientsDict[ingredient_type].values() %}
+    <div class="pure-control-group">
         <li> 
             {% if ingredient.name not in inventory.display_unavailable_ingredients() %}
-            {{ ingredient.name }}  <font size="5" color="darkorange">{% if ingredient.amount|int != 0 %}{{ingredient.amount}}{% endif %}</font><br/>
+                {% if ingredient.amount|int != 0 %}
+                    <font size="5" color="darkorange">{{ingredient.amount}}</font><br/>
+                {% endif %}
                 {% if error[ingredient.name] %} 
                     <font size="3" color="red">{{error[ingredient.name]}}</font><br/>
                 {% endif %}
-            <input type="number" name="{{ ingredient.name }}" style="width: 4em" min="0" >
+                <label for="{{ ingredient.name }}" style='width: 20em; text-align: left'>{{ ingredient.name }}</label>
+                <input id="{{ ingredient.name }}" type="number" name="{{ ingredient.name }}" style="width: 4em" min="0" >
             {% else %}
-            <font size="3" color="red">{{ ingredient.name }} is unavailable</font>
+                <font size="3" color="red">{{ ingredient.name }} is unavailable</font>
             {% endif %}
         </li> 
+    </div>
     {% endfor %}
     </ul>
 {% endfor %}
-
-        <button style="display: inline-block" name='button' type='submit' value ='submit'}}>submit</button>
-        <button style="display: inline-block" name='button' type='reset'}}>cancel</button>
+    <div align = "center" class="pure-u-1-4">
+        <button style="display: inline-block" name='button' type='submit' value ='submit' class="pure-button">submit</button>
+        <button style="display: inline-block" name='button' type='reset' class="pure-button">cancel</button>
+    </div>
 </form>
 </div>
 {% endblock %}
