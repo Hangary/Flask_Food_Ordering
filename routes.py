@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, url_for, abort, session
+from flask import render_template, request, redirect, url_for, abort, session, flash
 from server import app, system
 from datetime import datetime
 from src.ingredient import Ingredient
@@ -39,6 +39,7 @@ def home_page():
         if request.form["button"] == "make_new_order":
             order_id = system.make_order()
             session['order_ID'] = order_id
+            flash("Your create a new order!")
             return redirect('/customer/menu/Mains')
         elif request.form["button"] == "continue_order":
             return redirect('/customer/menu/Mains')
