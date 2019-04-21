@@ -73,7 +73,7 @@ def display_menu(menu_name):
         print(f"not found {menu_name}")
         return redirect(url_for('page_not_found'))
 
-    return render_template('menus.html', menu_name=menu_name, menu=menu.display(), inventory=system.inventory)
+    return render_template('customer_menus.html', menu_name=menu_name, menu=menu.display(), inventory=system.inventory)
     
 
 @app.route('/customer/creation/<item_name>', methods=["GET", "POST"])
@@ -95,15 +95,14 @@ def modify_mains(item_name):
                     elif 'Patty' in name:   item.modify_patties(system.inventory,ingredient)
                     else:                   item.modify_other_ingredients(system.inventory,ingredient)
             if(item._errors):
-                return render_template("mains_creation.html", item=item, inventory=system.inventory,error = item._errors)
+                return render_template("customer_mains_creation.html", item=item, inventory=system.inventory,error = item._errors)
             else:
                 system.add_items_in_orders(session['order_ID'], item)
                 return redirect(url_for('review_order'))
-    return render_template("mains_creation.html", item=item, inventory=system.inventory,error = item._errors)
+    return render_template("customer_mains_creation.html", item=item, inventory=system.inventory,error = item._errors)
 
 
 
-# TODO: button
 @app.route('/customer/review', methods=["GET", "POST"])
 def review_order():
     
@@ -122,15 +121,15 @@ def review_order():
             if error:
                 return render_template("error.html", error=error)
             session.pop('order_ID')
-            return render_template("order_result.html", order_id=order_id)
+            return render_template("customer_order_result.html", order_id=order_id)
         else:
             system.del_items_in_orders(order.order_id, request.form["button"])
-    return render_template('review_order.html', order=order)
+    return render_template('customer_review_order.html', order=order)
 
 
 @app.route('/customer/order/<order_id>')
 def search_order(order_id):
-    return render_template('search_order_result.html', order=system.get_order(int(order_id)))
+    return render_template('customer_search_order_result.html', order=system.get_order(int(order_id)))
 
 
 '''
@@ -178,6 +177,7 @@ def staff_order():
 
     return render_template('staff_order.html', system=system)
 
+
 @app.route('/staff/inventory', methods=["GET", "POST"])
 def staff_inventory():
     if not system.is_authenticated:
@@ -190,29 +190,3 @@ def staff_inventory():
         system.save_state()
     
     return render_template('staff_inventory.html', system=system)
-
-'''
----- Supplied codes ----:
-'''
-
-
-'''
-Search for Cars
-'''
-@app.route('/car', methods=["GET", "POST"])
-def cars():
-
-    if request.method == 'POST':
-        make  = request.form.get('make')
-        model = request.form.get('model')
-
-        if make == '':
-            make = None
-
-        if model == '':
-            model = None
-
-        cars = system.search_car(make, model)
-        return render_template('cars.html', cars = cars)
-    
-    return render_template('cars.html', cars = system.cars)
