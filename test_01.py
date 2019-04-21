@@ -141,7 +141,7 @@ def test_add_order(setup):
         assert(itemName in setup._get_pendingorder(1).items.keys())
 
 
-def test_remove_order(setup):
+def test_items_from_order(setup):
     
     assert setup.total_order == 0
     itemList = ["Coke Can", "Nugget - 6 pack", "Orange Juice - Small", "Fries - Medium"]
@@ -251,7 +251,14 @@ def test_modify_mains(setup):
                 assert stuff.amount == things[stuff.name].amount and stuff.additional_price == things[stuff.name].additional_price
 
 
-def test_add_more_mains_to_order(setup):
+def test_add_sundae(setup):
+    setup.make_order()
+    setup.add_items_in_orders(1,setup.get_item('Strawberry Sundae - Medium'),setup.get_item('Chocolate Sundae - Medium'))
+    assert "Strawberry Sundae - Medium" in setup._get_pendingorder(1).items.keys()
+    assert "Chocolate Sundae - Medium" in setup._get_pendingorder(1).items.keys()
+    assert "Chocolate Sundae - Small" not in setup._get_pendingorder(1).items.keys()
+
+def test_2_more_mains_to_order(setup):
     setup.make_order()
     assert setup.total_order == 1
     setup.add_items_in_orders(1,setup.get_item("Burger"),setup.get_item("Wrap"))
@@ -262,7 +269,7 @@ def test_add_more_mains_to_order(setup):
     assert len(setup._get_pendingorder(1).items['Wrap']) == 2
 
 
-def test_modify_mains_2_cant_add_more_than_max(setup):
+def test_adding_ingredients_more_than_max_limit(setup):
     #Create order and add mains
     setup.make_order()
     assert setup.total_order == 1
@@ -381,7 +388,7 @@ def test_staff_mark_order(setup1):
     assert(order1.is_prepared)
 
 
-def test_checkout_order_with_lots_of_items(setup):
+def test_checkout_order_when_stock_low(setup):
 
     orderID = setup.make_order()
     itemList = ["Coke Can", "Nugget - 6 pack", "Orange Juice - Small", "Fries - Medium"]

@@ -53,7 +53,9 @@ def test_changing_stock_number(test_fixture):
     test_fixture.update_stock("Fries",100)
     assert test_fixture.get_ingredient("Fries").amount == 400
     test_fixture.update_stock("Ice",-600)
-    assert test_fixture.get_ingredient("Fries").amount == 400
+    assert test_fixture.get_ingredient("Ice").amount == 400
+    test_fixture.update_stock("Lettuce",1)
+    assert test_fixture.get_ingredient("Lettuce").amount == 230
 
 '''
 Test whether we check the availability of an item or ingredient.

@@ -28,7 +28,7 @@ def test_incorrect_login(setup):
     setup.staff_system.login('Gaurang','12355')
     assert(setup.staff_system.is_authenticated == False)
 
-def test_updatation_order_correctlogin(setup):
+def test_update_order_correctlogin(setup):
     order_id = setup.make_order()
     someList = ["Coke Can", "Nugget - 6 pack", "Orange Juice - Small","Fries - Medium"]
     setup.add_items_in_orders(
@@ -42,7 +42,7 @@ def test_updatation_order_correctlogin(setup):
     setup.update_order(order_id,'Gaurang','1234')
     assert(setup.completed_orders[0].order_id == order_id)
 
-def test_updatation_order_incorrectlogin(setup):
+def test_update_order_incorrect_login(setup):
     setup.staff_system.logout()
     order_id = setup.make_order()
     someList = ["Coke Can", "Nugget - 6 pack", "Orange Juice - Small","Fries - Medium"]
@@ -60,14 +60,14 @@ def test_updatation_order_incorrectlogin(setup):
     assert((len(setup.completed_orders) == flag))
     assert(setup.staff_system.is_authenticated == False)
 
-def test_updation_order_invalid_order(setup):
+def test_update_invalid_order(setup):
     order_id = 464785
     flag = len(setup.completed_orders)
     setup.staff_system.logout()
     setup.update_order(order_id,'Gaurang','1234')
     assert((len(setup.completed_orders) == flag))
 
-def test_updationof_complete_order(setup):
+def test_update_complete_order(setup):
     order_id = setup.make_order()
     someList = ["Coke Can", "Nugget - 6 pack", "Orange Juice - Small","Fries - Medium"]
     setup.add_items_in_orders(
