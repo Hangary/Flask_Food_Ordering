@@ -228,7 +228,7 @@ class OrderSystem:
 
 
     def save_state(self):
-        with open('full_order.dat','wb') as f:
+        with open('system_data.dat','wb') as f:
             print('Saving')
             pickle.dump(self,f,pickle.HIGHEST_PROTOCOL)
 

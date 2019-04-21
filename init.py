@@ -4,7 +4,7 @@ import pickle
 
 def bootstrap_system():
     try:
-        with open('full_order.dat','rb') as f:
+        with open('system_data.dat','rb') as f:
             system = pickle.load(f)
     except FileNotFoundError:
         print("File not found creating new system")

@@ -50,7 +50,7 @@ def test_mains():
 def test_mains_no_checkout():
 
     try:
-        with open('full_order.dat','rb') as f:
+        with open('system_data.dat','rb') as f:
             system = pickle.load(f)
     except FileNotFoundError:
         print("File not found creating new system")
@@ -121,13 +121,13 @@ def test_mains_no_checkout():
     print(system.get_item("Burger"))
     print(system.get_item("Wrap"))
     print("Pickling system")
-    with open('full_order.dat','wb') as f:
+    with open('system_data.dat','wb') as f:
         pickle.dump(system,f,pickle.HIGHEST_PROTOCOL)
 
 
 def test_persistance():
     try:
-        with open('full_order.dat','rb') as f:
+        with open('system_data.dat','rb') as f:
             system = pickle.load(f)
     except FileNotFoundError:
         print("File not Found")
@@ -137,7 +137,7 @@ def test_persistance():
 
 def test_mains_checkout():
     try:
-        with open('full_order.dat','rb') as f:
+        with open('system_data.dat','rb') as f:
             system = pickle.load(f)
     except FileNotFoundError:
         print("File not found creating new system")
@@ -205,10 +205,10 @@ def test_mains_checkout():
     print("Amount of Tomato left {}".format(system.inventory.get_ingredient('Tomato').amount))
     print("Amount of Chicken Patty left {}".format(system.inventory.get_ingredient('Chicken Patty').amount))
     
-    with open('full_order.dat','wb') as f:
+    with open('system_data.dat','wb') as f:
         pickle.dump(system,f,pickle.HIGHEST_PROTOCOL)
-    #TODO: before first run $ rm full_order.dat
-    # Unpickle the full_order.dat here
+    #TODO: before first run $ rm system_data.dat
+    # Unpickle the system_data.dat here
     # Checkout order_id 1
     # inspect if the inventory is being decremented correctly
     # 1st run seems ok? Modify the fucntion so that it checkout everyorder in the pending_order list
@@ -218,7 +218,7 @@ def test_mains_checkout():
 
 def test_staff_mark_order():
     try:
-        with open('full_order.dat','rb') as f:
+        with open('system_data.dat','rb') as f:
             system = pickle.load(f)
     except FileNotFoundError:
         print("File not Found")
@@ -232,7 +232,7 @@ def test_staff_mark_order():
 
     system.display_order_lists()
     system.display_order(3)
-    with open('full_order.dat','wb') as f:
+    with open('system_data.dat','wb') as f:
         pickle.dump(system,f,pickle.HIGHEST_PROTOCOL)   
 
 def test_money():

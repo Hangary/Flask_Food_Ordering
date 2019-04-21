@@ -145,7 +145,7 @@ def create_save_system(mains: Menu, sides: Menu, drinks: Menu, sundaes: Menu, in
         Staff_system=staff_system
     )
 
-    with open('full_order.dat', 'wb') as f:
+    with open('system_data.dat', 'wb') as f:
         pickle.dump(system, f, pickle.HIGHEST_PROTOCOL)
 
     return system
