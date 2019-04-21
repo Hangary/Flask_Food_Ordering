@@ -140,7 +140,14 @@ class Main(Item):
         for ingredient in self._ingredients[ingredient_type].values():
             sum += ingredient.amount if not isNaN(ingredient.amount) else 0
         return sum
-    
+
+    def getLimit(self, ingredient_type: str) -> float:
+        if ingredient_type in self._max_limit.keys():
+            return self._max_limit[ingredient_type]
+        else:
+            print(f"<{ingredient_type}> not in limit!")
+            return None
+
     '''
     modify functions
     '''

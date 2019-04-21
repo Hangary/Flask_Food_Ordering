@@ -94,12 +94,12 @@ def modify_mains(item_name):
                     elif 'Wrap' in name:    item.modify_wraps(system.inventory,ingredient)
                     elif 'Patty' in name:   item.modify_patties(system.inventory,ingredient)
                     else:                   item.modify_other_ingredients(system.inventory,ingredient)
-            if(item._errors):
-                return render_template("customer_mains_creation.html", item=item, inventory=system.inventory,error = item._errors)
-            else:
-                system.add_items_in_orders(session['order_ID'], item)
-                return redirect(url_for('review_order'))
-    return render_template("customer_mains_creation.html", item=item, inventory=system.inventory,error = item._errors)
+                if item._errors:
+                    return render_template("customer_mains_creation.html", item=item, inventory=system.inventory, error=item._errors)
+            system.add_items_in_orders(session['order_ID'], item)
+            return redirect(url_for('review_order'))
+    
+    return render_template("customer_mains_creation.html", item=item, inventory=system.inventory, error=item._errors)
 
 
 
