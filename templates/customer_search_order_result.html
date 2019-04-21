@@ -13,17 +13,15 @@
                 <b>{{ item.name }}</b>       <br>
                 Price: ${{'%.2f'| format(item.price) }}    <br>
                 {% for ingredient_type in item.ingredientsDict.keys() %}
-                {% for ingredient in item.ingredientsDict[ingredient_type].values() %}
-                {% if ingredient.amount|int != 0 %}
-                - {{ingredient.name}}: {{ingredient.amount}} <br>
-                {% endif %}
+                    {% for ingredient in item.ingredientsDict[ingredient_type].values() %}
+                        {% if ingredient.amount|int != 0 %}
+                        - {{ingredient.name}}: {{ingredient.amount}} <br>
+                        {% endif %}
+                    {% endfor %}
                 {% endfor %}
-                {% endfor %}
-                Description: {{ item.description }} 
             {% else %}
                 <b>{{ item.name }}</b>       <br>
-                Price: ${{ item.price }}    <br>
-                Description: {{ item.description }} 
+                Price: ${{ item.price }}
             {% endif %}
         </li> 
         {% endfor %}

@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, url_for, abort, session, flash
+from flask import render_template, request, redirect, url_for, abort, session
 from server import app, system
 from datetime import datetime
 from src.ingredient import Ingredient
@@ -53,8 +53,19 @@ def home_page():
 '''
 Customer pages:
 '''
+
+def check_order_in_session():
+    # check whether order_id in the session
+    if 'order_ID' not in session:
+        return render_template("error.html", error="Sorry, you need to create a new order first.")
+    # check whether the order_id is in the system
+    if not system.get_order(session['order_ID']):
+        return render_template("error.html", error="Sorry, your order ID is no longer valid.")
+
+
 @app.route('/customer/menu/<menu_name>', methods=["GET", "POST"])
 def display_menu(menu_name):
+    check_order_in_session()
     
     if request.method == 'POST':
         if "add_btn" in request.form.keys():
@@ -77,6 +88,7 @@ def display_menu(menu_name):
 
 @app.route('/customer/creation/<item_name>', methods=["GET", "POST"])
 def modify_mains(item_name):
+    check_order_in_session()
     
     item = system.get_item(item_name)
     print(item)
@@ -101,16 +113,9 @@ def modify_mains(item_name):
     return render_template("customer_mains_creation.html", item=item, inventory=system.inventory, error=item._errors)
 
 
-
 @app.route('/customer/review', methods=["GET", "POST"])
 def review_order():
-    
-    # check whether order_id in the session
-    if 'order_ID' not in session:
-        return render_template("error.html", error="Sorry, you need to create a new order first.")
-    # check whether the order_id is in the system
-    if not system.get_order(session['order_ID']):
-        return render_template("error.html", error="Sorry, your order ID is no longer valid.")
+    check_order_in_session()
 
     order = system.get_order(session['order_ID'])
     if request.method == 'POST':

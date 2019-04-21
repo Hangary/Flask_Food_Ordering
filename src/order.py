@@ -150,7 +150,7 @@ class Order(object):
     '''
 
     def __str__(self):
-        return f"order id: {self._order_id}, total price: {self._price:.2f}"
+        return f"Order ID: {self._order_id}, Total Price: {self._price:.2f}"
 
 
 if __name__ == "__main__":
