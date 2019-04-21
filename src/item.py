@@ -151,7 +151,7 @@ class Main(Item):
     '''
     modify functions
     '''
-    #private function to modify ingredients 
+    # private function to modify ingredients 
     def _modify_ingredients(self, ingredient_type: str, inventory: Inventory, *argv: Ingredient):
         # check input
         if ingredient_type in ("Bun", "Patty", "Wrap"):
@@ -160,8 +160,6 @@ class Main(Item):
                 total_amount += ingredient.amount
                 # if more than max limit, reject
                 if ingredient_type in self._max_limit.keys():
-                   # print(self.getSumInMain(ingredient_type),ingredient_type, ingredient.amount)
-                    #print("Total before add",total_amount+self.getSumInMain(ingredient_type))
                     if (total_amount+self.getSumInMain(ingredient_type)) > self._max_limit[ingredient_type]:
                         print(f"{ingredient_type} are more than the max amount!")
                         self._errors[ingredient_type] = f"{ingredient_type} are more than the max amount!"
@@ -172,8 +170,8 @@ class Main(Item):
                     return
                 self._ingredients[ingredient_type][ingredient.name] = Ingredient(ingredient.name,ingredient.amount,additional_price= ingredient.additional_price)
                 ## At this stage we should remove the error from the list
-                self._errors.pop(ingredient_type,None)
-                self._errors.pop(ingredient.name,None)
+                self._errors.pop(ingredient_type, None)
+                self._errors.pop(ingredient.name, None)
                 total_amount = 0
         elif ingredient_type == "Other":
             for ingredient in argv:
@@ -187,7 +185,7 @@ class Main(Item):
                     self._errors[ingredient.name] = f"{ingredient.name} is not enough in the inventory!"
                     return
                 self._ingredients[ingredient_type][ingredient.name] = Ingredient(ingredient.name,ingredient.amount,additional_price= ingredient.additional_price)
-                self._errors.pop(ingredient.name,None)
+                self._errors.pop(ingredient.name, None)
         else:
             print("invalid ingredient type!")
         

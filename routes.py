@@ -39,7 +39,6 @@ def home_page():
         if request.form["button"] == "make_new_order":
             order_id = system.make_order()
             session['order_ID'] = order_id
-            flash("Your create a new order!")
             return redirect('/customer/menu/Mains')
         elif request.form["button"] == "continue_order":
             return redirect('/customer/menu/Mains')
@@ -84,7 +83,7 @@ def modify_mains(item_name):
     print(system.inventory.display_unavailable_ingredients())
     if request.method == 'POST':
         if request.form['button'] == 'submit':
-            for name,amount in request.form.items():
+            for name, amount in request.form.items():
                 if name == 'button':
                     continue
                 if amount:
@@ -124,6 +123,7 @@ def review_order():
             return render_template("customer_order_result.html", order_id=order_id)
         else:
             system.del_items_in_orders(order.order_id, request.form["button"])
+    
     return render_template('customer_review_order.html', order=order)
 
 
