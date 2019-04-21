@@ -34,7 +34,7 @@ def setup1():
         staff_system=create_staffsystem("docs/StaffSystem.csv")
     )
     system.make_order()
-    itemList = ["Coke Can", "Nugget 6 pack", "OrangeJuice_Small", "Med Fries"]
+    itemList = ["Coke Can", "Nugget - 6 pack", "Orange Juice - Small", "Fries - Medium"]
     system.add_items_in_orders(
         1,
         system.get_item(itemList[0]),
@@ -129,7 +129,7 @@ def test_add_order(setup):
     # continue from above
     assert setup.total_order == 0
     setup.make_order()
-    itemList = ["Coke Can", "Nugget 6 pack", "OrangeJuice_Small", "Med Fries"]
+    itemList = ["Coke Can", "Nugget - 6 pack", "Orange Juice - Small", "Fries - Medium"] 
     setup.add_items_in_orders(
         1,
         setup.get_item(itemList[0]),
@@ -144,7 +144,7 @@ def test_add_order(setup):
 def test_remove_order(setup):
     
     assert setup.total_order == 0
-    itemList = ["Coke Can", "Nugget 6 pack", "OrangeJuice_Small", "Med Fries"]
+    itemList = ["Coke Can", "Nugget - 6 pack", "Orange Juice - Small", "Fries - Medium"]
     setup.make_order()
     setup.add_items_in_orders(
         1,
@@ -156,14 +156,13 @@ def test_remove_order(setup):
     order = setup._get_pendingorder(1)
     #order.items['Coke Can'][0].uniqueID
     setup.del_items_in_orders(1,order.items['Coke Can'][0].uniqueid)
-    setup.del_items_in_orders(1,order.items['Nugget 6 pack'][0].uniqueid)
-    setup.del_items_in_orders(1,order.items['OrangeJuice_Small'][0].uniqueid)
+    setup.del_items_in_orders(1,order.items['Nugget - 6 pack'][0].uniqueid)
+    setup.del_items_in_orders(1,order.items['Orange Juice - Small'][0].uniqueid)
     for itemName in itemList:
-        if itemName != "Med Fries":
+        if itemName != "Fries - Medium":
             assert(itemName not in setup._get_pendingorder(1).items.keys())
-        assert("Med Fries" in setup._get_pendingorder(1).items.keys())
+        assert("Fries - Medium" in setup._get_pendingorder(1).items.keys())
     
-
 
 def test_add_mains_to_order(setup):
     setup.make_order()
@@ -251,6 +250,7 @@ def test_modify_mains(setup):
             if stuff.name in things.keys():
                 assert stuff.amount == things[stuff.name].amount and stuff.additional_price == things[stuff.name].additional_price
 
+
 def test_add_more_mains_to_order(setup):
     setup.make_order()
     assert setup.total_order == 1
@@ -260,6 +260,7 @@ def test_add_more_mains_to_order(setup):
     setup.add_items_in_orders(1,setup.get_item("Burger"),setup.get_item("Wrap"))
     assert len(setup._get_pendingorder(1).items['Burger']) == 2
     assert len(setup._get_pendingorder(1).items['Wrap']) == 2
+
 
 def test_modify_mains_2_cant_add_more_than_max(setup):
     #Create order and add mains
@@ -316,9 +317,10 @@ def test_modify_mains_2_cant_add_more_than_max(setup):
                     assert stuff.amount == things[stuff.name].amount and stuff.additional_price == things[stuff.name].additional_price
     assert(setup._get_pendingorder(1).price == 19.5)
 
+
 def test_check_out_simple(setup):
     assert setup.total_order == 0
-    itemList = ["Coke Can", "Nugget 6 pack", "OrangeJuice_Small", "Med Fries"]
+    itemList = ["Coke Can", "Nugget - 6 pack", "Orange Juice - Small", "Fries - Medium"]
     setup.make_order()
     setup.add_items_in_orders(
         1,
@@ -331,6 +333,7 @@ def test_check_out_simple(setup):
     setup.checkout(1)
     assert(setup._get_pendingorder(1).is_payed)
     setup.display_order(1)
+
 
 def test_initial_inventory_simple(setup):
     assert(setup.inventory.get_ingredient('Lettuce').amount == 200)
@@ -346,6 +349,7 @@ def test_initial_inventory_simple(setup):
     assert(setup.inventory.get_ingredient('Sesame Bun').amount == 100)
     assert(setup.inventory.get_ingredient('Muffin Bun').amount == 100)
     assert(setup.inventory.get_ingredient('Wrap').amount == 100)
+
 
 def test_inventory_numbers(setup1):
     assert setup1._get_pendingorder(1).price == 48.5
@@ -368,6 +372,7 @@ def test_inventory_numbers(setup1):
     assert(setup1.inventory.get_ingredient('Muffin Bun').amount == 99)
     assert(setup1.inventory.get_ingredient('Wrap').amount == 98)
 
+
 def test_staff_mark_order(setup1):
     order1 = setup1._get_pendingorder(1)
     setup1.checkout(1)
@@ -375,10 +380,11 @@ def test_staff_mark_order(setup1):
     setup1.update_order(1,'Kanadech','4568')
     assert(order1.is_prepared)
 
+
 def test_checkout_order_with_lots_of_items(setup):
 
     orderID = setup.make_order()
-    itemList = ["Coke Can","Nugget 6 pack","OrangeJuice_Small","Med Fries"]
+    itemList = ["Coke Can", "Nugget - 6 pack", "Orange Juice - Small", "Fries - Medium"]
     setup.add_items_in_orders(orderID,
             setup.get_item(itemList[1]),
             setup.get_item(itemList[1]),
@@ -427,9 +433,10 @@ def test_checkout_order_with_lots_of_items(setup):
     assert(setup.inventory.get_ingredient('Ice').amount == 1000-80)
     assert(setup.inventory.get_ingredient('Nugget').amount == 1)
 
+
 def test_inventory_unavailable(setup):
     orderID = setup.make_order()
-    itemList = ["Coke Can","Nugget 6 pack","OrangeJuice_Small","Med Fries"]
+    itemList = ["Coke Can", "Nugget - 6 pack", "Orange Juice - Small", "Fries - Medium"]
     setup.add_items_in_orders(orderID,
             setup.get_item(itemList[2]),
             setup.get_item(itemList[2]),
@@ -445,6 +452,7 @@ def test_inventory_unavailable(setup):
     assert "OrangeJuice" in setup.inventory.display_unavailable_ingredients()
     assert "Nugget" in setup.inventory.display_unavailable_ingredients()
     setup.display_order_lists()
+
 
 def test_customer_check_status(setup1):
     #For front end we will use display_order() to show customer their order

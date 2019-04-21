@@ -30,7 +30,7 @@ def test_incorrect_login(setup):
 
 def test_updatation_order_correctlogin(setup):
     order_id = setup.make_order()
-    someList = ["Coke Can","Nugget 6 pack","OrangeJuice_Small","Med Fries"]
+    someList = ["Coke Can", "Nugget - 6 pack", "Orange Juice - Small","Fries - Medium"]
     setup.add_items_in_orders(
         order_id,
         setup.get_item(someList[0]),
@@ -45,7 +45,7 @@ def test_updatation_order_correctlogin(setup):
 def test_updatation_order_incorrectlogin(setup):
     setup.staff_system.logout()
     order_id = setup.make_order()
-    someList = ["Coke Can","Nugget 6 pack","OrangeJuice_Small","Med Fries"]
+    someList = ["Coke Can", "Nugget - 6 pack", "Orange Juice - Small","Fries - Medium"]
     setup.add_items_in_orders(
         order_id,
         setup.get_item(someList[0]),
@@ -69,7 +69,7 @@ def test_updation_order_invalid_order(setup):
 
 def test_updationof_complete_order(setup):
     order_id = setup.make_order()
-    someList = ["Coke Can","Nugget 6 pack","OrangeJuice_Small","Med Fries"]
+    someList = ["Coke Can", "Nugget - 6 pack", "Orange Juice - Small","Fries - Medium"]
     setup.add_items_in_orders(
         order_id,
         setup.get_item(someList[0]),
