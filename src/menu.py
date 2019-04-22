@@ -1,5 +1,5 @@
-from item import Item, Burger, Wrap, Drink, Side
-from order import Order
+from src.item import Item, Burger, Wrap, Drink, Side
+from src.order import Order
 '''
 Menu: a class used to store menu information, which is composed of items.
 '''
@@ -28,10 +28,13 @@ class Menu:
 
     # print all the items inside the menu
     def display(self):
+        items = []
         print(f"{self.name}:")
         for item in self._items.values():
+            items.append(item)
             item = f"<{item.name}> Price: {item.price}" 
             print(item)
+        return items
 
     # put items into an order
     def putin_order(self, order: Order, *argv: Item):
