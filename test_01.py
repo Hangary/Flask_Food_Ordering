@@ -124,7 +124,7 @@ def test_make_order(setup):
     assert setup.total_order == 1
 
 
-def test_add_order(setup):
+def test_add_items_to_order(setup):
     # add some drinks and sides
     # continue from above
     assert setup.total_order == 0
@@ -141,7 +141,7 @@ def test_add_order(setup):
         assert(itemName in setup._get_pendingorder(1).items.keys())
 
 
-def test_items_from_order(setup):
+def test_delete_items_from_order(setup):
     
     assert setup.total_order == 0
     itemList = ["Coke Can", "Nugget - 6 pack", "Orange Juice - Small", "Fries - Medium"]
@@ -257,6 +257,14 @@ def test_add_sundae(setup):
     assert "Strawberry Sundae - Medium" in setup._get_pendingorder(1).items.keys()
     assert "Chocolate Sundae - Medium" in setup._get_pendingorder(1).items.keys()
     assert "Chocolate Sundae - Small" not in setup._get_pendingorder(1).items.keys()
+
+def test_add_default_mains(setup):
+
+    setup.make_order()
+    setup.add_default_main(1,setup.get_item("Burger"))
+    assert "Big Mac" in setup._get_pendingorder(1).items.keys()
+    setup.add_default_main(1,setup.get_item("Wrap"))
+    assert "Classic Wrap" in setup._get_pendingorder(1).items.keys()
 
 def test_2_more_mains_to_order(setup):
     setup.make_order()
